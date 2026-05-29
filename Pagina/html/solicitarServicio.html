@@ -3,19 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro uso del Salon</title>
+    <title>Solicitar Servicio</title>
 </head>
 <body>
-    <a href="indexSolicitante.html"> 
+     <a href=indexSolicitante.html>
     <button>Volver</button>
     </a>
 
     <a href="inicioSecion.html"> 
     <button>Cerrar sesión</button> 
     </a>
+
+ <details>
+  <summary>Seleccionar tipo de servicio</summary>  <ul>
+    <li><input type="checkbox" id="Instalacion de programa" name="Instalacion de programa"> <label for="Instalacion de programa"> Instalacion de programa</label> </li>
+    <li><input type="checkbox" id="Vinculacion de PC" name="Vinculacion de PC"> <label for="Vinculacion de PC"> Vinculacion de PC</label> </li>
+    <li><input type="checkbox" id="Armado de equipo" name="Armado de equipo"> <label for="Armado de equipo"> Armado de equipo</label> </li>
+    <li><input type="checkbox" id="Reorganisacion" name="Reorganisacion"> <label for="Reorganisacion"> Reorganisacion</label> </li>
+    <li><input type="checkbox" id="Reparacion de PC" name="Reparacion de PC"> <label for="Reparacion de PC"> Reparacion de PC</label> </li>
+  </ul>
+</details>
+<br> <br>
+
+<form>
+  <label for="fecha">Selecciona una fecha:</label>
+  <input type="date" id="fecha" name="fecha">
+</form>
+<br> <br>
+
+
 <form action="procesar_registro.php" method="post">
-    <h1>Seleccionar Salon</h1>
-  
+<h4>Seleccionar espacio</h4>
     <input type="checkbox" id="Lab" name="Lab" value="Lab">
     <label for="Lab"> Laboratorio</label>
 
@@ -48,45 +66,12 @@
 <br>
 <br>
 
+<h4>Descripción de la Incidencia</h4>
+<textarea cols="40" rows="10" id="descripcion" placeholder="Describe la incidencia..."></textarea>
 
- <label for="fecha">Dia</label>
-    <span id="fecha"></span>
-   
-    <script>
-        
-        const hoy = new Date();
-        
-        const formatoFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        const fechaFormateada = hoy.toLocaleDateString('es-ES', formatoFecha);
-        
-        
-        document.getElementById('fecha').textContent = fechaFormateada;
-    </script>
-
-<br> <br> 
-
-form>
-    <label for="hora-inicio">Hora de Inicio:</label>
-    <input type="time" id="hora-inicio" name="hora_inicio" required>
-    
-    <br>
-    
-    <label for="hora-final">Hora Final:</label>
-    <input type="time" id="hora-final" name="hora_final" required>
-</form>
 <br> <br>
 
+<button type="submit">Enviar</button>
 
-    <label for="nombre">Grupo:</label>
-    <input type="text" id="nombre" name="nombre">
-<br><br>
-
-<input type="checkbox" id="no" >
-    <label for="no"> No se uso ningun equipo</label>
-    <br>  <br>
-
-    <a href="registrarIncidencia.html">
-    <button type="submit">siguiente</button>
-    </a>
 </body>
 </html>

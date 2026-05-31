@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Incidencias</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href=solicitanteRegistrarIncidencia.html>
+        <button>Volver</button>
+      </a>
+
+      <a href="inicioSesion.html">
+        <button>Cerrar sesión</button>
+      </a>
+    </nav>
+  </header>
+
+  <form autocomplete="on" action="mailto:">
+    <fieldset>
+      <legend>Registrar Incidencia</legend>
+      <p>
+      <h4>Tipo de Incidencia</h4>
+      <input type="radio" name="opcionIncidencia" value="1" required> PC
+      <input type="radio" name="opcionIncidencia" value="2" required> Otros
+      </p>
+
+      <p>
+        <label for="nroPC">Número del PC:</label>
+        <input name="nroPC" type="nroPC" placeholder="Ej: PC03" required>
+
+      </p>
+
+      <p>
+        <label for="nombreAlumno">Nombre del alumno:</label>
+        <input name="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
+      </p>
+
+      <p>
+      <h4>Descripción de la Incidencia</h4>
+      <textarea cols="40" rows="10" id="descripcion" name="descripcion" required
+        placeholder="Describe la incidencia..."></textarea>
+      </p>
+
+      <input type="submit" value="Registrar Incidencia">
+
+    </fieldset>
+  </form>
+
+</body>
+
+</html>

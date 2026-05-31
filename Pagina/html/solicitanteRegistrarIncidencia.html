@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro uso del Salon</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="indexSolicitante.html">
+                <button>Volver</button>
+            </a>
+
+            <a href="inicioSesion.html">
+                <button>Cerrar sesión</button>
+            </a>
+        </nav>
+    </header>
+
+    <form autocomplete="on" action="mailto:" method="post" enctype="text/plain">
+        <p>
+        <fieldset>
+
+            <label for="espacio">Espacio:</label>
+            <select>
+                <option>Laboratorio</option>
+                <option>Taller</option>
+                <option>Teórico</option>
+            </select>
+            <br>
+            <label for="nroEspacio">Número del espacio:</label>
+            <input name="nroEspacio" type="nroEspacio" placeholder="Ej: 3" required>
+
+            <p>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </p>
+
+            <p>
+                <label for="grupo">Grupo:</label>
+                <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
+            </p>
+
+
+            <a href="solicitanteRegistrarIncidencia2.html">
+                <button type="button">Siguiente</button>
+            </a>
+        </fieldset>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Servicio</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href=indexSolicitante.html>
+        <button>Volver</button>
+      </a>
+
+      <a href="inicioSesion.html">
+        <button>Cerrar sesión</button>
+      </a>
+    </nav>
+  </header>
+
+  <form autocomplete="on" action="mailto:">
+    <fieldset>
+      <legend>Registrar Solicitud de servicio</legend>
+
+      <p>
+        <label for="tipoServicio">Seleccionar tipo de servicio:</label>
+        <select>
+          <option>Preparación de laboratorio</option>
+          <option>Instalación de software</option>
+          <option>Configuración de equipos</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="fecha">Selecciona una fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+      </p>
+
+      <p>
+        <label for="grupo">Grupo:</label>
+        <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
+      </p>
+
+      <label for="espacio">Espacio:</label>
+      <select>
+        <option>Laboratorio</option>
+        <option>Taller</option>
+        <option>Teórico</option>
+      </select>
+      <br>
+      <label for="nroEspacio">Número del espacio:</label>
+      <input name="nroEspacio" type="nroEspacio" placeholder="Ej: 3" required>
+
+      <p>
+      <h4>Descripción del Servicio</h4>
+      <textarea cols="40" rows="10" id="descripcion" placeholder="Describe el servicio..."></textarea>
+      </p>
+      <button type="submit">Enviar</button>
+
+    </fieldset>
+  </form>
+
+</body>
+
+</html>

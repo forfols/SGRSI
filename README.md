@@ -1,2 +1,2 @@
 # SGRSI
-Repositorio del equipo forfols
+Repositorio del equipo Forfols

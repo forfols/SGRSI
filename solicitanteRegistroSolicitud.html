@@ -24,24 +24,24 @@
     <fieldset>
       <legend>Registrar Solicitud de servicio</legend>
 
-      <p>
+      <div>
         <label for="tipoServicio">Seleccionar tipo de servicio:</label>
         <select>
           <option>Preparación de laboratorio</option>
           <option>Instalación de software</option>
           <option>Configuración de equipos</option>
         </select>
-      </p>
+      </div>
 
-      <p>
+      <div>
         <label for="fecha">Selecciona una fecha:</label>
         <input type="date" id="fecha" name="fecha" required>
-      </p>
+      </div>
 
-      <p>
+      <div>
         <label for="grupo">Grupo:</label>
         <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
-      </p>
+      </div>
 
       <label for="espacio">Espacio:</label>
       <select>
@@ -53,10 +53,10 @@
       <label for="nroEspacio">Número del espacio:</label>
       <input name="nroEspacio" type="nroEspacio" placeholder="Ej: 3" required>
 
-      <p>
+      <div>
       <h4>Descripción del Servicio</h4>
       <textarea cols="40" rows="10" id="descripcion" placeholder="Describe el servicio..."></textarea>
-      </p>
+      </div>
       <button type="submit">Enviar</button>
 
     </fieldset>

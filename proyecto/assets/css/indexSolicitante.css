@@ -1,0 +1,72 @@
+:root{
+    --rojo: #CD1A30;
+    --rojoOscuro: #7A0C31;
+    --test: #494949;
+    --amarillo: #FEE785;
+    --blanco: #ffffff;
+    --vordo: rgb(28, 9, 5);
+}
+
+body {
+  box-sizing: content-box;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--blanco);
+  background-color: var(--blanco);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--rojoOscuro);
+    padding: 16px 32px;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 50vh;
+  font-size: 20px;
+}
+
+img{
+    height: 50px;
+
+}
+
+/*botones generales*/
+.btnPrincipal{
+  background-color: var(--rojoOscuro);
+  color: var(--blanco);
+  width: 200px;
+  border: none;
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 15px;
+}
+
+.btnPrincipal:hover {
+  background-color: var(--rojo);
+  color: var(--blanco);
+}
+
+.btnPrincipal:active {
+  opacity: 0.8;
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+img{
+    height: 30px;
+
+}
+
+}

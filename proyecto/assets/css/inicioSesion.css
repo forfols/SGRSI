@@ -1,0 +1,47 @@
+:root{
+    --rojo: #CD1A30;
+    --rojoOscuro: #7A0C31;
+    --amarillo: #FEE785;
+    --blanco: #ffffff;
+    --vordo: rgb(28, 9, 5);
+}
+
+body {
+  box-sizing: content-box;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--blanco);
+  background-color: var(--vordo);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.inicioSesion{
+    display: flex;
+    justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 50vh;
+  font-size: 20px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+}
+  
+
+
+img{
+    height: 50px;
+
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+img{
+    height: 30px;
+
+}
+
+}

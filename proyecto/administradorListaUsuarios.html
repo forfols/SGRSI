@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Usuarios</title>
+    <script src="assets/js/administradorListaUsuarios.js"></script>
 </head>
 
 <body>
@@ -25,9 +26,60 @@
         <tr>
             <th>Docente</th>
             <th>CI</th>
+            <th>Contraseña</th>
             <th>Rol</th>
             <th>Acciones</th>
         </tr>
+        <tbody id="tabla"></tbody>
+    </table>
+
+    <form id="modificarUsuario">
+        <fieldset class="formularioModificarUsuario" style="display:none">
+            <legend>
+                <h2>
+                    Modificar Usuario
+                </h2>
+            </legend>
+
+            <button type="button" id="btnCerrarModificarUsuario" onclick="formularioModificarUsuario()">x</button>
+
+            <br>
+
+            <div>
+                <label for="nombre">Usuario:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div>
+                <label for="ci">Cédula:</label>
+                <input type="ci" id="ci" name="ci" required>
+            </div>
+
+            <div>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="contra" name="contraseña" required>
+            </div>
+
+            <div>
+                <label for="repetirContraseña">Repetir contraseña:</label>
+                <input type="password" id="repetirContra" name="repetirContraseña" required>
+            </div>
+
+            <div>
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" required>
+                    <option value="solicitante">Solicitante</option>
+                    <option value="tecnico">Tecnico</option>
+                </select>
+            </div>
+
+
+
+            <p>
+                <input type="submit" value="Actualizar">
+            </p>
+        </fieldset>
+    </form>
 
 </body>
 

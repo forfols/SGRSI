@@ -1,0 +1,211 @@
+:root {
+    --rojo: #CD1A30;
+    --rojoOscuro: #7A0C31;
+    --amarillo: #FEE785;
+    --blanco: #ffffff;
+    --vordo: rgb(28, 9, 5);
+}
+
+body {
+    box-sizing: content-box;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--blanco);
+    background-color: var(--vordo);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 32px;
+}
+
+header {
+    border-bottom: 2px solid var(--rojo);
+    margin-bottom: 24px;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+}
+
+header nav a {
+    text-decoration: none;
+}
+
+/*Botones*/
+button,
+input[type="submit"] {
+    background-color: var(--rojo);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: var(--rojoOscuro);
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+.btnNav,
+header nav button {
+    background-color: transparent;
+    border: 1px solid var(--amarillo);
+    color: var(--amarillo);
+}
+
+.btnNav:hover,
+header nav button:hover {
+    background-color: var(--amarillo);
+    color: var(--vordo);
+}
+
+/*Botones para cerrar pop-ups*/
+#btnCerrarModificarEstado,
+#btnCerrarVerEstado,
+#btnCerrarModificarIncidencia {
+    background-color: transparent;
+    color: var(--rojo);
+    border: 1px solid var(--rojo);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    line-height: 1;
+    float: right;
+}
+
+h1 {
+    color: var(--amarillo);
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-left: 12px;
+}
+
+h2,
+h4 {
+    color: var(--amarillo);
+}
+
+legend h2 {
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+table,
+th,
+td {
+    border: 1px solid var(--rojoOscuro) !important;
+}
+
+th {
+    background-color: var(--rojo);
+    color: var(--blanco);
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(254, 231, 133, 0.06);
+}
+
+tbody tr:hover {
+    background-color: rgba(205, 26, 48, 0.15);
+}
+
+form {
+    margin-bottom: 24px;
+}
+
+fieldset {
+    border: 1px solid var(--rojoOscuro);
+    border-radius: 8px;
+    padding: 20px 24px;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+legend {
+    color: var(--amarillo);
+    font-weight: 600;
+    padding: 0 10px;
+}
+
+label {
+    display: inline-block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    color: var(--blanco);
+    font-weight: 500;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--blanco);
+    color: var(--vordo);
+    border: 1px solid var(--rojoOscuro);
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--rojo);
+    box-shadow: 0 0 0 2px rgba(205, 26, 48, 0.35);
+}
+
+input[readonly] {
+    background-color: #e9e9e9;
+    cursor: not-allowed;
+}
+
+.formularioModificarEstado,
+.formularioVerEstado,
+.formularioModificarIncidencia {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background-color: var(--vordo);
+    border: 2px solid var(--rojo);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+
+/*Bootstrap*/
+.d-none {
+    display: none !important;
+}

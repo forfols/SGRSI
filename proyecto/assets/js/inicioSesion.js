@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (usuario.rol === "administrador") {
         window.location.href = "indexAdministrador.html";
       } else if (usuario.rol === "tecnico") {
-        window.location.href = "indexTecnico.html";
+        window.location.href = "tecnico.html";
       } else {
         window.location.href = "indexSolicitante.html";
       }

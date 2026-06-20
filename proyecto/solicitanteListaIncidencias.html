@@ -7,23 +7,24 @@
     <title>Lista de Incidencias</title>
       <script src="assets/js/solicitanteListaIncidencias.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link rel="stylesheet" href="assets/css/solicitanteListaIncidencias.css">
 </head>
 
 <body>
     <header>
         <nav>
             <a href=indexSolicitante.html>
-                <button>Volver</button>
+                <button class="btnNav">Volver</button>
             </a>
 
             <a href="inicioSesion.html">
-                <button>Cerrar sesión</button>
+                <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>
     </header>
 
     <h1>Lista de Incidencias</h1>
-    <table border="1">
+    <table border="1" class="tabla">
         <tr>
             <th>Tipo incidencia</th>
             <th>Espacio</th>
@@ -38,7 +39,6 @@
         </tr>
         <tbody id="tabla"></tbody>
     </table>
-
 
     <form id="modificarIncidencia">
         <fieldset class="formularioModificarIncidencia" style="display:none">

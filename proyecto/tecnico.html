@@ -13,10 +13,6 @@
 <body>
     <header>
         <nav class="d-flex justify-content-between align-items-center">
-            <a href="indexTecnico.html">
-                <button class="btnNav">Volver</button>
-            </a>
-
             <a href="inicioSesion.html">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
@@ -25,7 +21,7 @@
 
     <h1>Lista de Incidencias</h1>
     <div class="table-responsive">
-    <table border="1" class="table">
+    <table border="1">
         <tr>
             <th>Docente</th>
             <th>Tipo incidencia</th>
@@ -99,6 +95,8 @@
             <button type="button" id="btnCerrarVerEstado" onclick="formularioVerEstado()">x</button>
 
             <br>
+            <label for="tecnico">Tecnico asignado:</label>
+            <input type="text" id="tecnico" readonly></input>
 
             <label for="estado">Estado:</label>
             <input type="text" id="estadoVer" readonly></input>

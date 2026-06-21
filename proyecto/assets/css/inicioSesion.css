@@ -1,4 +1,4 @@
-:root{
+:root {
     --rojo: #CD1A30;
     --rojoOscuro: #7A0C31;
     --amarillo: #FEE785;
@@ -7,41 +7,80 @@
 }
 
 body {
-  box-sizing: content-box;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--blanco);
-  background-color: var(--vordo);
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 32px;
+    box-sizing: content-box;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--blanco);
+    background-color: var(--vordo);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 32px;
 }
 
-.inicioSesion{
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inicioSesion {
     display: flex;
     justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 50vh;
-  font-size: 20px;
+    align-items: center;
+    flex-direction: column;
+    min-height: 50vh;
+    font-size: 20px;
 }
 
-header{
+.inicioSesion form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#btnIniciar{
+    margin-top: 20px;
+}
+
+header {
     display: flex;
     justify-content: space-between;
 }
-  
 
 
-img{
+
+img {
     height: 50px;
 
 }
 
 @media (max-width: 480px) and (orientation: portrait) {
-img{
-    height: 30px;
+    img {
+        height: 30px;
 
-}
+    }
+
+    .inicioSesion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 50vh;
+        font-size: 30px;
+    }
+    h1{
+        padding-top: 60px;
+        font-size: 45px;
+    }
+
+
+    #btnIniciar {
+        width: 200px;
+        height: 75px;
+        padding: 10px 20px;
+        margin-top: 50px;
+        font-size: 18px;
+    }
 
 }

@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const descripcion = document.getElementById("descripcion").value;
         let estado = "Sin asignar";
         let prioridad="Sin asignar";
-        let docenteAsignado="Sin asignar";
+        let tecnicoAsignado="Sin asignar";
         let diagnostico="N/A";
         let soluciones="N/A";
 
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             fecha: datosEspacio.fecha,
             estado,
             prioridad,
-            docenteAsignado,
+            tecnicoAsignado,
             diagnostico,
             soluciones
 

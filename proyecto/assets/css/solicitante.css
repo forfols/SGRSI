@@ -206,3 +206,15 @@ input[readonly] {
 .d-none {
     display: none !important;
 }
+
+form {
+  margin-bottom: 24px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+}

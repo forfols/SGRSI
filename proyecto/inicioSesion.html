@@ -8,7 +8,7 @@
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="assets/css/inicioSesion.css">
     <script src="assets/js/inicioSesion.js"></script>
-    <script src="assets/js/cuentas.js"></script>
+    
 </head>
 
 
@@ -20,22 +20,25 @@
         <img src="assets/img/logoITI.png" alt="logo de la ITI">
     </header>
 
+ <button type="button" id="btnObtenerUsuarios">Usuarios predefinidos</button>
+
     <section class="inicioSesion">
-    <h1>Iniciar Sesión</h1>
     
     <form id="inicioSesion">
+     <h1>Iniciar Sesión</h1>
 
     <label for="ci">Cédula:</label>
     <input type="text" id="ci" name="ci" required>
-    <br>
+    
     <label for="contra">Contraseña:</label>
     <input type="password" id="contra" name="contra" required>
-    <br>
+    
 
-    <button type="submit" class="btn btn-outline-danger">Iniciar sesión</button>
-    </section>
+    <button type="submit" class="btn btn-outline-danger" id="btnIniciar">Iniciar sesión</button>
+    
 
     </form>
+    </section>
 
 </body>
 

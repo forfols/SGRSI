@@ -24,7 +24,7 @@ header {
 
 header nav {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding-bottom: 16px;
 }
@@ -33,7 +33,6 @@ header nav a {
     text-decoration: none;
 }
 
-/*Botones*/
 button,
 input[type="submit"] {
     background-color: var(--rojo);
@@ -56,20 +55,19 @@ input[type="submit"]:active {
     transform: translateY(1px);
 }
 
-.btnNav,
+button.btnNav,
 header nav button {
     background-color: transparent;
     border: 1px solid var(--amarillo);
     color: var(--amarillo);
 }
 
-.btnNav:hover,
+button.btnNav:hover,
 header nav button:hover {
     background-color: var(--amarillo);
     color: var(--vordo);
 }
 
-/*Botones para cerrar pop-ups*/
 #btnCerrarModificarEstado,
 #btnCerrarVerEstado,
 #btnCerrarModificarIncidencia {
@@ -188,9 +186,8 @@ input[readonly] {
     cursor: not-allowed;
 }
 
-.formularioModificarEstado,
-.formularioVerEstado,
-.formularioModificarIncidencia {
+.formularioModificarUsuario,
+.formularioVerEstado {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -205,8 +202,18 @@ input[readonly] {
     z-index: 1000;
 }
 
-/*Bootstrap*/
 .d-none {
     display: none !important;
 }
 
+form {
+  margin-bottom: 24px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+}

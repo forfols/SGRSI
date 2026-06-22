@@ -46,14 +46,25 @@ main {
 header {
     display: flex;
     justify-content: space-between;
+    
 }
 
 
 
-img {
-    height: 50px;
+/*Img*/
 
+.logoForfols{
+    height: 60px;
 }
+.logoSGRSI{
+    height: 90px;
+    width: 240px;
+}
+.logoITI{
+    height: 56px;
+    width: 56px;
+}
+
 
 @media (max-width: 480px) and (orientation: portrait) {
     img {
@@ -61,14 +72,6 @@ img {
 
     }
 
-    .inicioSesion {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        min-height: 50vh;
-        font-size: 30px;
-    }
     h1{
         padding-top: 60px;
         font-size: 45px;

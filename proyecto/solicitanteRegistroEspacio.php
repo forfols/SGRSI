@@ -13,11 +13,11 @@
 <body>
     <header>
         <nav class="d-flex justify-content-between align-items-center">
-            <a href="indexSolicitante.html">
+            <a href="indexSolicitante.php">
                 <button class="btnNav">Volver</button>
             </a>
 
-            <a href="inicioSesion.html">
+            <a href="inicioSesion.php">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>

@@ -13,11 +13,11 @@
 <body>
     <header>
         <nav>
-            <a href="indexAdministrador.html">
+            <a href="indexAdministrador.php">
                 <button>Volver</button>
             </a>
 
-            <a href="inicioSesion.html">
+            <a href="inicioSesion.php">
                 <button>Cerrar sesión</button>
             </a>
         </nav>

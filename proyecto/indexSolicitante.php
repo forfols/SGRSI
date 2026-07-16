@@ -12,22 +12,22 @@
 <body>
     <header>
         <nav>
-            <a href="inicioSesion.html">
+            <a href="inicioSesion.php">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>
     </header>
 
     <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
-        <a href="solicitanteRegistroEspacio.html">
+        <a href="solicitanteRegistroEspacio.php">
             <button class="btnPrincipal">Registrar Incidencia</button>
         </a>
 
-        <a href="solicitanteRegistroSolicitud.html">
+        <a href="solicitanteRegistroSolicitud.php">
             <button class="btnPrincipal">Registrar Solicitud</button>
         </a>
 
-        <a href="solicitanteListaIncidencias.html">
+        <a href="solicitanteListaIncidencias.php">
             <button class="btnPrincipal">Ver Incidencias Realizadas</button>
         </a>
     </main>

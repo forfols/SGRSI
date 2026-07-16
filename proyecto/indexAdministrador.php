@@ -13,7 +13,7 @@
 <body>
     <header>
         <nav>
-            <a href="inicioSesion.html">
+            <a href="inicioSesion.php">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>
@@ -21,19 +21,19 @@
 
     <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
 
-        <a href="administradorCrearUsuario.html">
+        <a href="administradorCrearUsuario.php">
             <button class="btnPrincipal">Crear usuario</button>
         </a>
 
-        <a href="administradorListaUsuarios.html">
+        <a href="administradorListaUsuarios.php">
             <button class="btnPrincipal">Gestionar usuarios</button>
         </a>
 
-        <a href="administradorListaIncidencias.html">
+        <a href="administradorListaIncidencias.php">
             <button class="btnPrincipal">Ver incidencias generales</button>
         </a>
         
-        <a href="administradorMetricas.html">
+        <a href="administradorMetricas.php">
             <button class="btnPrincipal">Panel de métricas y reportes</button>
         </a>
     </main>

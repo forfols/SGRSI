@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     terminar.addEventListener("click", function () {
         localStorage.removeItem("registroEspacio");
-        window.location.href = "indexSolicitante.html";
+        window.location.href = "indexSolicitante.php";
 
     });
 

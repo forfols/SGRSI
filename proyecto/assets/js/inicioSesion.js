@@ -59,11 +59,11 @@ localStorage.setItem("usuarios", JSON.stringify(usuarios));
     }]
     localStorage.setItem("usuarioUtilizado", JSON.stringify(usuarioUtilizado));
       if (usuario.rol === "administrador") {
-        window.location.href = "indexAdministrador.html";
+        window.location.href = "indexAdministrador.php";
       } else if (usuario.rol === "tecnico") {
-        window.location.href = "tecnico.html";
+        window.location.href = "tecnico.php";
       } else {
-        window.location.href = "indexSolicitante.html";
+        window.location.href = "indexSolicitante.php";
       }
     }
   });

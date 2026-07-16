@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }]
     localStorage.setItem("registroEspacio", JSON.stringify(registroEspacio));
     
-    window.location.href = "solicitanteRegistroIncidencias.html";
+    window.location.href = "solicitanteRegistroIncidencias.php";
 
 
 

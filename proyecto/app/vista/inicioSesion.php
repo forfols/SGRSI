@@ -25,7 +25,7 @@
 
     <section class="inicioSesion">
     
-    <form id="inicioSesion">
+    <form action="procesarInicioSesion.php" method="post">
      <h1>Iniciar Sesión</h1>
 
     <label for="ci">Cédula:</label>

@@ -25,7 +25,7 @@ if ($usuario === null) {
 }
 
 session_start();
-session_regenerate_id(true);
+    session_regenerate_id(true);
 
 $_SESSION["ci"] = $usuario->getCi();
 $_SESSION["rol"] = $usuario->getRol();
@@ -36,7 +36,7 @@ if($rol== "Solicitante") {
     header("Location: indexSolicitante.php");
 }else if($rol== "Tecnico") {
     header("Location: tecnico.php");
-}else{
+}else if ($rol== "Administrador"){
     header("Location: indexAdministrador.php");
 }
 

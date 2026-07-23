@@ -1,43 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/indexAdministrador.css">
-</head>
+session_start();
 
-<body>
-    <header>
-        <nav>
-            <a href="inicioSesion.php">
-                <button class="btnNav">Cerrar sesión</button>
-            </a>
-        </nav>
-    </header>
+if (!isset($_SESSION["ci"])) {
+    $mensaje = "Acceso Denegado: Sesión no iniciada";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-    <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+if ( !isset($_SESSION["rol"]) || $_SESSION["rol"] !== "Administrador" ) {
+    $mensaje = "Acceso Denegado: Rol incorrecto";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-        <a href="administradorCrearUsuario.php">
-            <button class="btnPrincipal">Crear usuario</button>
-        </a>
+require_once __DIR__ . "/../app/vista/indexAdministrador.php";
 
-        <a href="administradorListaUsuarios.php">
-            <button class="btnPrincipal">Gestionar usuarios</button>
-        </a>
-
-        <a href="administradorListaIncidencias.php">
-            <button class="btnPrincipal">Ver incidencias generales</button>
-        </a>
-        
-        <a href="administradorMetricas.php">
-            <button class="btnPrincipal">Panel de métricas y reportes</button>
-        </a>
-    </main>
-
-</body>
-
-</html>
+?>

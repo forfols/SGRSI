@@ -1,38 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitante</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/indexSolicitante.css">
-</head>
+session_start();
 
-<body>
-    <header>
-        <nav>
-            <a href="inicioSesion.php">
-                <button class="btnNav">Cerrar sesión</button>
-            </a>
-        </nav>
-    </header>
+if (!isset($_SESSION["ci"])) {
+    $mensaje = "Acceso Denegado: Sesión no iniciada";
+    header("Location: inicioSesion.php?" . "error=" . $mensaje);
+    exit;
+}
 
-    <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
-        <a href="solicitanteRegistroEspacio.php">
-            <button class="btnPrincipal">Registrar Incidencia</button>
-        </a>
+if ( !isset($_SESSION["rol"]) || $_SESSION["rol"] !== "Solicitante" ) {
+    $mensaje = "Acceso Denegado: Rol incorrecto";
+    header("Location: inicioSesion.php?" . "error=" . $mensaje);
+    exit;
+}
 
-        <a href="solicitanteRegistroSolicitud.php">
-            <button class="btnPrincipal">Registrar Solicitud</button>
-        </a>
+require_once __DIR__ . "/../app/vista/indexSolicitante.php";
 
-        <a href="solicitanteListaIncidencias.php">
-            <button class="btnPrincipal">Ver Incidencias Realizadas</button>
-        </a>
-    </main>
-
-
-</body>
-
-</html>
+?>

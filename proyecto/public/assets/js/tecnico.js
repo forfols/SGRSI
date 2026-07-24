@@ -46,9 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         registroIncidencia
             .filter(function (datosIncidencia) {
-                return !datosIncidencia.tecnicoAsignado
+                return (!datosIncidencia.tecnicoAsignado
                     || datosIncidencia.tecnicoAsignado === "Sin asignar"
-                    || datosIncidencia.tecnicoAsignado === tecnicoAsignado;
+                    || datosIncidencia.tecnicoAsignado === tecnicoAsignado
+                )&& datosIncidencia.estado!=="Terminado";
             })
             .forEach(function (datosIncidencia) {
                 

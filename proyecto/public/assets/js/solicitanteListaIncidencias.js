@@ -147,7 +147,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             fila.appendChild(casillaAcciones);
             casillaAcciones.appendChild(article);
-            article.appendChild(btnModificar);
+
+            if (datosIncidencia.estado==="Terminado"){
+                article.textContent = "Finalizado";
+            }else{
+                article.appendChild(btnModificar);
+            }
+
+            
 
             tabla.appendChild(fila);
 

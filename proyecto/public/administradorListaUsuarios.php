@@ -29,7 +29,6 @@
         <tr>
             <th>Docente</th>
             <th>CI</th>
-            <th>Contraseña</th>
             <th>Rol</th>
             <th>Acciones</th>
         </tr>
@@ -57,16 +56,6 @@
             <div>
                 <label for="ci">Cédula:</label>
                 <input type="ci" id="ci" name="ci" required>
-            </div>
-
-            <div>
-                <label for="contraseña">Contraseña:</label>
-                <input type="password" id="contra" name="contraseña" required>
-            </div>
-
-            <div>
-                <label for="repetirContraseña">Repetir contraseña:</label>
-                <input type="password" id="repetirContra" name="repetirContraseña" required>
             </div>
 
             <div>

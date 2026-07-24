@@ -28,9 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const casillaCi = document.createElement('td');
             casillaCi.textContent = datosUsuarios.ci;
 
-            const casillaContra = document.createElement('td');
-            casillaContra.textContent = datosUsuarios.contra;
-
             const casillaRol = document.createElement('td');
             casillaRol.textContent = datosUsuarios.rol;
 
@@ -52,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document.getElementById("nombre").value = datosUsuarios.usuario;
                 document.getElementById("ci").value = datosUsuarios.ci;
-                document.getElementById("contra").value = datosUsuarios.contra;
                 document.getElementById("rol").value = datosUsuarios.rol;
             });
 
@@ -66,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (mismoUsuario) {
                     mismoUsuario.usuario = document.getElementById("nombre").value;
                     mismoUsuario.ci = document.getElementById("ci").value;
-                    mismoUsuario.contra = document.getElementById("contra").value;
                     mismoUsuario.rol = document.getElementById("rol").value;
                 }
 
@@ -78,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Para que los objetos se vean
             fila.appendChild(casillaUsuario);
             fila.appendChild(casillaCi);
-            fila.appendChild(casillaContra);
             fila.appendChild(casillaRol);
 
             fila.appendChild(casillaAcciones);

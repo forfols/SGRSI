@@ -1,3 +1,6 @@
+<?php
+$mensajeError = isset($_GET["error"]) ? htmlspecialchars($_GET["error"]) : null;
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,6 +27,10 @@
  <button type="button" id="btnObtenerUsuarios">Usuarios predefinidos</button>
 
     <section class="inicioSesion">
+
+    <?php if ($mensajeError): ?>
+    <p class="alert alert-danger"><?= $mensajeError ?></p>
+    <?php endif; ?>
     
     <form action="procesarInicioSesion.php" method="post">
      <h1>Iniciar Sesión</h1>

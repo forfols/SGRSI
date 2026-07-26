@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Servicio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/solicitante.css">
+</head>
+
+<body>
+  <header>
+    <nav class="d-flex justify-content-between align-items-center">
+      <a href="indexSolicitante.php">
+        <button class="btnNav">Volver</button>
+      </a>
+
+      <a href="inicioSesion.php">
+        <button class="btnNav">Cerrar sesión</button>
+      </a>
+    </nav>
+  </header>
+
+  <form autocomplete="on" action="mailto:asistentesiti@gmail.com" class="mt-3">
+    <fieldset>
+      <legend>Registrar Solicitud de servicio</legend>
+
+      <div class="mb-2">
+        <label for="tipoServicio">Seleccionar tipo de servicio:</label>
+        <select>
+          <option>Preparación de laboratorio</option>
+          <option>Instalación de software</option>
+          <option>Configuración de equipos</option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <label for="fecha">Selecciona una fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+      </div>
+
+      <div class="mb-2">
+        <label for="grupo">Grupo:</label>
+        <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
+      </div>
+
+      <label for="espacio">Espacio:</label>
+      <select>
+        <option>Laboratorio</option>
+        <option>Taller</option>
+        <option>Teórico</option>
+      </select>
+      <br>
+      <label for="nroEspacio">Número del espacio:</label>
+      <input name="nroEspacio" type="nroEspacio" placeholder="Ej: 3" required>
+
+      <div class="mb-2">
+      <h4>Descripción del Servicio</h4>
+      <textarea cols="40" rows="10" id="descripcion" placeholder="Describe el servicio..."></textarea>
+      </div>
+      <button type="submit" class="mt-2">Enviar</button>
+
+    </fieldset>
+  </form>
+
+</body>
+
+</html>

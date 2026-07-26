@@ -1,57 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+session_start();
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <title>Registrar Incidencias</title>
-  <link rel="stylesheet" href="assets/css/solicitante.css">
-  <script src="assets/js/solicitanteRegistroIncidencia.js"></script>
-</head>
+if (!isset($_SESSION["ci"])) {
+    $mensaje = "Acceso Denegado: Sesión no iniciada";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-<body>
-  <header>
-    <nav class="d-flex justify-content-between align-items-center">
-        <button id="btnTerminar" class="btnNav">Terminar</button>
+if ( !isset($_SESSION["rol"]) || $_SESSION["rol"] !== "Administrador" ) {
+    $mensaje = "Acceso Denegado: Rol incorrecto";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-      <a href="inicioSesion.php">
-        <button class="btnNav">Cerrar sesión</button>
-      </a>
-    </nav>
-  </header>
-
-  <form id="registroIncidencia" class="mt-3">
-    <fieldset>
-      <legend>Registrar Incidencia</legend>
-      <div class="mb-2">
-        <label for="espacio" >Tipo de Incidencia:</label>
-            <select id="tipoIncidencia">
-                <option value="" disabled selected hidden>--</option>
-                <option>Otros</option>
-                <option>PC</option>
-            </select>
-      </div>
-
-      <div id="campoExtra" class="d-none">
-        <label for="nroPC">Número del PC:</label>
-        <input name="nroPC" id="nroPC" type="text" placeholder="Ej: PC03" required>
-        
-        <label for="nombreAlumno">Nombre del alumno:</label>
-        <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
-      </div>
-
-      <div class="mb-2">
-      <h4>Descripción de la Incidencia</h4>
-      <textarea cols="40" rows="10" id="descripcion" name="descripcion" required
-        placeholder="Describe la incidencia..."></textarea>
-      </div>
-
-      <input type="submit" value="Registrar Incidencia" class="mt-2">
-
-    </fieldset>
-  </form>
-
-</body>
-
-</html>
+require_once __DIR__ . "/../app/vista/solicitanteRegistroIncidencias.php";
+?>  

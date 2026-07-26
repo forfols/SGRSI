@@ -1,50 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+session_start();
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro uso del Salon</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/solicitante.css">
-    <script src="assets/js/solicitanteRegistroEspacio.js"></script>
-</head>
+if (!isset($_SESSION["ci"])) {
+    $mensaje = "Acceso Denegado: Sesión no iniciada";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-<body>
-    <header>
-        <nav class="d-flex justify-content-between align-items-center">
-            <a href="indexSolicitante.php">
-                <button class="btnNav">Volver</button>
-            </a>
+if ( !isset($_SESSION["rol"]) || $_SESSION["rol"] !== "Administrador" ) {
+    $mensaje = "Acceso Denegado: Rol incorrecto";
+    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+    exit;
+}
 
-            <a href="inicioSesion.php">
-                <button class="btnNav">Cerrar sesión</button>
-            </a>
-        </nav>
-    </header>
-
-    <form id="registroEspacio" class="mt-3">
-        <fieldset>
-
-            <label for="espacio" >Espacio:</label>
-            <select id="tipoEspacio">
-                <option>Laboratorio</option>
-                <option>Taller</option>
-                <option>Teórico</option>
-            </select>
-
-            <label for="nroEspacio">Número del espacio:</label>
-            <input name="nroEspacio" type="nroEspacio" id="nroEspacio" placeholder="Ej: 3" required>
-
-            <div class="mb-2">
-                <label for="grupo">Grupo:</label>
-                <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
-            </div>
-
-                <button type="submit" class="mt-2">Siguiente</button>
-
-        </fieldset>
-    </form>
-</body>
-
-</html>
+require_once __DIR__ . "/../app/vista/solicitanteRegistroEspacio.php";
+?>  

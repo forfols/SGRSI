@@ -1,41 +1,45 @@
-/*
-    Espacio donde se deberán aclarar y definir todas las consultas utilizadas dentro del sistema
+CREATE TABLE usuario (
+    cedula CHAR(8) NOT NULL,
+    contra VARCHAR(255) NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT FALSE,
+    rol VARCHAR(20) NOT NULL,
 
-    Ya que los select tendrán valores que dependerán de lo que ingrese el usuario, indicar siempre cuál es el valor
-    que variará.
-*/
+    CONSTRAINT pk_usuario
+        PRIMARY KEY (cedula)
+);
 
-/*Selecciona un usuario en base a su cédula, en PHP, donde aparece '00000000' debe ser remplazado por :cedula*/
-SELECT
-    u.cedula,
-    u.contra,
-    u.activo,
-    u.rol,
+CREATE TABLE administrador (
+    cedula CHAR(8) NOT NULL,
 
-    CASE
-        WHEN a.cedula IS NOT NULL THEN 1
-        ELSE 0
-    END AS administrador,
+    CONSTRAINT pk_administrador
+        PRIMARY KEY (cedula)
+);
 
-    CASE
-        WHEN s.cedula IS NOT NULL THEN 1
-        ELSE 0
-    END AS solicitante
+CREATE TABLE solicitante (
+    cedula CHAR(8) NOT NULL,
 
-    CASE
-        WHEN t.cedula IS NOT NULL THEN 1
-        ELSE 0
-    END AS tecnico
+    CONSTRAINT pk_solicitante
+        PRIMARY KEY (cedula)
+);
 
-FROM USUARIO AS u
+CREATE TABLE tecnico (
+    cedula CHAR(8) NOT NULL,
 
-    LEFT JOIN ADMINISTRADOR AS a
-    ON a.cedula = u.cedula
+    CONSTRAINT pk_tecnico
+        PRIMARY KEY (cedula)
+);
 
-    LEFT JOIN solicitante AS s
-    ON s.cedula = u.cedula
+ALTER TABLE administrador
+    ADD CONSTRAINT fk_administrador_usuario
+    FOREIGN KEY (cedula)
+    REFERENCES USUARIO (cedula);
 
-    LEFT JOIN tecnico AS t
-    ON t.cedula = u.cedula
+ALTER TABLE solicitante
+    ADD CONSTRAINT fk_solicitante_usuario
+    FOREIGN KEY (cedula)
+    REFERENCES USUARIO (cedula);
 
-WHERE u.cedula = '00000000';
+ALTER TABLE tecnico
+    ADD CONSTRAINT fk_tecnico_usuario
+    FOREIGN KEY (cedula)
+    REFERENCES USUARIO (cedula);

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../modelo/Usuario.php";
-require_once __DIR__ . "/../modelo/ConsultaUsuario.php";
+require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
 require_once __DIR__ . "/../modelo/InicioSesion.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $ci = trim($_POST["ci"] ?? "");
 $contra = $_POST["contra"] ?? "";
 
-$consultaUsuario = new ConsultaUsuario();
-$inicioSesion = new InicioSesion($consultaUsuario);
+$accesoDatosUsuario = new AccesoDatosUsuario();
+$inicioSesion = new InicioSesion($accesoDatosUsuario);
 
 $usuario = $inicioSesion->autenticar($ci, $contra);
 

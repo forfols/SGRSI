@@ -1,50 +1,33 @@
-/*
-    Espacio donde se deberán colocar todas las sentencias utilizadas para crear las tablas.
-*/
+SELECT
+    u.cedula,
+    u.contra,
+    u.activo,
+    u.rol,
 
-CREATE TABLE USUARIO (
-    cedula CHAR(8) NOT NULL,
-    contra VARCHAR(255) NOT NULL,
-    activo BOOLEAN NOT NULL DEFAULT FALSE,
-    rol VARCHAR(20) NOT NULL,
+    CASE
+        WHEN a.cedula IS NOT NULL THEN 1
+        ELSE 0
+    END AS administrador,
 
-    CONSTRAINT pk_usuario
-        PRIMARY KEY (cedula)
-);
+    CASE
+        WHEN s.cedula IS NOT NULL THEN 1
+        ELSE 0
+    END AS solicitante
 
-CREATE TABLE ADMINISTRADOR (
-    cedula CHAR(8) NOT NULL,
+    CASE
+        WHEN t.cedula IS NOT NULL THEN 1
+        ELSE 0
+    END AS tecnico
 
-    CONSTRAINT pk_administrador
-        PRIMARY KEY (cedula)
-);
+FROM usuario AS u
 
-CREATE TABLE SOLICITANTE (
-    cedula CHAR(8) NOT NULL,
+    LEFT JOIN administrador AS a
+    ON a.cedula = u.cedula
 
-    CONSTRAINT pk_solicitante
-        PRIMARY KEY (cedula)
-);
+    LEFT JOIN solicitante AS s
+    ON s.cedula = u.cedula
 
-CREATE TABLE TECNICO (
-    cedula CHAR(8) NOT NULL,
+    LEFT JOIN tecnico AS t
+    ON t.cedula = u.cedula
 
-    CONSTRAINT pk_tecnico
-        PRIMARY KEY (cedula)
-);
-
-
-ALTER TABLE ADMINISTRADOR
-    ADD CONSTRAINT fk_administrador_usuario
-    FOREIGN KEY (cedula)
-    REFERENCES USUARIO (cedula);
-
-ALTER TABLE SOLICITANTE
-    ADD CONSTRAINT fk_solicitante_usuario
-    FOREIGN KEY (cedula)
-    REFERENCES USUARIO (cedula);
-
-ALTER TABLE TECNICO
-    ADD CONSTRAINT fk_tecnico_usuario
-    FOREIGN KEY (cedula)
-    REFERENCES USUARIO (cedula);
+WHERE u.cedula = '00000000';

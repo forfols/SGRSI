@@ -15,45 +15,39 @@ class AccesoDatosUsuario {
      * @param string $cedula La cedula del usuario sin puntos ni guiones.
      * @return Usuario|null Los datos del usuario, retorna su objeto si existe, null en caso contrario.
      */
-    public function buscarUsuario(string $ci): ?Usuario {
-        $sql = "
+    public function buscarUsuario(string $ci): ?Usuario
+{
+    $sql = "
         SELECT
-        u.cedula,
-                u.claveHash,
-                u.sesionActiva,
+            ci,
+            contra,
+            nombre,
+            rol,
+            activo
+        FROM USUARIO
+        WHERE ci = :ci
+    ";
 
-                CASE
-                    WHEN a.cedula IS NOT NULL THEN 1
-                    ELSE 0
-                END AS administrador,
+    $consulta = $this->conexion->prepare($sql);
 
-                CASE
-                    WHEN l.cedula IS NOT NULL THEN 1
-                    ELSE 0
-                END AS logistica
+    $consulta->execute(["ci" => $ci]);
 
-            FROM USUARIO AS u
+    $datos = $consulta->fetch(PDO::FETCH_ASSOC);
 
-            LEFT JOIN ADMINISTRADOR AS a
-                ON a.cedula = u.cedula
+    $consulta = null;
 
-            LEFT JOIN LOGISTICA AS l
-                ON l.cedula = u.cedula
-
-            WHERE u.cedula = :cedula
-            ";
-        foreach ($usuarios as $datos) {
-            if ($datos["ci"] === $ci) {
-                return new Usuario(
-                    $datos["ci"],
-                    $datos["contra"],
-                    $datos["activo"],
-                    $datos["rol"]
-                );
-            }
-        }return null;
-
+    if ($datos === false) {
+        return null;
     }
+
+    return new Usuario(
+        $datos["ci"],
+        $datos["contra"],
+        $datos["nombre"],
+        (bool) $datos["activo"],
+        $datos["rol"]
+    );
+}
 }
 
 ?>

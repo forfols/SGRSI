@@ -31,7 +31,7 @@ class ConectorPDO
 };
 
 //Código para depuración
-$ConectorPDO = new ConectorPDO ("localhost:3000", "root", "", "SGRSI");
+$ConectorPDO = new ConectorPDO ("localhost:3306", "root", "", "SGRSI");
 $ConectorPDO->establecerConexion();
 
 ?>

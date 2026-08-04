@@ -1,8 +1,12 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once __DIR__ . "/../modelo/Usuario.php";
-require_once __DIR__ . "/../modelo/ConsultaUsuario.php";
+require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
 require_once __DIR__ . "/../modelo/InicioSesion.php";
+require_once __DIR__ . "/../modelo/ConectorPDO.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -15,10 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $ci = trim($_POST["ci"] ?? "");
 $contra = $_POST["contra"] ?? "";
 
-$consultaUsuario = new ConsultaUsuario();
-$inicioSesion = new InicioSesion($consultaUsuario);
+//Credenciales hardcodeadas, en un futuro van a colocarse en archivos aislados o variables de entorno
+$conectorPDO = new ConectorPDO ("localhost:3306", "root", "", "SGRSI");
+$conexion = $conectorPDO->establecerConexion();
 
-$usuario = $inicioSesion->autenticar($ci, $contra);
+    $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
+    $inicioSesion = new InicioSesion($accesoDatosUsuario);
+    $usuario = $inicioSesion->autenticar($ci, $contra);
+
+$conectorPDO->desconectar();
 
 //Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {

@@ -48,6 +48,9 @@ $solicitante= $usuario->getRolSolicitante();
 $tecnico= $usuario->getRolTecnico();
 $administrador= $usuario->getRolAdministrador();
 
+$accesoDatosUsuario->estaActivo($_SESSION["ci"], true);
+
+
 if(($solicitante == true) && ($tecnico == true) && ($administrador == true)) {
     header("Location: indexGeneral.php");
 }else if(($solicitante == true) && (($tecnico == true) || ($administrador == true))) {

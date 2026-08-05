@@ -66,6 +66,19 @@ header {
 }
 
 
+.alerta {
+    background-color: #ffdddd;
+    color: #b30000;
+    border: 2px solid #b30000;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto;
+    width: 80%;
+}
+
+
 @media (max-width: 480px) and (orientation: portrait) {
     img {
         height: 30px;

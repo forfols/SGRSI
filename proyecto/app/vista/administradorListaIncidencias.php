@@ -17,7 +17,7 @@
                 <button>Volver</button>
             </a>
 
-            <a href="inicioSesion.php">
+            <a href="../app/controlador/cerrarSesion.php">
                 <button>Cerrar sesión</button>
             </a>
         </nav>

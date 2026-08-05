@@ -1,5 +1,5 @@
 <?php
-$mensajeError = isset($_GET["error"]) ? htmlspecialchars($_GET["error"]) : null;
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,9 +26,12 @@ $mensajeError = isset($_GET["error"]) ? htmlspecialchars($_GET["error"]) : null;
 
     <section class="inicioSesion">
 
-    <?php if ($mensajeError): ?>
-    <p class="alert alert-danger"><?= $mensajeError ?></p>
-    <?php endif; ?>
+    <?php
+if (isset($_SESSION["error"])) {
+    echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+    unset($_SESSION["error"]);
+}
+?>
     
     <form action="procesarInicioSesion.php" method="post">
      <h1>Iniciar Sesión</h1>

@@ -15,7 +15,7 @@
     <nav class="d-flex justify-content-between align-items-center">
         <button id="btnTerminar" class="btnNav">Terminar</button>
 
-      <a href="inicioSesion.php">
+      <a href="../app/controlador/cerrarSesion.php">
         <button class="btnNav">Cerrar sesión</button>
       </a>
     </nav>

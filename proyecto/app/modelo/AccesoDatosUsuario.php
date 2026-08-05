@@ -53,6 +53,8 @@ FROM USUARIO AS u
 WHERE u.ci = :ci;
     ";
 
+    
+
     $consulta = $this->conexion->prepare($sql);
 
     $consulta->execute(["ci" => $ci]);
@@ -75,6 +77,25 @@ WHERE u.ci = :ci;
         (bool) $datos["administrador"]
     );
 }
+
+public function estaActivo(string $ci, bool $activo): void
+{
+    $sql = "
+        UPDATE USUARIO
+        SET activo = :activo
+        WHERE ci = :ci
+    ";
+
+    $consulta = $this->conexion->prepare($sql);
+
+    $consulta->execute([
+        "activo" => $activo ? 1 : 0,
+        "ci" => $ci
+    ]);
+
+    $consulta = null;
+}
+
 }
 
 ?>

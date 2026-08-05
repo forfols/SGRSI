@@ -8,9 +8,8 @@ if (!isset($_SESSION["ci"])) {
     exit;
 }
 
-if ( !isset($_SESSION["rol"]) || $_SESSION["rol"] !== "Tecnico" ) {
-    $mensaje = "Acceso Denegado: Rol incorrecto";
-    header("Location: inicioSesion.php?error=" . urlencode($mensaje));
+if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] != true) {
+header("Location: ../app/controlador/cerrarSesion.php?motivo=rol");
     exit;
 }
 

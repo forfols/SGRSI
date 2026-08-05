@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+$cantidadRoles = 0;
+
+if ($_SESSION["solicitante"]) {
+    $cantidadRoles++;
+}
+
+if ($_SESSION["tecnico"]) {
+    $cantidadRoles++;
+}
+
+if ($_SESSION["administrador"]) {
+    $cantidadRoles++;
+}
+
+if ($cantidadRoles < 2) {
+    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=rol");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 

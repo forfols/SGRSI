@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once __DIR__ . "/../modelo/Usuario.php";
 require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
 require_once __DIR__ . "/../modelo/InicioSesion.php";
@@ -10,8 +7,8 @@ require_once __DIR__ . "/../modelo/ConectorPDO.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $mensaje = "Acceso Denegado: Petición incorrecta";
-    header("Location: /proyecto/public/inicioSesion.php?error=" . urlencode($mensaje));
+   //$mensaje = "Acceso Denegado: Petición incorrecta";
+    header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
     exit;
 }
 
@@ -31,8 +28,12 @@ $conectorPDO->desconectar();
 
 //Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {
-    $mensaje = "Acceso Denegado: La cédula o la contraseña son incorrectas.";
-    header("Location: /proyecto/public/inicioSesion.php?error=" . urlencode($mensaje));
+    header("Location: cerrarSesion.php?motivo=credenciales");
+    exit;
+}
+
+if ($usuario->estaActivo()) {
+    header("Location: ../app/controlador/verificarActivo.php?motivo=sesionActiva");
     exit;
 }
 

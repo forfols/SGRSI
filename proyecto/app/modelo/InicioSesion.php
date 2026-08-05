@@ -1,6 +1,7 @@
 <?php
 
 class InicioSesion {
+
     private AccesoDatosUsuario $accesoDatosUsuario;
 
     public function __construct(AccesoDatosUsuario $accesoDatosUsuario) {
@@ -14,12 +15,6 @@ class InicioSesion {
         if ($usuario === null) {
             return null;
             //die("No se encontró el usuario");
-        }
-
-        if ($usuario->estaActivo()) {
-            return null;
-            //die("El usuario ya tiene sesión iniciada");
-
         }
 
         if ( !password_verify($contra, $usuario->getContra() ) ){

@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["ci"])) {
+    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=sinSesion");
+    exit;
+}
+
+if (empty($_SESSION["solicitante"])) {
+    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=rol");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 

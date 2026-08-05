@@ -24,8 +24,6 @@ $mensajeError = isset($_GET["error"]) ? htmlspecialchars($_GET["error"]) : null;
         <img src="assets/img/logoITI.png" alt="logo de la ITI" class="logoITI">
     </header>
 
- <button type="button" id="btnObtenerUsuarios">Usuarios predefinidos</button>
-
     <section class="inicioSesion">
 
     <?php if ($mensajeError): ?>

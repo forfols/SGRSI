@@ -40,15 +40,27 @@ session_start();
     session_regenerate_id(true);
 
 $_SESSION["ci"] = $usuario->getCi();
-$_SESSION["rol"] = $usuario->getRol();
+$_SESSION["solicitante"] = $usuario->getRolSolicitante();
+$_SESSION["tecnico"] = $usuario->getRolTecnico();
+$_SESSION["administrador"] = $usuario->getRolAdministrador();
 
-$rol= $usuario->getRol();
+$solicitante= $usuario->getRolSolicitante();
+$tecnico= $usuario->getRolTecnico();
+$administrador= $usuario->getRolAdministrador();
 
-if($rol== "Solicitante") {
+if(($solicitante == true) && ($tecnico == true) && ($administrador == true)) {
+    header("Location: indexGeneral.php");
+}else if(($solicitante == true) && (($tecnico == true) || ($administrador == true))) {
+    header("Location: indexGeneral.php");
+}else if (($tecnico == true) && (($solicitante == true) || ($administrador == true))){
+    header("Location: indexGeneral.php");
+}else if (($administrador == true) && (($solicitante == true) || ($tecnico == true))){
+    header("Location: indexGeneral.php");
+}else if ($solicitante == true){
     header("Location: indexSolicitante.php");
-}else if($rol== "Tecnico") {
+}else if ($tecnico == true){
     header("Location: tecnico.php");
-}else if ($rol== "Administrador"){
+}else if ($administrador == true){
     header("Location: indexAdministrador.php");
 }
 

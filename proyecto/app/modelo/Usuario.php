@@ -4,16 +4,20 @@ class Usuario {
     private string $ci;
     private string $contra;
     private string $nombre;
-    private string $rol;
+    private bool $solicitante;
+    private bool $tecnico;
+    private bool $administrador;
     private bool $activo;
 
 
-    public function __construct(string $ci, string $contra, string $nombre, bool $activo, string $rol) {
+    public function __construct(string $ci, string $contra, string $nombre, bool $activo, bool $solicitante, bool $tecnico, bool $administrador) {
         $this->ci = $ci;
         $this->contra = $contra;
         $this->nombre = $nombre;
         $this->activo = $activo;
-        $this->rol = $rol;
+        $this->solicitante = $solicitante;
+        $this->tecnico = $tecnico;
+        $this->administrador = $administrador;
     }
 
     public function getCi(): string {
@@ -32,8 +36,16 @@ class Usuario {
         return $this->activo;
     }
 
-    public function getRol(): string {
-        return $this->rol;
+    public function getRolSolicitante(): bool {
+        return $this->solicitante;
+    }
+
+    public function getRolTecnico(): bool {
+        return $this->tecnico;
+    }
+
+    public function getRolAdministrador(): bool {
+        return $this->administrador;
     }
 
 }

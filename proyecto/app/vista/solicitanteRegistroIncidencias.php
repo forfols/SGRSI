@@ -10,6 +10,9 @@ if (empty($_SESSION["solicitante"])) {
     header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=rol");
     exit;
 }
+
+$idEspacio = $_GET["idEspacio"] ?? null;
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +23,7 @@ if (empty($_SESSION["solicitante"])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <title>Registrar Incidencias</title>
   <link rel="stylesheet" href="assets/css/solicitante.css">
-  <script src="assets/js/solicitanteRegistroIncidencia.js"></script>
+  <script src="/GitHub/ramaAlexander/proyecto/public/assets/js/solicitanteRegistroIncidencia.js"></script>
 </head>
 
 <body>
@@ -34,12 +37,18 @@ if (empty($_SESSION["solicitante"])) {
     </nav>
   </header>
 
-  <form id="registroIncidencia" class="mt-3">
+  <form id="registroIncidencia" class="mt-3" action="procesarRegistroIncidencia.php" method="post">
     <fieldset>
+  
+    <input type="hidden"
+           name="idEspacio"
+           value="<?= $idEspacio ?>">
+
+
       <legend>Registrar Incidencia</legend>
       <div class="mb-2">
         <label for="espacio" >Tipo de Incidencia:</label>
-            <select id="tipoIncidencia">
+            <select name="tipo" id="tipo">
                 <option value="" disabled selected hidden>--</option>
                 <option>Otros</option>
                 <option>PC</option>
@@ -47,8 +56,8 @@ if (empty($_SESSION["solicitante"])) {
       </div>
 
       <div id="campoExtra" class="d-none">
-        <label for="nroPC">Número del PC:</label>
-        <input name="nroPC" id="nroPC" type="text" placeholder="Ej: PC03" required>
+        <label for="nroPc">Número del PC:</label>
+        <input name="nroPc" id="nroPc" type="text" placeholder="Ej: PC03" required>
         
         <label for="nombreAlumno">Nombre del alumno:</label>
         <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">

@@ -20,7 +20,6 @@ if (empty($_SESSION["solicitante"])) {
     <title>Registro uso del Salon</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/solicitante.css">
-    <script src="assets/js/solicitanteRegistroEspacio.js"></script>
 </head>
 
 <body>
@@ -36,18 +35,18 @@ if (empty($_SESSION["solicitante"])) {
         </nav>
     </header>
 
-    <form id="registroEspacio" class="mt-3">
+    <form id="registroEspacio" class="mt-3" action="procesarRegistroEspacio.php" method="post">
         <fieldset>
 
             <label for="espacio" >Espacio:</label>
-            <select id="tipoEspacio">
+            <select id="tipoEspacio" name="tipoEspacio">
                 <option>Laboratorio</option>
                 <option>Taller</option>
                 <option>Teórico</option>
             </select>
 
             <label for="nroEspacio">Número del espacio:</label>
-            <input name="nroEspacio" type="nroEspacio" id="nroEspacio" placeholder="Ej: 3" required>
+            <input type="number" id="nroEspacio" name="nroEspacio" placeholder="Ej: 3" required>
 
             <div class="mb-2">
                 <label for="grupo">Grupo:</label>

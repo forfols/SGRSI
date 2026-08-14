@@ -10,7 +10,6 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="assets/css/inicioSesion.css">
-    <script src="assets/js/inicioSesion.js"></script>
     
 </head>
 

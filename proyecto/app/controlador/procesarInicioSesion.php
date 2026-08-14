@@ -44,6 +44,8 @@ $_SESSION["ci"] = $usuario->getCi();
 $_SESSION["solicitante"] = $usuario->getRolSolicitante();
 $_SESSION["tecnico"] = $usuario->getRolTecnico();
 $_SESSION["administrador"] = $usuario->getRolAdministrador();
+$_SESSION["nombre"]= $usuario->getNombre();
+
 
 $solicitante= $usuario->getRolSolicitante();
 $tecnico= $usuario->getRolTecnico();

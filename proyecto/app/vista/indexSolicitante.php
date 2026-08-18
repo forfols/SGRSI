@@ -37,7 +37,7 @@ if (empty($_SESSION["solicitante"])) {
             <button class="btnPrincipal">Registrar Incidencia</button>
         </a>
 
-        <a href="solicitanteRegistroSolicitud.php">
+       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=forfols.iti@gmail.com&su=Solicitud%20de%20registro&body=Hola%2C%20quiero%20registrar%20una%20solicitud." target="_blank">
             <button class="btnPrincipal">Registrar Solicitud</button>
         </a>
 

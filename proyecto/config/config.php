@@ -11,7 +11,7 @@ define("RUTA_PUBLIC", RUTA_RAIZ . "/public");
 
 //cambiar URL_BASE dependiendo de la url de cada uno
 //estas url se usaron porque headers y href no permiten el uso de la ruta raiz como parte de la ruta
-define("URL_BASE", "/GitHub/ramaAlexander/proyecto");
+define("URL_BASE", "/GitHub/SGRSI/proyecto");
 define("URL_APP", URL_BASE . "/app");
 define("URL_MODELO", URL_APP . "/modelo");
 define("URL_CONTROLADOR", URL_APP . "/controlador");

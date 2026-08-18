@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require_once __DIR__ . "/../../config/config.php";
 
 $motivo = $_GET["motivo"] ?? "";
 
@@ -8,5 +9,5 @@ if($motivo == "sesionActiva"){
     $_SESSION["error"] = "Acceso Denegado: La sesión está activa en otro dispositivo";
 }
 
-header("Location: ../../public/inicioSesion.php");
+header("Location:" . URL_PUBLIC . "/inicioSesion.php");
 exit;

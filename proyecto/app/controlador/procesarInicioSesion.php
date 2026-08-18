@@ -1,9 +1,10 @@
 <?php
+require_once __DIR__ . "/../../config/config.php";
+require_once RUTA_MODELO . "/Usuario.php";
+require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
+require_once RUTA_MODELO . "/InicioSesion.php";
+require_once RUTA_MODELO . "/ConectorPDO.php";
 
-require_once __DIR__ . "/../modelo/Usuario.php";
-require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
-require_once __DIR__ . "/../modelo/InicioSesion.php";
-require_once __DIR__ . "/../modelo/ConectorPDO.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -17,7 +18,7 @@ $ci = trim($_POST["ci"] ?? "");
 $contra = $_POST["contra"] ?? "";
 
 //Credenciales hardcodeadas, en un futuro van a colocarse en archivos aislados o variables de entorno
-$conectorPDO = new ConectorPDO ("localhost:3306", "root", "", "SGRSI");
+$conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
     $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
@@ -33,7 +34,7 @@ if ($usuario === null) {
 }
 
 if ($usuario->estaActivo()) {
-    header("Location: ../app/controlador/verificarActivo.php?motivo=sesionActiva");
+    header("Location:" . URL_CONTROLADOR . "/verificarActivo.php?motivo=sesionActiva");
     exit;
 }
 

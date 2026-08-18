@@ -1,5 +1,6 @@
 <?php
     session_start();
+require_once __DIR__ . "/../config/config.php";
 
     if ($_SESSION["motivoError"]=="sinSesion"){
         header("Location: /GitHub/ramaAlexander/proyecto/app/controlador/cerrarSesion.php?motivo=". $_SESSION["motivoError"]);
@@ -12,5 +13,5 @@
 
 
 
-    require_once __DIR__ . "/../app/controlador/cerrarSesion.php";
+require_once RUTA_CONTROLADOR . "/cerrarSesion.php";
 ?>

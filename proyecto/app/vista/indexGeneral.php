@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once __DIR__ . "/../../config/config.php";
 $cantidadRoles = 0;
 
 if ($_SESSION["solicitante"]) {
@@ -16,7 +16,7 @@ if ($_SESSION["administrador"]) {
 }
 
 if ($cantidadRoles < 2) {
-    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=rol");
+    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
     exit;
 }
 ?>
@@ -35,7 +35,7 @@ if ($cantidadRoles < 2) {
 <body>
     <header>
         <nav>
-            <a href="../app/controlador/cerrarSesion.php">
+            <a href="<?= URL_PUBLIC . "/cerrarSesion.php" ?>">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>

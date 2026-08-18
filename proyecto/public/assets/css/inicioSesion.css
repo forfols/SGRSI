@@ -100,3 +100,50 @@ header {
     }
 
 }
+
+/*adaptacion a 1080p*/
+@media (min-width: 1900px) {
+  body {
+    max-width: 1900px;
+    padding: 32px 48px;
+  }
+
+  header {
+    width: 100%;
+  }
+
+  .inicioSesion {
+    font-size: 24px;
+  }
+
+  .inicioSesion form {
+    gap: 16px;
+  }
+
+  .inicioSesion input,
+  .inicioSesion select {
+    font-size: 1.1rem;
+    padding: 12px 14px;
+  }
+
+  #btnIniciar {
+    width: 280px;
+    height: 60px;
+    font-size: 1.2rem;
+    margin-top: 32px;
+  }
+
+  .logoForfols {
+    height: 80px;
+  }
+
+  .logoSGRSI {
+    height: 120px;
+    width: 320px;
+  }
+
+  .logoITI {
+    height: 74px;
+    width: 74px;
+  }
+}

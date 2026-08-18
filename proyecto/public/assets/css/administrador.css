@@ -217,3 +217,38 @@ h1{
     display: flex;
     justify-content: center;
 }
+
+/*
+  Adaptar 1080P 
+*/
+@media (min-width: 1900px) {
+  fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+
+  legend {
+    grid-column: 1 / -1;
+  }
+
+  fieldset input,
+  fieldset select,
+  fieldset textarea {
+    max-width: none;
+  }
+
+  body {
+    max-width: 1900px;
+    padding: 32px 48px;
+  }
+
+  th,
+  td {
+    padding: 14px 18px;
+  }
+
+  header {
+    width: 100%;
+  }
+}

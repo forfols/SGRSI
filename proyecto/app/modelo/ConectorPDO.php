@@ -1,4 +1,5 @@
 <?php
+
 class ConectorPDO
 {
     private string $servername;
@@ -31,7 +32,7 @@ class ConectorPDO
 };
 
 //Código para depuración
-$ConectorPDO = new ConectorPDO ("localhost:3306", "root", "", "SGRSI");
-$ConectorPDO->establecerConexion();
+//$conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
+//$ConectorPDO->establecerConexion();
 
 ?>

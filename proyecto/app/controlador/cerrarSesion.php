@@ -1,16 +1,11 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 session_start();
+require_once __DIR__ . "/../../config/config.php";
+require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 
-require_once __DIR__ . "/../modelo/ConectorPDO.php";
-require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
-
-$conectorPDO = new ConectorPDO("localhost:3306", "root", "", "SGRSI");
+$conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
 $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
@@ -48,5 +43,5 @@ if($motivo == "peticionIncorrecta"){
     */
 
 
-header("Location: /GitHub/ramaAlexander/proyecto/public/inicioSesion.php");
+header("Location:" . URL_PUBLIC . "/inicioSesion.php");
 exit;

@@ -1,13 +1,15 @@
 <?php
 session_start();
 
+require_once __DIR__ . "/../../config/config.php";
+
 if (!isset($_SESSION["ci"])) {
-    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=sinSesion");
+    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=sinSesion");
     exit;
 }
 
 if (empty($_SESSION["tecnico"])) {
-    header("Location: /GitHub/ramaAlexander/proyecto/public/cerrarSesion.php?motivo=rol");
+    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
     exit;
 }
 ?>
@@ -26,7 +28,7 @@ if (empty($_SESSION["tecnico"])) {
 <body>
     <header>
         <nav class="d-flex justify-content-between align-items-center">
-            <a href="../app/controlador/cerrarSesion.php">
+            <a href="<?= URL_PUBLIC . '/cerrarSesion.php' ?>">
                 <button class="btnNav">Cerrar sesión</button>
             </a>
         </nav>

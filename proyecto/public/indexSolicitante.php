@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require_once __DIR__ . "/../config/config.php";
 
 if (!isset($_SESSION["ci"])) {
     $_SESSION["motivoError"]= "sinSesion";
@@ -14,6 +15,6 @@ if (!isset($_SESSION["solicitante"]) || $_SESSION["solicitante"] != true) {
     exit;
 }
 
-require_once __DIR__ . "/../app/vista/indexSolicitante.php";
+require_once RUTA_VISTA . "/indexSolicitante.php";
 
 ?>

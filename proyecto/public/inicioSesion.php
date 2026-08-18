@@ -1,3 +1,4 @@
 <?php
-require_once __DIR__ . "/../app/vista/inicioSesion.php";
+require_once __DIR__ . "/../config/config.php";
+require_once RUTA_VISTA . "/inicioSesion.php";
 ?>

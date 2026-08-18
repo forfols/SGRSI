@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once __DIR__ . "/../config/config.php";
 if (!isset($_SESSION["ci"])) {
     $_SESSION["motivoError"]= "sinSesion";
     header("Location: cerrarSesion.php");
@@ -13,5 +13,5 @@ if (!isset($_SESSION["administrador"]) || $_SESSION["administrador"] != true) {
     exit;
 }
 
-require_once __DIR__ . "/../app/vista/administradorListaIncidencias.php";
+require_once RUTA_VISTA . "/administradorCrearUsuario.php";
 ?>  

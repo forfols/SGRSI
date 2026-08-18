@@ -99,3 +99,43 @@ main{
         font-size: 18px;
   }
 }
+
+/*
+  Adaptar 1080P 
+*/
+@media (min-width: 1900px) {
+  main {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    max-width: 1900px;
+    margin: 0 auto;
+    min-height: calc(60vh - 200px);
+    margin-top: -60px;
+  }
+
+  .btnPrincipal {
+    width: 380px;
+    height: 90px;
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+
+  body {
+    max-width: 1900px;
+    padding: 32px 48px;
+  }
+
+  header {
+    width: 100%;
+  }
+}
+@media (min-width: 1900px) {
+  main button {
+    width: 380px;
+    height: 90px;
+    font-size: 1.4rem;
+  }
+}

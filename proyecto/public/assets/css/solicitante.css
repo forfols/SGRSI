@@ -218,3 +218,69 @@ h1{
     display: flex;
     justify-content: center;
 }
+
+/* Adaptar 1080P */
+@media (min-width: 1900px) {
+    fieldset {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 24px;
+    }
+
+    legend {
+        grid-column: 1 / -1;
+    }
+
+    fieldset input,
+    fieldset select,
+    fieldset textarea {
+        max-width: none;
+    }
+}
+
+@media (min-width: 1900px) {
+    body {
+        max-width: 1900px;
+        padding: 32px 48px;
+    }
+
+    th,
+    td {
+        padding: 14px 18px;
+    }
+}
+
+@media (min-width: 1900px) {
+    fieldset {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 32px 40px;
+    }
+
+    legend {
+        grid-column: 1 / -1;
+        font-size: 1.3rem;
+    }
+
+    fieldset input,
+    fieldset select,
+    fieldset textarea {
+        max-width: none;
+        font-size: 1.05rem;
+        padding: 12px 14px;
+    }
+
+    fieldset label {
+        font-size: 1.05rem;
+    }
+
+    fieldset button,
+    fieldset input[type="submit"] {
+        font-size: 1.1rem;
+        padding: 14px 24px;
+        margin-top: 12px;
+    }
+}

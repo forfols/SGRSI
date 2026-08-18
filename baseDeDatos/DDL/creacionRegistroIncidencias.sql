@@ -1,11 +1,34 @@
+CREATE TABLE ESPACIO (
+    id INT(20) AUTO_INCREMENT,
+    tipo VARCHAR(255) NOT NULL,
+    numero INT(10) NOT NULL,
+
+    CONSTRAINT pk_Espacio
+        PRIMARY KEY (id)
+);
+
+CREATE TABLE GRUPO (
+    nombre VARCHAR(255) NOT NULL,
+
+    CONSTRAINT pk_Grupo
+        PRIMARY KEY (nombre)
+);
+
 CREATE TABLE REGISTROESPACIO (
     id INT(20) AUTO_INCREMENT,
-    nombreEspacio VARCHAR(255) NOT NULL,
-    nroEspacio INT(10) NOT NULL,
-    grupo VARCHAR(255) NOT NULL,
+    idEspacio INT(20) NOT NULL,
+    nombreGrupo VARCHAR(255) NOT NULL,
 
     CONSTRAINT pk_registroEspacio
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+
+    CONSTRAINT fk_Espacio
+        FOREIGN KEY (idEspacio)
+        REFERENCES ESPACIO(id),
+
+    CONSTRAINT fk_Grupo
+        FOREIGN KEY (nombreGrupo)
+        REFERENCES GRUPO(nombre)
 );
 
 CREATE TABLE REGISTROTIPOINCIDENCIA (
@@ -19,29 +42,51 @@ CREATE TABLE REGISTROTIPOINCIDENCIA (
         PRIMARY KEY (id)
 );
 
+CREATE TABLE ESTADO (
+    id INT(20) AUTO_INCREMENT,
+    tipo VARCHAR(50) DEFAULT 'Sin asignar',
+    prioridad VARCHAR(50) DEFAULT 'Sin asignar',
+    diagnostico VARCHAR(255) DEFAULT 'N/A',
+    soluciones VARCHAR(255) DEFAULT 'N/A',
+
+    CONSTRAINT pk_estado
+        PRIMARY KEY (id)
+);
+
 CREATE TABLE REGISTROINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
 
-    nombreSolicitante VARCHAR(50) NOT NULL,
-    ci CHAR(8) NOT NULL,
-    idEspacio INT(20) NOT NULL,
+    ciSolicitante CHAR(8) NOT NULL,
+    ciTecnico CHAR(8),
+
+    idRegistroEspacio INT(20) NOT NULL,
     idTipoIncidencia INT(20) NOT NULL,
+
+    idEstado INT(20) NOT NULL,
+
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(50) DEFAULT 'Sin asignar',
-    prioridad VARCHAR(50) DEFAULT 'Sin asignar',
-    tecnicoAsignado VARCHAR(50) DEFAULT 'Sin asignar',
-    diagnostico VARCHAR(255) DEFAULT 'N/A',
-    soluciones VARCHAR(255) DEFAULT 'N/A',
 
 
     CONSTRAINT pk_registroIncidencia
         PRIMARY KEY (id),
 
-    CONSTRAINT fk_incidenciaEspacio
-        FOREIGN KEY (idEspacio)
+    CONSTRAINT fk_ciSolicitante
+        FOREIGN KEY (ciSolicitante)
+        REFERENCES USUARIO(ci),
+
+    CONSTRAINT fk_ciTecnico
+        FOREIGN KEY (ciTecnico)
+        REFERENCES USUARIO(ci),
+
+    CONSTRAINT fk_registroEspacio
+        FOREIGN KEY (idRegistroEspacio)
         REFERENCES REGISTROESPACIO(id),
 
     CONSTRAINT fk_tipoIncidencia
         FOREIGN KEY (idTipoIncidencia)
-        REFERENCES REGISTROTIPOINCIDENCIA(id)
+        REFERENCES REGISTROTIPOINCIDENCIA(id),
+
+    CONSTRAINT fk_estado
+        FOREIGN KEY (idEstado)
+        REFERENCES ESTADO(id)
 ); 

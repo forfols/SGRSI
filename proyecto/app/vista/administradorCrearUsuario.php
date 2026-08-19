@@ -20,7 +20,7 @@ if (empty($_SESSION["administrador"])) {
     <title>Crear Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/administrador.css">
-    <script src="assets/js/administradorCrearUsuario.js"></script>
+
 </head>
 
 <body>
@@ -36,10 +36,21 @@ if (empty($_SESSION["administrador"])) {
         </nav>
     </header>
 
+    <?php
+if (isset($_SESSION["error"])) {
+    echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+    unset($_SESSION["error"]);
+}
+if (isset($_SESSION["mensaje"])) {
+    echo "<div class='mensaje'>" . htmlspecialchars($_SESSION["mensaje"]) . "</div>";
+    unset($_SESSION["mensaje"]);
+}
+?>
+
     <p>
     <h1>Crear Usuario</h1>
     </p>
-    <form id="crearUsuario">
+    <form id="crearUsuario" action="procesarRegistroUsuario.php" method="post">
         <div>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -57,12 +68,12 @@ if (empty($_SESSION["administrador"])) {
 
         <div>
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contra" name="contraseña" required>
+            <input type="password" id="contra" name="contra" required>
         </div>
 
         <div>
             <label for="repetirContraseña">Repetir contraseña:</label>
-            <input type="password" id="repetirContra" name="repetirContraseña" required>
+            <input type="password" id="repetirContra" name="repetirContra" required>
         </div>
 
         <div>

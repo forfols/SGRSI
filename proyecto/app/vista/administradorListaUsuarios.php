@@ -19,14 +19,13 @@ if (empty($_SESSION["administrador"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/administrador.css">
-    <script src="assets/js/administradorListaUsuarios.js"></script>
+    <link rel="stylesheet" href="<?= URL_PUBLIC . '/assets/css/administrador.css' ?>">
 </head>
 
 <body>
     <header>
         <nav>
-            <a href="indexAdministrador.php">
+            <a href="<?= URL_PUBLIC . '/indexAdministrador.php' ?>">
                 <button>Volver</button>
             </a>
 
@@ -40,12 +39,52 @@ if (empty($_SESSION["administrador"])) {
     <div class="table-responsive">
     <table border="1">
         <tr>
-            <th>Docente</th>
+            <th>Nombre</th>
             <th>CI</th>
             <th>Rol</th>
             <th>Acciones</th>
         </tr>
         <tbody id="tabla"></tbody>
+        <?php foreach ($usuarios as $usuario) { ?>
+
+                        <?php
+                            $roles = "";
+
+                            if ($usuario["solicitante"] == 1) {
+                                $roles = "Solicitante";
+                            }
+
+                            if ($usuario["tecnico"] == 1) {
+                                if ($roles != "") {
+                                    $roles = $roles . ", ";
+                                }
+
+                                $roles = $roles . "Técnico";
+                            }
+
+                            if ($usuario["administrador"] == 1) {
+                                if ($roles != "") {
+                                    $roles = $roles . ", ";
+                                }
+
+                                $roles = $roles . "Administrador";
+                            }
+
+                            if ($roles == "") {
+                                $roles = "Sin rol";
+                            }
+
+                        ?>
+
+                        <tr>
+                            <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
+                            <td><?= htmlspecialchars($usuario["ci"]) ?></td>
+                            <td><?= htmlspecialchars($roles) ?></td>
+                            </tr>
+
+                    <?php } ?>
+                </tbody>
+
     </table>
     </div>
 

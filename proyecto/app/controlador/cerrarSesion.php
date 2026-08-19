@@ -34,13 +34,10 @@ if($motivo == "peticionIncorrecta"){
 }else if ($motivo == "credenciales"){
     session_start();
     $_SESSION["error"] = "Acceso Denegado: Cédula o contraseña incorrectos";
-}/*else if($motivo == "sesionActiva"){
+}else if ($motivo == "sinConexion"){
     session_start();
-    $_SESSION["error"] = "Acceso Denegado: La sesión está activa en otro dispositivo";
-    header("Location: ../public/inicioSesion.php");
-    exit;
+    $_SESSION["error"] = "Acceso Denegado: No se pudo establecer conexión con la base de datos";
 }
-    */
 
 
 header("Location:" . URL_PUBLIC . "/inicioSesion.php");

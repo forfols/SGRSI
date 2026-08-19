@@ -63,7 +63,8 @@ if (isset($_SESSION["mensaje"])) {
 
         <div>
             <label for="ci">Cédula:</label>
-            <input type="ci" id="ci" name="ci" required>
+            <input type="ci" id="ci" name="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric"
+                            maxlength="8" required>
         </div>
 
         <div>

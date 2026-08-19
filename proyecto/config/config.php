@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //Guarda como constante el directorio padre de config, es decir proyecto
 define("RUTA_RAIZ", dirname(__DIR__));
 

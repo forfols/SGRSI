@@ -38,7 +38,7 @@ if (empty($_SESSION["administrador"])) {
             <button class="btnPrincipal">Crear usuario</button>
         </a>
 
-        <a href="administradorListaUsuarios.php">
+        <a href="<?= URL_CONTROLADOR . '/cargarUsuarios.php' ?>">
             <button class="btnPrincipal">Gestionar usuarios</button>
         </a>
 

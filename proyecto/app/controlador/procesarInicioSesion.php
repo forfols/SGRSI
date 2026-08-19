@@ -21,6 +21,11 @@ $contra = $_POST["contra"] ?? "";
 $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
+if ($conexion === null) {
+    header("Location: cerrarSesion.php?motivo=sinConexion");
+    exit;
+}
+
     $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
     $inicioSesion = new InicioSesion($accesoDatosUsuario);
     $usuario = $inicioSesion->autenticar($ci, $contra);

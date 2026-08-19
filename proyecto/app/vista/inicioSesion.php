@@ -34,7 +34,8 @@ if (isset($_SESSION["error"])) {
      <h1>Iniciar Sesión</h1>
 
     <label for="ci">Cédula:</label>
-    <input type="text" id="ci" name="ci" required>
+    <input type="text" id="ci" name="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric"
+                            maxlength="8" required>
     
     <label for="contra">Contraseña:</label>
     <input type="password" id="contra" name="contra" required>

@@ -96,6 +96,48 @@ public function estaActivo(string $ci, bool $activo): void
     $consulta = null;
 }
 
+
+
+public function listarUsuarios(): array {
+        $sql = "
+            SELECT
+                u.ci,
+                u.nombre,
+
+                CASE
+                    WHEN s.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS solicitante,
+
+                CASE
+                    WHEN t.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS tecnico,
+
+                CASE
+                    WHEN a.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS administrador
+
+            FROM USUARIO AS u
+
+            LEFT JOIN SOLICITANTE AS s
+                ON s.ci = u.ci
+
+            LEFT JOIN TECNICO AS t
+                ON t.ci = u.ci
+
+            LEFT JOIN ADMINISTRADOR AS a
+                ON a.ci = u.ci";
+
+        $consulta = $this->conexion->query($sql);
+
+        $usuarios = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+        $consulta = null;
+
+        return $usuarios;
+    }
 }
 
 ?>

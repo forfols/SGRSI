@@ -15,6 +15,11 @@ $conectorPDO = new ConectorPDO(
 
 $conexion = $conectorPDO->establecerConexion();
 
+if ($conexion === null) {
+    header("Location: cerrarSesion.php?motivo=sinConexion");
+    exit;
+}
+
 $recibirEspacio = new RecibirEspacio($conexion);
 
 $espacios = $recibirEspacio->recibirEspacios();

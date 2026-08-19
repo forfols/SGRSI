@@ -46,11 +46,13 @@ if (empty($_SESSION["solicitante"])) {
             </select>
 
             <label for="nroEspacio">Número del espacio:</label>
-            <input type="number" id="nroEspacio" name="nroEspacio" placeholder="Ej: 3" required>
+            <select id="nroEspacio" name="nroEspacio">
+            </select>   
 
             <div class="mb-2">
                 <label for="grupo">Grupo:</label>
-                <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MA" required>
+                <select id="grupo" name="grupo">
+                </select>
             </div>
 
                 <button type="submit" class="mt-2">Siguiente</button>

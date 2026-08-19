@@ -66,11 +66,17 @@ if (empty($_SESSION["administrador"])) {
         </div>
 
         <div>
-            <label for="rol">Rol:</label>
-            <select id="rol" name="rol" required>
-                <option value="solicitante">Solicitante</option>
-                <option value="tecnico">Tecnico</option>
-            </select>
+            <label >Rol:</label>
+            <br>
+
+            <label for="solicitante">Solicitante:</label>
+            <input type="checkbox" id="solicitante" name="solicitante" value="activo">
+            <label for="tecnico">Tecnico:</label>
+            <input type="checkbox" id="tecnico" name="tecnico" value="activo">
+            <label for="administrador">Administrador:</label>
+            <input type="checkbox" id="administrador" name="administrador" value="activo">
+
+            
         </div>
 
         <button type="submit" class="mt-2" id="btnCrear">Crear Usuario</button>

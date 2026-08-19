@@ -11,7 +11,7 @@ if (empty($_SESSION["solicitante"])) {
     exit;
 }
 
-$idEspacio = $_GET["idEspacio"] ?? null;
+$idRegistroEspacio = $_GET["idRegistroEspacio"] ?? null;
 
 ?>
 <!DOCTYPE html>
@@ -41,8 +41,8 @@ $idEspacio = $_GET["idEspacio"] ?? null;
     <fieldset>
   
     <input type="hidden"
-           name="idEspacio"
-           value="<?= $idEspacio ?>">
+           name="idRegistroEspacio"
+           value="<?= $idRegistroEspacio ?>">
 
 
       <legend>Registrar Incidencia</legend>

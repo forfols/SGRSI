@@ -17,17 +17,21 @@ $tipoEspacio = trim($_POST["tipoEspacio"] ?? "");
 $nroEspacio = $_POST["nroEspacio"] ?? "";
 $grupo = $_POST["grupo"] ?? "";
 
+
 $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
 $registroEspacio = new RegistroEspacio($conexion);
 
-$idEspacio = $registroEspacio->registrarEspacio(
-    $tipoEspacio, $nroEspacio, $grupo
+$idRegistroEspacio = $registroEspacio->registrarEspacio(
+    $tipoEspacio,
+    $nroEspacio,
+    $grupo
 );
 
+
 $conectorPDO->desconectar();
-header("Location: solicitanteRegistroIncidencias.php?idEspacio=" . $idEspacio);
+header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio);
 exit;
 
 ?>

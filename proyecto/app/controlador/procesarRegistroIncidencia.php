@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/RegistroTipoIncidencia.php";
 require_once RUTA_MODELO . "/RegistroIncidencia.php";
+require_once RUTA_MODELO . "/RegistroEstado.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -18,7 +19,8 @@ $tipo = trim($_POST["tipo"] ?? "");
 $nroPc = $_POST["nroPc"] ?? null;
 $nombreAlumno = $_POST["nombreAlumno"] ?? null;
 $descripcion = $_POST["descripcion"] ?? "";
-$idEspacio = $_POST["idEspacio"] ?? null;
+$idRegistroEspacio = $_POST["idRegistroEspacio"] ?? null;
+
 
 $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
@@ -29,18 +31,20 @@ $idTipoIncidencia = $registroTipoIncidencia->registrarTipoIncidencia(
     $tipo, $nroPc, $nombreAlumno, $descripcion
 );
 
-
+$registroEstado = new RegistroEstado($conexion);
+$idEstado = $registroEstado->registrarEstado();
 
 $registroIncidencia = new RegistroIncidencia($conexion);
-
-
 $registroIncidencia->registrarIncidencia(
-    $idEspacio, $idTipoIncidencia, $_SESSION["ci"], $_SESSION["nombre"]
+    $idRegistroEspacio,
+    $idTipoIncidencia,
+    $_SESSION["ci"],
+    $idEstado
 );
 
 
 $conectorPDO->desconectar();
-header("Location: solicitanteRegistroIncidencias.php?idEspacio=" . $idEspacio);
+header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio);
 exit;
 
 ?>

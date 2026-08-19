@@ -8,18 +8,18 @@ class RegistroIncidencia {
         $this->conexion = $conexion;
     }
 
-    public function registrarIncidencia($idEspacio, $idTipoIncidencia, $ci, $nombre) {
+    public function registrarIncidencia($idRegistroEspacio, $idTipoIncidencia, $ciSolicitante, $idEstado) {
 
         $sql = "INSERT INTO REGISTROINCIDENCIA 
-                (idEspacio, idTipoIncidencia, nombreSolicitante, ci)
-                VALUES (:idEspacio, :idTipoIncidencia, :nombre, :ci)";
+                (ciSolicitante, idRegistroEspacio, idTipoIncidencia, idEstado)
+                VALUES (:ciSolicitante, :idRegistroEspacio, :idTipoIncidencia, :idEstado)";
 
         $stmt = $this->conexion->prepare($sql);
 
-        $stmt->bindParam(":idEspacio", $idEspacio);
-        $stmt->bindParam(":idTipoIncidencia", $idTipoIncidencia); 
-        $stmt->bindParam(":nombre", $nombre); 
-        $stmt->bindParam(":ci", $ci); 
+        $stmt->bindParam(":ciSolicitante", $ciSolicitante);
+        $stmt->bindParam(":idRegistroEspacio", $idRegistroEspacio, PDO::PARAM_INT); 
+        $stmt->bindParam(":idTipoIncidencia", $idTipoIncidencia, PDO::PARAM_INT); 
+        $stmt->bindParam(":idEstado", $idEstado, PDO::PARAM_INT); 
 
         return $stmt->execute();
     }

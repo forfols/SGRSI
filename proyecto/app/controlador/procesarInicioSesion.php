@@ -60,7 +60,7 @@ $administrador= $usuario->getRolAdministrador();
 $accesoDatosUsuario->estaActivo($_SESSION["ci"], true);
 
 
-if(($solicitante == true) && ($tecnico == true) && ($administrador == true)) {
+if((($solicitante == true) && ($tecnico == true) && ($administrador == true)) || (($solicitante == false) && ($tecnico == false) && ($administrador == false))) {
     header("Location: indexGeneral.php");
 }else if(($solicitante == true) && (($tecnico == true) || ($administrador == true))) {
     header("Location: indexGeneral.php");

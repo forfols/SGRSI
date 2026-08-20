@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../../config/config.php";
 $cantidadRoles = 0;
+$sinRol=false;
 
 if ($_SESSION["solicitante"]) {
     $cantidadRoles++;
@@ -15,7 +16,13 @@ if ($_SESSION["administrador"]) {
     $cantidadRoles++;
 }
 
-if ($cantidadRoles < 2) {
+if (($_SESSION["solicitante"])== false && ($_SESSION["tecnico"])== false && ($_SESSION["administrador"])== false) {
+    $cantidadRoles = 3;
+    $sinRol = true;
+}
+
+
+if ($cantidadRoles == 1) {
     header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
     exit;
 }
@@ -42,6 +49,17 @@ if ($cantidadRoles < 2) {
     </header>
 
     <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+
+
+        <?php
+            if ($sinRol==true) {
+        ?>
+            <p>
+                Este usuario todavía no cuenta con un rol asignado
+            </p>
+        <?php
+        }
+        ?>
         
         <?php
             if ($_SESSION["solicitante"]) {

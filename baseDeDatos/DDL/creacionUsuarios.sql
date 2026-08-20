@@ -3,7 +3,7 @@
 */
 
 CREATE TABLE USUARIO (
-    ci CHAR(8) NOT NULL,
+    ci VARCHAR(20) NOT NULL,
     contra VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT FALSE,
@@ -13,21 +13,21 @@ CREATE TABLE USUARIO (
 );
 
 CREATE TABLE SOLICITANTE (
-    ci CHAR(8) NOT NULL,
+    ci VARCHAR(20) NOT NULL,
 
     CONSTRAINT pk_solicitante
         PRIMARY KEY (ci)
 );
 
 CREATE TABLE TECNICO (
-    ci CHAR(8) NOT NULL,
+    ci VARCHAR(20) NOT NULL,
 
     CONSTRAINT pk_tecnico
         PRIMARY KEY (ci)
 );
 
 CREATE TABLE ADMINISTRADOR (
-    ci CHAR(8) NOT NULL,
+    ci VARCHAR(20) NOT NULL,
 
     CONSTRAINT pk_administrador
         PRIMARY KEY (ci)

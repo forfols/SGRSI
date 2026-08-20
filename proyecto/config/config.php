@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 //Guarda como constante el directorio padre de config, es decir proyecto
 define("RUTA_RAIZ", dirname(__DIR__));

@@ -56,8 +56,8 @@ CREATE TABLE ESTADO (
 CREATE TABLE REGISTROINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
 
-    ciSolicitante CHAR(8) NOT NULL,
-    ciTecnico CHAR(8),
+    ciSolicitante VARCHAR(20) NOT NULL,
+    ciTecnico VARCHAR(20),
 
     idRegistroEspacio INT(20) NOT NULL,
     idTipoIncidencia INT(20) NOT NULL,

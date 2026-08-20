@@ -43,7 +43,7 @@ if ($usuario->estaActivo()) {
     exit;
 }
 
-session_start();
+
     session_regenerate_id(true);
 
 $_SESSION["ci"] = $usuario->getCi();

@@ -18,8 +18,10 @@ if (empty($_SESSION["administrador"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Usuarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="<?= URL_PUBLIC . '/assets/css/administrador.css' ?>">
+
 </head>
 
 <body>
@@ -35,60 +37,79 @@ if (empty($_SESSION["administrador"])) {
         </nav>
     </header>
 
+    <?php
+if (isset($_SESSION["error"])) {
+    echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+    unset($_SESSION["error"]);
+}
+if (isset($_SESSION["mensaje"])) {
+    echo "<div class='mensaje'>" . htmlspecialchars($_SESSION["mensaje"]) . "</div>";
+    unset($_SESSION["mensaje"]);
+}
+?>
+
     <h3>Lista de Usuarios</h3>
     <div class="table-responsive">
-    <table border="1">
-        <tr>
-            <th>Nombre</th>
-            <th>CI</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-        </tr>
-        <tbody id="tabla"></tbody>
-        <?php foreach ($usuarios as $usuario) { ?>
+        <table border="1">
+            <tr>
+                <th>Nombre</th>
+                <th>CI</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+            <tbody id="tabla"></tbody>
+            <?php foreach ($usuarios as $usuario) { ?>
 
-                        <?php
-                            $roles = "";
+                <?php
+                $roles = "";
 
-                            if ($usuario["solicitante"] == 1) {
-                                $roles = "Solicitante";
-                            }
+                if ($usuario["solicitante"] == 1) {
+                    $roles = "Solicitante";
+                }
 
-                            if ($usuario["tecnico"] == 1) {
-                                if ($roles != "") {
-                                    $roles = $roles . ", ";
-                                }
+                if ($usuario["tecnico"] == 1) {
+                    if ($roles != "") {
+                        $roles = $roles . ", ";
+                    }
 
-                                $roles = $roles . "Técnico";
-                            }
+                    $roles = $roles . "Técnico";
+                }
 
-                            if ($usuario["administrador"] == 1) {
-                                if ($roles != "") {
-                                    $roles = $roles . ", ";
-                                }
+                if ($usuario["administrador"] == 1) {
+                    if ($roles != "") {
+                        $roles = $roles . ", ";
+                    }
 
-                                $roles = $roles . "Administrador";
-                            }
+                    $roles = $roles . "Administrador";
+                }
 
-                            if ($roles == "") {
-                                $roles = "Sin rol";
-                            }
+                if ($roles == "") {
+                    $roles = "Sin rol";
+                }
 
-                        ?>
+                ?>
 
-                        <tr>
-                            <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
-                            <td><?= htmlspecialchars($usuario["ci"]) ?></td>
-                            <td><?= htmlspecialchars($roles) ?></td>
-                            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
+                    <td><?= htmlspecialchars($usuario["ci"]) ?></td>
+                    <td><?= htmlspecialchars($roles) ?></td>
+                    <td>
+                        <button type="button" class="btnModificar" data-nombre="<?= htmlspecialchars($usuario["nombre"]) ?>"
+                            data-ci="<?= htmlspecialchars(trim($usuario["ci"])) ?>"
+                            data-solicitante="<?= $usuario["solicitante"] ?>" data-tecnico="<?= $usuario["tecnico"] ?>"
+                            data-administrador="<?= $usuario["administrador"] ?>">
+                            Modificar
+                        </button>
+                    </td>
+                </tr>
 
-                    <?php } ?>
-                </tbody>
+            <?php } ?>
+            </tbody>
 
-    </table>
+        </table>
     </div>
 
-    <form id="modificarUsuario">
+    <form action="procesarModificarUsuario.php" method="post" id="modificarUsuario">
         <fieldset class="formularioModificarUsuario" style="display:none">
             <legend>
                 <h2>
@@ -107,15 +128,22 @@ if (empty($_SESSION["administrador"])) {
 
             <div>
                 <label for="ci">Cédula:</label>
-                <input type="ci" id="ci" name="ci" required>
+                <input type="ci" id="ci" name="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric"
+                            maxlength="8" required>
             </div>
 
             <div>
-                <label for="rol">Rol:</label>
-                <select id="rol" name="rol" required>
-                    <option value="solicitante">Solicitante</option>
-                    <option value="tecnico">Tecnico</option>
-                </select>
+                <label>Roles:</label>
+                <br>
+                <input type="checkbox" id="rolSolicitante" name="solicitante" value="1">
+                <label for="rolSolicitante">Solicitante</label>
+
+                <input type="checkbox" id="rolTecnico" name="tecnico" value="1">
+                <label for="rolTecnico">Técnico</label>
+
+                <input type="checkbox" id="rolAdministrador" name="administrador" value="1">
+                <label for="rolAdministrador">Administrador</label>
+                <br>
             </div>
 
 
@@ -125,7 +153,7 @@ if (empty($_SESSION["administrador"])) {
             </p>
         </fieldset>
     </form>
-
+    <script src="<?= URL_PUBLIC . '/assets/js/administradorListaUsuarios.js' ?>"></script>
 </body>
 
 </html>

@@ -21,13 +21,13 @@ if (empty($_SESSION["solicitante"])) {
     <title>Lista de Incidencias</title>
       <script src="assets/js/solicitanteListaIncidencias.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-      <link rel="stylesheet" href="assets/css/solicitante.css">
+      <link rel="stylesheet" href="<?= URL_PUBLIC . '/assets/css/solicitante.css' ?>">
 </head>
 
 <body>
     <header>
         <nav class="d-flex justify-content-between align-items-center">
-            <a href=indexSolicitante.php>
+            <a href="<?= URL_PUBLIC . '/indexSolicitante.php' ?>">
                 <button class="btnNav">Volver</button>
             </a>
 
@@ -53,6 +53,27 @@ if (empty($_SESSION["solicitante"])) {
             <th>Acciones</th>
         </tr>
         <tbody id="tabla"></tbody>
+        <?php foreach ($incidencias as $incidencia) { ?>
+        <?php $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
+                <tr>
+                    <td><?= htmlspecialchars($incidencia["tipoIncidencia"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["tipoEspacio"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["nombreGrupo"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["nroPc"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["alumno"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["descripcionIncidencia"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["numeroEspacio"]) ?></td>
+                    <td><?= htmlspecialchars("Estado") ?></td>
+                    <td><?= htmlspecialchars($fechaCambiada) ?></td>
+                    <td>
+                        <button type="button" class="btnModificar">
+                            Modificar
+                        </button>
+                    </td>
+                </tr>
+
+            <?php } ?>
+        </tbody>
     </table>
     </div>
 

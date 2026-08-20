@@ -44,7 +44,7 @@ if (empty($_SESSION["solicitante"])) {
             <button class="btnPrincipal">Registrar Solicitud</button>
         </a>
 
-        <a href="solicitanteListaIncidencias.php">
+        <a href="<?= URL_CONTROLADOR . '/cargarIncidencias.php' ?>">
             <button class="btnPrincipal">Ver Incidencias Realizadas</button>
         </a>
     </main>

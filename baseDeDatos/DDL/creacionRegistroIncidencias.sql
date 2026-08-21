@@ -31,15 +31,28 @@ CREATE TABLE REGISTROESPACIO (
         REFERENCES GRUPO(nombre)
 );
 
+CREATE TABLE EQUIPO (
+    id INT(20) AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    modelo VARCHAR(255) NOT NULL,
+
+    CONSTRAINT pk_Equipo
+        PRIMARY KEY (id)
+);
+
 CREATE TABLE REGISTROTIPOINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
     tipo VARCHAR(255) NOT NULL,
-    nroPc VARCHAR(20),
+    idEquipo INT(20) NOT NULL,
     alumno VARCHAR(255) DEFAULT 'no aplica',
     descripcion VARCHAR(255) NOT NULL,
 
     CONSTRAINT pk_registroTipoIncidencia
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+    
+    CONSTRAINT fk_idEspacio
+        FOREIGN KEY (idEspacio)
+        REFERENCES ESPACIO(id)
 );
 
 CREATE TABLE ESTADO (

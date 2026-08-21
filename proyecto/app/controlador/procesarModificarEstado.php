@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
-require_once RUTA_MODELO . "/ModificarIncidencia.php";
-require_once RUTA_MODELO . "/VerificarEstado.php";
+require_once RUTA_MODELO . "/ModificarEstado.php";
 
 
 
@@ -22,9 +21,9 @@ if ($conexion === null) {
     exit;
 }
 
-$modificarIncidencia = new ModificarIncidencia($conexion);
+$modificarEstado = new ModificarEstado($conexion);
 
-$resultado = $modificarIncidencia->modificarIncidencia(
+$resultado = $modificarEstado->modificarEstado(
 
     $idIncidencia, $estado, $prioridad, $diagnostico, $soluciones
 );

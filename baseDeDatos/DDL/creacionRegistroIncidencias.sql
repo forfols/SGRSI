@@ -34,7 +34,6 @@ CREATE TABLE REGISTROESPACIO (
 CREATE TABLE EQUIPO (
     id INT(20) AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
-    modelo VARCHAR(255) NOT NULL,
 
     CONSTRAINT pk_Equipo
         PRIMARY KEY (id)
@@ -50,9 +49,9 @@ CREATE TABLE REGISTROTIPOINCIDENCIA (
     CONSTRAINT pk_registroTipoIncidencia
         PRIMARY KEY (id),
     
-    CONSTRAINT fk_idEspacio
-        FOREIGN KEY (idEspacio)
-        REFERENCES ESPACIO(id)
+    CONSTRAINT fk_idEquipo
+        FOREIGN KEY (idEquipo)
+        REFERENCES EQUIPO(id)
 );
 
 CREATE TABLE ESTADO (

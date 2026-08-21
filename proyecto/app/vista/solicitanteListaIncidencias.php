@@ -1,16 +1,9 @@
 <?php
 
 require_once __DIR__ . "/../../config/config.php";
-if (!isset($_SESSION["ci"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=sinSesion");
-    exit;
-}
 
-if (empty($_SESSION["solicitante"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
-    exit;
-}
 require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
+
 ?>
 
 <!DOCTYPE html>

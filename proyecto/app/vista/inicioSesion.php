@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,9 +10,7 @@
     
 </head>
 
-
 <body>
-    
 
     <header>
         <img src="assets/img/logoForfols.png" alt="logo de forfols" class="logoForfols">
@@ -23,7 +20,7 @@
 
     <section class="inicioSesion">
 
-    <?php
+<?php
 if (isset($_SESSION["error"])) {
     echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
     unset($_SESSION["error"]);

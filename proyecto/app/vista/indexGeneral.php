@@ -17,7 +17,7 @@ if ($_SESSION["administrador"]) {
 }
 
 if (($_SESSION["solicitante"])== false && ($_SESSION["tecnico"])== false && ($_SESSION["administrador"])== false) {
-    $cantidadRoles = 3;
+    $cantidadRoles = 0;
     $sinRol = true;
 }
 

@@ -71,7 +71,7 @@ if((($solicitante == true) && ($tecnico == true) && ($administrador == true)) ||
 }else if ($solicitante == true){
     header("Location: indexSolicitante.php");
 }else if ($tecnico == true){
-    header("Location: tecnico.php");
+    header("<?= URL_CONTROLADOR . '/cargarIncidenciasTecnico.php' ?>");
 }else if ($administrador == true){
     header("Location: indexAdministrador.php");
 }

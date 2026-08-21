@@ -19,11 +19,11 @@ $descripcion = $_POST["descripcion"] ?? "";
 
 if ($tipoIncidencia === "PC" && ($nroPc === "" || $nombreAlumno === "")) {
     $_SESSION["error"] = "No se pudo modificar la incidencia: Se eligio una incidencia sobre PC pero no se asigno un alumno o pc";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 } else if ($tipoIncidencia === "" || $descripcion === "") {
     $_SESSION["error"] = "No se pudo modificar la incidencia: hay campos vacíos";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
 
@@ -44,7 +44,7 @@ $incidencia = $verificarEstado->verificarEstado(
 $estado = $incidencia["tipo"];
 if ($estado != "Sin asignar") {
     $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico o Administrador";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
 
@@ -65,10 +65,10 @@ $conectorPDO->desconectar();
 
 if ($resultado == false) {
     $_SESSION["error"] = "No se pudo modificar la incidencia";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
 
 $_SESSION["mensaje"] = "Se ha modificado la incidencia con éxito";
-header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
 exit;

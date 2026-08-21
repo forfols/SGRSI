@@ -74,7 +74,7 @@ if ($cantidadRoles == 1) {
         <?php
             if ($_SESSION["tecnico"]) {
         ?>
-            <a href="tecnico.php">
+            <a href="<?= URL_CONTROLADOR . '/cargarIncidenciasTecnico.php' ?>">
                 <button>Ingresar como Tecnico</button>
             </a>
         <?php

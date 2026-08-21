@@ -28,7 +28,7 @@ $incidencia = $verificarEstado->verificarEstado(
 $estado = $incidencia["tipo"];
 if ($estado != "Sin asignar") {
     $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico o Administrador";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
 
@@ -43,10 +43,10 @@ $conectorPDO->desconectar();
 
 if ($resultado == false) {
     $_SESSION["error"] = "No se pudo eliminar la incidencia";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
 
     $_SESSION["mensaje"] = "Se ha eliminado la incidencia";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidencias.php");
+    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;

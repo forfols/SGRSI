@@ -67,7 +67,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
             </tr>
             <tbody id="tabla"></tbody>
             <?php foreach ($incidencias as $incidencia) { ?>
-                <?php if (($incidencia["ciSolicitante"] == $_SESSION["ci"]) && ($incidencia["tipoEstado"] != "Terminado")) { ?>
+                <?php if (($incidencia["ciSolicitante"] == $_SESSION["ci"])) { ?>
                     <?php $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
                     <tr>
                         <td><?= htmlspecialchars($incidencia["tipoIncidencia"]) ?></td>

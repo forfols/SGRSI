@@ -22,6 +22,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
     <script>
           const equipos = <?= json_encode($equipos) ?>;
           const tipoEspacio = <?= json_encode($_GET["tipoEspacio"]) ?>;
+          const alumnoAsignado = <?= json_encode($_SESSION["nombre"]) ?>;
 </script>
   <script src="<?= URL_PUBLIC . '/assets/js/solicitanteRegistroIncidencia.js' ?>"></script>
 </head>
@@ -71,7 +72,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
         <select name="nroPc" id="nroPc">
             </select>
         
-        <label for="nombreAlumno">Nombre del alumno:</label>
+        <label for="nombreAlumno">Persona asignada:</label>
         <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
       </div>
 

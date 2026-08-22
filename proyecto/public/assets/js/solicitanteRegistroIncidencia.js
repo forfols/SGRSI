@@ -11,11 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const tipo = document.getElementById("tipo");
     const campoExtra = document.getElementById("campoExtra");
     const nroPc = document.getElementById("nroPc");
+    const nombreAlumno= document.getElementById("nombreAlumno");
 
     tipo.addEventListener("change", function () {
         if (tipo.value === "PC") {
             campoExtra.classList.remove("d-none");
             nroPc.required = true;
+
+            
 
             const selectPc = document.getElementById("nroPc");
 
@@ -29,12 +32,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     option.textContent = equipo.nombre;
                     selectPc.appendChild(option);
 
+                    if (equipo.nombre == "PCDocente") {
+
+                        nombreAlumno.value = alumnoAsignado;
+                    }
+
                 } else if (equipo.nombre == "PCDocente") {
                     const option = document.createElement("option");
                     option.value = equipo.id;
                     option.textContent = equipo.nombre;
 
                     selectPc.appendChild(option);
+
+                    nombreAlumno.value = alumnoAsignado;
+
                 }
             });
 

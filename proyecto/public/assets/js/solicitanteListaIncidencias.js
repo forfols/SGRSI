@@ -61,6 +61,7 @@ document.querySelectorAll(".btnModificar").forEach(function (boton) {
         const campoExtra = document.getElementById("campoExtra");
         const nroPc = document.getElementById("nroPc");
         const descripcion = document.getElementById("descripcion");
+        const nombreAlumno= document.getElementById("nombreAlumno");
 
         tipoIncidencia.addEventListener("change", function () {
             if (tipoIncidencia.value === "PC") {
@@ -78,6 +79,12 @@ document.querySelectorAll(".btnModificar").forEach(function (boton) {
                         option.value = equipo.id;
                         option.textContent = equipo.nombre;
                         selectPc.appendChild(option);
+                        nombreAlumno.value = "";
+
+                        if (equipo.nombre == "PCDocente") {
+
+                        nombreAlumno.value = alumnoAsignado;
+                    }
 
                     } else if (equipo.nombre == "PCDocente") {
                         const option = document.createElement("option");
@@ -85,6 +92,8 @@ document.querySelectorAll(".btnModificar").forEach(function (boton) {
                         option.textContent = equipo.nombre;
 
                         selectPc.appendChild(option);
+
+                        nombreAlumno.value = alumnoAsignado;
                     }
                 });
 

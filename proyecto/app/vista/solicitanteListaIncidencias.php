@@ -17,7 +17,9 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="<?= URL_PUBLIC . '/assets/css/solicitante.css' ?>">
-    <script>const equipos = <?= json_encode($equipos) ?>;</script>
+    <script>const equipos = <?= json_encode($equipos) ?>;
+        const alumnoAsignado = <?= json_encode($_SESSION["nombre"]) ?>;
+    </script>
 
 </head>
 
@@ -54,7 +56,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
                 <th>Nro espacio</th>
                 <th>Grupo</th>
                 <th>PC</th>
-                <th>Alumno asignado</th>
+                <th>Persona asignada PC</th>
                 <th>Descripción</th>
                 <th>Estado</th>
                 <th>Fecha creado</th>
@@ -72,7 +74,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
                         <td><?= htmlspecialchars($incidencia["nombreEquipo"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["alumno"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["descripcionIncidencia"]) ?></td>
-                        
+
                         <td>
                             <button type="button" class="btnVerEstado"
                                 data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>"
@@ -85,14 +87,12 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
                         </td>
                         <td><?= htmlspecialchars($fechaCambiada) ?></td>
                         <td>
-                            <button type="button" class="btnModificar"
-                                data-id="<?= htmlspecialchars($incidencia["id"]) ?>"
+                            <button type="button" class="btnModificar" data-id="<?= htmlspecialchars($incidencia["id"]) ?>"
                                 data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>"
                                 data-tipo-espacio="<?= htmlspecialchars($incidencia["tipoEspacio"]) ?>">
                                 Modificar
                             </button>
-                            <button type="button" class="btnEliminar"
-                                data-id="<?= htmlspecialchars($incidencia["id"]) ?>"
+                            <button type="button" class="btnEliminar" data-id="<?= htmlspecialchars($incidencia["id"]) ?>"
                                 data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>">
                                 Eliminar
                             </button>
@@ -105,8 +105,8 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
     </div>
 
     <form action="procesarEliminarIncidencia.php" method="post" id="eliminarIncidencia">
-    <input type="hidden" name="idIncidencia" id="idIncidenciaEliminar">
-    <input type="hidden" name="estadoIncidencia" id="estadoEliminar">
+        <input type="hidden" name="idIncidencia" id="idIncidenciaEliminar">
+        <input type="hidden" name="estadoIncidencia" id="estadoEliminar">
 
     </form>
 
@@ -135,9 +135,9 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
 
             <div id="campoExtra" class="d-none">
                 <label for="nroPc">PC:</label>
-            <select name="nroPc" id="nroPc">
-            </select>
-                <label for="nombreAlumno">Nombre del alumno:</label>
+                <select name="nroPc" id="nroPc">
+                </select>
+                <label for="nombreAlumno">Nombre de la Persona:</label>
                 <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
             </div>
 
@@ -192,8 +192,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
 
     </form>
 
-    <script 
-    src="<?= URL_PUBLIC . '/assets/js/solicitanteListaIncidencias.js' ?>"></script>
+    <script src="<?= URL_PUBLIC . '/assets/js/solicitanteListaIncidencias.js' ?>"></script>
 </body>
 
 </html>

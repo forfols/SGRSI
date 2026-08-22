@@ -22,7 +22,11 @@ $idEquipo = $_POST["nroPc"] ?? null;
 $nombreAlumno = $_POST["nombreAlumno"] ?? null;
 $descripcion = $_POST["descripcion"] ?? "";
 $idRegistroEspacio = $_POST["idRegistroEspacio"] ?? null;
-
+$csrfToken = $_POST["csrfToken"];
+if ($csrfToken != $_SESSION["csrfToken"]) {
+    header("Location: cerrarSesion.php?motivo=token");
+    exit;
+}
 
 if ($tipo === "PC" && ($idEquipo === "" || $nombreAlumno === "")) {
     $_SESSION["error"] = "No se pudo registrar la incidencia: Se eligio una incidencia sobre PC pero no se asigno un alumno o pc";

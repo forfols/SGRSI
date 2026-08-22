@@ -22,7 +22,11 @@ $motivo = $_GET["motivo"] ?? "";
 $_SESSION = [];
 session_destroy();
 
-if($motivo == "peticionIncorrecta"){
+
+if ($motivo == "token") {
+    session_start();
+    $_SESSION["error"] = "Acceso Denegado";
+} else if($motivo == "peticionIncorrecta"){
     session_start();
     $_SESSION["error"] = "Acceso Denegado: Petición incorrecta";
 }else if($motivo == "sinSesion"){

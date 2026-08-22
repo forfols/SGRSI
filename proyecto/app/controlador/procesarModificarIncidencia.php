@@ -14,7 +14,11 @@ $tipoIncidencia = $_POST["tipoIncidencia"] ?? "";
 $idEquipo = $_POST["nroPc"] ?? null;
 $nombreAlumno = $_POST["nombreAlumno"] ?? "";
 $descripcion = $_POST["descripcion"] ?? "";
-
+$csrfToken = $_POST["csrfToken"];
+if ($csrfToken != $_SESSION["csrfToken"]) {
+    header("Location: cerrarSesion.php?motivo=token");
+    exit;
+}
 
 
 if ($tipoIncidencia === "PC" && ($nroPc === "" || $nombreAlumno === "")) {

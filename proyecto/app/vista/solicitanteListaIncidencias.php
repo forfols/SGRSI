@@ -107,6 +107,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
     <form action="procesarEliminarIncidencia.php" method="post" id="eliminarIncidencia">
         <input type="hidden" name="idIncidencia" id="idIncidenciaEliminar">
         <input type="hidden" name="estadoIncidencia" id="estadoEliminar">
+        <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
 
     </form>
 
@@ -123,6 +124,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
             <br>
             <input type="hidden" name="idIncidencia" id="idIncidenciaModificar">
             <input type="hidden" name="estadoIncidencia" id="estadoModificar">
+            <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
 
             <div>
                 <label for="tipoIncidencia">Tipo de Incidencia:</label>

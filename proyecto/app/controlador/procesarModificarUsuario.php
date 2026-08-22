@@ -11,7 +11,11 @@ $nombre = trim($_POST["nombre"] ?? "");
 $solicitante = trim($_POST["solicitante"] ?? "");
 $tecnico = $_POST["tecnico"] ?? "";
 $administrador = $_POST["administrador"] ?? "";
-
+$csrfToken = $_POST["csrfToken"];
+if ($csrfToken != $_SESSION["csrfToken"]) {
+    header("Location: cerrarSesion.php?motivo=token");
+    exit;
+}
 
 //Sección que valida los datos recibidos del formulario
 if ($ci === "" || $nombre === "") {

@@ -103,6 +103,8 @@ if (isset($_SESSION["mensaje"])) {
 
     <form action="procesarModificarUsuario.php" method="post" id="modificarUsuario">
         <fieldset class="formularioModificarUsuario" style="display:none">
+
+        <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
             <legend>
                 <h2>
                     Modificar Usuario

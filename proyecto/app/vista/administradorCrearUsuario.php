@@ -43,6 +43,9 @@ if (isset($_SESSION["mensaje"])) {
     <h1>Crear Usuario</h1>
     </p>
     <form id="crearUsuario" action="procesarRegistroUsuario.php" method="post">
+
+        <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
+
         <div>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>

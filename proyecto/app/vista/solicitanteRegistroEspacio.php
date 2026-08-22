@@ -34,6 +34,8 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
     <form id="registroEspacio" class="mt-3" action="procesarRegistroEspacio.php" method="post">
         <fieldset>
 
+        <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
+
             <label for="espacio">Espacio:</label>
             <select id="tipoEspacio" name="tipoEspacio" required>
                 <option value="">Seleccione un tipo</option>

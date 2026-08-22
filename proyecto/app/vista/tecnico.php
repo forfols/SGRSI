@@ -90,6 +90,7 @@ require_once __DIR__ . "/../../config/config.php";
 
             <input type="hidden" name="idIncidencia" id="idIncidenciaEstado">
             <input type="hidden" name="ciTecnico" value="<?php $_SESSION["ci"] ?>">
+            <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
 
             <br>
 

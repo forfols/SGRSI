@@ -59,6 +59,10 @@ $administrador= $usuario->getRolAdministrador();
 
 $accesoDatosUsuario->estaActivo($_SESSION["ci"], true);
 
+if (!isset($_SESSION["csrfToken"])) {
+    $_SESSION["csrfToken"] = bin2hex( random_bytes(32) ); 
+}
+
 
 if((($solicitante == true) && ($tecnico == true) && ($administrador == true)) || (($solicitante == false) && ($tecnico == false) && ($administrador == false))) {
     header("Location: indexGeneral.php");

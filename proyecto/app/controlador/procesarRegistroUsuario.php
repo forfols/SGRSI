@@ -21,7 +21,11 @@ $repetirContra = $_POST["repetirContra"] ?? "";
 $solicitante = $_POST["solicitante"] ?? NULL;
 $tecnico = $_POST["tecnico"] ?? NULL;
 $administrador = $_POST["administrador"] ?? NULL;
-
+$csrfToken = $_POST["csrfToken"];
+if ($csrfToken != $_SESSION["csrfToken"]) {
+    header("Location: cerrarSesion.php?motivo=token");
+    exit;
+}
 
 if ($contra !== $repetirContra) {
     $_SESSION["error"] = "Las contraseñas no coinciden";

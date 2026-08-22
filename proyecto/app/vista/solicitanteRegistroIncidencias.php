@@ -54,6 +54,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
   
     <input type="hidden" name="idRegistroEspacio" value="<?= $idRegistroEspacio ?>">
       <input type="hidden" name="tipoEspacio" value="<?= $_GET["tipoEspacio"] ?>">
+      <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
 
 
       <legend>Registrar Incidencia</legend>

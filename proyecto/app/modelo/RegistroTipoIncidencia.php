@@ -8,20 +8,19 @@ class RegistroTipoIncidencia {
         $this->conexion = $conexion;
     }
 
-    public function registrarTipoIncidencia($tipo, $nroPc, $nombreAlumno, $descripcion) {
+    public function registrarTipoIncidencia($tipo, $idEquipo, $nombreAlumno, $descripcion) {
 
         $sql = "INSERT INTO REGISTROTIPOINCIDENCIA 
-                (tipo, nroPc, alumno, descripcion)
-                VALUES (:tipo, :nroPc, :nombreAlumno, :descripcion)";
+                (tipo, idEquipo, alumno, descripcion)
+                VALUES (:tipo, :idEquipo, :nombreAlumno, :descripcion)";
 
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(":tipo", $tipo);
-        $stmt->bindParam(":nroPc", $nroPc);
+        $stmt->bindParam(":idEquipo", $idEquipo);
         $stmt->bindParam(":nombreAlumno", $nombreAlumno); 
         $stmt->bindParam(":descripcion", $descripcion); 
 
-        //return $stmt->execute();
         $stmt->execute();
         return $this->conexion->lastInsertId();
     }

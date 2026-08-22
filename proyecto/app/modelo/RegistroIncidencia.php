@@ -47,9 +47,11 @@ class RegistroIncidencia
                 
                 rti.id AS idTipoIncidencia,
                 rti.tipo AS tipoIncidencia,
-                rti.nroPc,
                 rti.alumno,
                 rti.descripcion AS descripcionIncidencia,
+
+                eq.id AS idEquipo,
+                eq.nombre AS nombreEquipo,
                 
                 es.id AS idEstado,
                 es.tipo AS tipoEstado,
@@ -78,6 +80,9 @@ class RegistroIncidencia
 
         INNER JOIN REGISTROTIPOINCIDENCIA rti
             ON ri.idTipoIncidencia = rti.id
+
+        LEFT JOIN EQUIPO eq
+            ON rti.idEquipo = eq.id
 
         INNER JOIN ESTADO es
             ON ri.idEstado = es.id;";

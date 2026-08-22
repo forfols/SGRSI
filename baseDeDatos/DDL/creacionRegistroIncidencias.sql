@@ -42,8 +42,8 @@ CREATE TABLE EQUIPO (
 CREATE TABLE REGISTROTIPOINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
     tipo VARCHAR(255) NOT NULL,
-    idEquipo INT(20) NOT NULL,
-    alumno VARCHAR(255) DEFAULT 'no aplica',
+    idEquipo INT(20) NULL,
+    alumno VARCHAR(255) NULL,
     descripcion VARCHAR(255) NOT NULL,
 
     CONSTRAINT pk_registroTipoIncidencia

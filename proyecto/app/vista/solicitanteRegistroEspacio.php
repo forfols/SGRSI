@@ -69,6 +69,6 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
 <script>
     const espacios = <?= json_encode($espacios) ?>;
 </script>
-<script src="assets/js/solicitanteRegistroEspacio.js"></script>
+<script src="<?= URL_PUBLIC . '/assets/js/solicitanteRegistroEspacio.js' ?>"></script>
 
 </html>

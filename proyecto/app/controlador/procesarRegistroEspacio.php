@@ -36,7 +36,7 @@ $idRegistroEspacio = $registroEspacio->registrarEspacio(
 
 
 $conectorPDO->desconectar();
-header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio);
+header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio . "&tipoEspacio=". $tipoEspacio);
 exit;
 
 ?>

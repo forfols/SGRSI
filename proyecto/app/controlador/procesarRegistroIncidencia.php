@@ -15,8 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 //Recupera las credenciales provenientes del formulario
+$tipoEspacio = $_POST["tipoEspacio"];
+
 $tipo = trim($_POST["tipo"] ?? "");
-$nroPc = $_POST["nroPc"] ?? null;
+$idEquipo = $_POST["nroPc"] ?? null;
 $nombreAlumno = $_POST["nombreAlumno"] ?? null;
 $descripcion = $_POST["descripcion"] ?? "";
 $idRegistroEspacio = $_POST["idRegistroEspacio"] ?? null;
@@ -33,7 +35,7 @@ if ($conexion === null) {
 $registroTipoIncidencia = new RegistroTipoIncidencia($conexion);
 
 $idTipoIncidencia = $registroTipoIncidencia->registrarTipoIncidencia(
-    $tipo, $nroPc, $nombreAlumno, $descripcion
+    $tipo, $idEquipo, $nombreAlumno, $descripcion
 );
 
 $registroEstado = new RegistroEstado($conexion);
@@ -49,7 +51,7 @@ $registroIncidencia->registrarIncidencia(
 
 
 $conectorPDO->desconectar();
-header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio);
+header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio . "&tipoEspacio=". $tipoEspacio);
 exit;
 
 ?>

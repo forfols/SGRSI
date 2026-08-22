@@ -36,7 +36,7 @@ require_once __DIR__ . "/../../config/config.php";
             <th>Tipo incidencia</th>
             <th>Espacio</th>
             <th>Grupo</th>
-            <th>Número de PC</th>
+            <th>PC</th>
             <th>Alumno asignado</th>
 		    <th>Descripción</th>
 		    <th>Nro espacio</th>

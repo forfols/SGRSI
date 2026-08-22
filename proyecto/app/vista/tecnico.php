@@ -56,7 +56,7 @@ require_once __DIR__ . "/../../config/config.php";
                 <tr>
                     <td><?= htmlspecialchars($incidencia["nombreSolicitante"]) ?></td>
                     <td><?= htmlspecialchars($incidencia["tipoIncidencia"]) ?></td>
-                    <td><?= htmlspecialchars($incidencia["nroPc"]) ?></td>
+                    <td><?= htmlspecialchars($incidencia["nombreEquipo"]) ?></td>
                     <td><?= htmlspecialchars($incidencia["alumno"]) ?></td>
                     <td><?= htmlspecialchars($incidencia["tipoEspacio"]) ?></td>
                     <td><?= htmlspecialchars($incidencia["numeroEspacio"]) ?></td>

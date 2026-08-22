@@ -6,13 +6,13 @@ require_once RUTA_MODELO . "/VerificarEstado.php";
 
 
 
-$ciTecnico = trim($_POST["ciTecnico"] ?? "");
+
 $idIncidencia = trim($_POST["idIncidencia"] ?? "");
 $estado = trim($_POST["estadoIncidencia"] ?? "");
 
 $tipoIncidencia = $_POST["tipoIncidencia"] ?? "";
-$nroPc = $_POST["nroPc"] ?? "Sin asignar";
-$nombreAlumno = $_POST["nombreAlumno"] ?? "Sin asignar";
+$idEquipo = $_POST["nroPc"] ?? null;
+$nombreAlumno = $_POST["nombreAlumno"] ?? "";
 $descripcion = $_POST["descripcion"] ?? "";
 
 
@@ -43,7 +43,7 @@ $incidencia = $verificarEstado->verificarEstado(
 
 $estado = $incidencia["tipo"];
 if ($estado != "Sin asignar") {
-    $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico o Administrador";
+    $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico";
     header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }
@@ -53,11 +53,10 @@ if ($estado != "Sin asignar") {
 $modificarIncidencia = new ModificarIncidencia($conexion);
 
 $resultado = $modificarIncidencia->modificarIncidencia(
-    
-    $ciTecnico,
+
     $idIncidencia,
     $tipoIncidencia,
-    $nroPc,
+    $idEquipo,
     $nombreAlumno,
     $descripcion
 );

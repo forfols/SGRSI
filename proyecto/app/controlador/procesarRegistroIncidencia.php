@@ -24,6 +24,21 @@ $descripcion = $_POST["descripcion"] ?? "";
 $idRegistroEspacio = $_POST["idRegistroEspacio"] ?? null;
 
 
+if ($tipo === "PC" && ($idEquipo === "" || $nombreAlumno === "")) {
+    $_SESSION["error"] = "No se pudo registrar la incidencia: Se eligio una incidencia sobre PC pero no se asigno un alumno o pc";
+    header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio . "&tipoEspacio=". $tipoEspacio);
+    exit;
+} else if ($tipo === "" || $descripcion === "") {
+    $_SESSION["error"] = "No se pudo registrar la incidencia: hay campos vacíos";
+    header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio . "&tipoEspacio=". $tipoEspacio);
+    exit;
+}
+
+if ($tipo === "Otros") {
+    $idEquipo=null;
+    $nombreAlumno=null;
+} 
+
 $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
@@ -51,6 +66,7 @@ $registroIncidencia->registrarIncidencia(
 
 
 $conectorPDO->desconectar();
+$_SESSION["mensaje"] = "Se registró la incidencia";
 header("Location: solicitanteRegistroIncidencias.php?idRegistroEspacio=" . $idRegistroEspacio . "&tipoEspacio=". $tipoEspacio);
 exit;
 

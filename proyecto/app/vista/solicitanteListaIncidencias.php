@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../../config/config.php";
 
 require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
+require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
 
 ?>
 
@@ -16,6 +17,7 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="<?= URL_PUBLIC . '/assets/css/solicitante.css' ?>">
+    <script>const equipos = <?= json_encode($equipos) ?>;</script>
 
 </head>
 
@@ -85,7 +87,8 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
                         <td>
                             <button type="button" class="btnModificar"
                                 data-id="<?= htmlspecialchars($incidencia["id"]) ?>"
-                                data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>">
+                                data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>"
+                                data-tipo-espacio="<?= htmlspecialchars($incidencia["tipoEspacio"]) ?>">
                                 Modificar
                             </button>
                             <button type="button" class="btnEliminar"
@@ -131,9 +134,9 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
             </div>
 
             <div id="campoExtra" class="d-none">
-                <label for="nroPc">Número del PC:</label>
-                <input name="nroPc" id="nroPc" type="text" placeholder="Ej: PC03" required>
-
+                <label for="nroPc">PC:</label>
+            <select name="nroPc" id="nroPc">
+            </select>
                 <label for="nombreAlumno">Nombre del alumno:</label>
                 <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
             </div>
@@ -189,7 +192,8 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
 
     </form>
 
-    <script src="<?= URL_PUBLIC . '/assets/js/solicitanteListaIncidencias.js' ?>"></script>
+    <script 
+    src="<?= URL_PUBLIC . '/assets/js/solicitanteListaIncidencias.js' ?>"></script>
 </body>
 
 </html>

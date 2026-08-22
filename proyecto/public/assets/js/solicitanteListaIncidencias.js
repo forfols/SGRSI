@@ -48,7 +48,8 @@ document.querySelectorAll(".btnModificar").forEach(function (boton) {
     boton.addEventListener("click", function () {
 
         const idIncidencia = this.dataset.id;
-        const estadoIncidencia=this.dataset.estado;
+        const estadoIncidencia = this.dataset.estado;
+        const tipoEspacio = this.dataset.tipoEspacio;
 
 
         campoModificar.style.display = "block";
@@ -65,9 +66,41 @@ document.querySelectorAll(".btnModificar").forEach(function (boton) {
             if (tipoIncidencia.value === "PC") {
                 campoExtra.classList.remove("d-none");
                 nroPc.required = true;
+
+                const selectPc = document.getElementById("nroPc");
+
+
+                equipos.forEach(equipo => {
+
+                    if (tipoEspacio == "Laboratorio") {
+
+                        const option = document.createElement("option");
+                        option.value = equipo.id;
+                        option.textContent = equipo.nombre;
+                        selectPc.appendChild(option);
+
+                    } else if (equipo.nombre == "PCDocente") {
+                        const option = document.createElement("option");
+                        option.value = equipo.id;
+                        option.textContent = equipo.nombre;
+
+                        selectPc.appendChild(option);
+                    }
+                });
+
+
+
+
             } else {
                 campoExtra.classList.add("d-none");
                 nroPc.required = false;
+
+                nroPc.value = "";
+                if (document.getElementById("nombreAlumno")) {
+                    document.getElementById("nombreAlumno").value = "";
+                }
+
+
             }
         })
 

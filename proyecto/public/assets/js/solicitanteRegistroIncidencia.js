@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             nroPc.required = true;
 
             const selectPc = document.getElementById("nroPc");
-            
+
 
             equipos.forEach(equipo => {
 
@@ -42,12 +42,17 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             campoExtra.classList.add("d-none");
             nroPc.required = false;
+
+            nroPc.value = "";
+            if (document.getElementById("nombreAlumno")) {
+                document.getElementById("nombreAlumno").value = "";
+            }
+
         }
     })
 
     formulario.addEventListener("submit", function (e) {
 
-        alert("Incidencia realizada, si desea terminar de realizar incidencias presione en Terminar");
 
 
     })

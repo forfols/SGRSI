@@ -27,7 +27,7 @@ $incidencia = $verificarEstado->verificarEstado(
 
 $estado = $incidencia["tipo"];
 if ($estado != "Sin asignar") {
-    $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico o Administrador";
+    $_SESSION["error"] = "No se pudo eliminar la incidencia: La incidencia está siendo procesada por un Técnico";
     header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
     exit;
 }

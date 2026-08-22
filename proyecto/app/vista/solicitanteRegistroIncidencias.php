@@ -37,6 +37,17 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
     </nav>
   </header>
 
+      <?php
+    if (isset($_SESSION["error"])) {
+        echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+        unset($_SESSION["error"]);
+    }
+    if (isset($_SESSION["mensaje"])) {
+        echo "<div class='mensaje'>" . htmlspecialchars($_SESSION["mensaje"]) . "</div>";
+        unset($_SESSION["mensaje"]);
+    }
+    ?>
+
   <form id="registroIncidencia" class="mt-3" action="procesarRegistroIncidencia.php" method="post">
     <fieldset>
   

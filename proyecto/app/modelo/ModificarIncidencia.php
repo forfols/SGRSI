@@ -23,20 +23,15 @@ class ModificarIncidencia
      * Modifica los datos de una incidencia.
      *
      * @param int $idIncidencia ID de la incidencia a modificar.
-     * @param string $tipoIncidencia Nuevo tipo de incidencia.
-     * @param string $nroPc Nuevo número de PC.
-     * @param string $nombreAlumno Nuevo nombre del alumno.
+     * @param string $tipoIncidencia Nuevo tipo de incidencia ('PC' u 'Otros').
+     * @param int|null $idEquipo ID del equipo de la tabla EQUIPO (o null).
+     * @param string|null $nombreAlumno Nombre del alumno (o null).
      * @param string $descripcion Nueva descripción de la incidencia.
      *
      * @return bool TRUE si la modificación se realiza correctamente,
      * FALSE en caso contrario.
      */
-    public function modificarIncidencia(
-        int $idIncidencia,
-        string $tipoIncidencia,
-        string $nroPc,
-        string $nombreAlumno,
-        string $descripcion
+    public function modificarIncidencia(int $idIncidencia, string $tipoIncidencia, ?int $idEquipo, ?string $nombreAlumno, string $descripcion
     ): bool {
 
         try {
@@ -49,15 +44,11 @@ class ModificarIncidencia
                 WHERE id = :idIncidencia";
 
             $consultaIncidencia = $this->conexion->prepare($sqlIncidencia);
-
             $consultaIncidencia->execute(["idIncidencia" => $idIncidencia]);
-
             $incidencia = $consultaIncidencia->fetch(PDO::FETCH_ASSOC);
 
             if (!$incidencia) {
-
                 $this->conexion->rollBack();
-
                 return false;
             }
 
@@ -66,25 +57,24 @@ class ModificarIncidencia
             $sqlTipoIncidencia = "
                 UPDATE REGISTROTIPOINCIDENCIA
                 SET tipo = :tipo,
-                    nroPc = :nroPc,
+                    idEquipo = :idEquipo,
                     alumno = :alumno,
                     descripcion = :descripcion
                 WHERE id = :idTipoIncidencia";
 
             $consultaTipoIncidencia = $this->conexion->prepare($sqlTipoIncidencia);
 
-            $consultaTipoIncidencia->execute([
-                "tipo" => $tipoIncidencia,
-                "nroPc" => $nroPc,
-                "alumno" => $nombreAlumno,
-                "descripcion" => $descripcion,
-                "idTipoIncidencia" => $idTipoIncidencia
-            ]);
+            $consultaTipoIncidencia->bindParam(":tipo", $tipoIncidencia);
+            $consultaTipoIncidencia->bindParam(":idEquipo", $idEquipo);
+            $consultaTipoIncidencia->bindParam(":alumno", $nombreAlumno);
+            $consultaTipoIncidencia->bindParam(":descripcion", $descripcion);
+            $consultaTipoIncidencia->bindParam(":idTipoIncidencia", $idTipoIncidencia, PDO::PARAM_INT);
+
+            $consultaTipoIncidencia->execute();
 
             $this->conexion->commit();
 
             return true;
-
 
         } catch (PDOException $error) {
             if ($this->conexion->inTransaction()) {
@@ -94,9 +84,4 @@ class ModificarIncidencia
             return false;
         }
     }
-
-
-
-
-
 }

@@ -1,0 +1,1 @@
+SELECT id, tipo, numero FROM ESPACIO ORDER BY tipo, numero;

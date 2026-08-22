@@ -51,7 +51,7 @@ require_once __DIR__ . "/../../config/config.php";
             </tr>
             <tbody id="tabla"></tbody>
             <?php foreach ($incidencias as $incidencia) { ?>
-                <?php //if (($incidencia["ciTecnico"] == $_SESSION["ci"])) { ?>
+                <?php if (($incidencia["tipoEstado"] == "Sin asignar") || ($incidencia["ciTecnico"] == $_SESSION["ci"])) { ?>
                 <?php $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
                 <tr>
                     <td><?= htmlspecialchars($incidencia["nombreSolicitante"]) ?></td>
@@ -72,7 +72,7 @@ require_once __DIR__ . "/../../config/config.php";
                     <td><?= htmlspecialchars($incidencia["descripcionIncidencia"]) ?></td>
                     <td><?= htmlspecialchars($fechaCambiada) ?></td>
                 </tr>
-                <?php //} ?>
+                <?php } ?>
             <?php } ?>
             </tbody>
         </table>
@@ -89,6 +89,7 @@ require_once __DIR__ . "/../../config/config.php";
             <button type="button" id="btnCerrarModificarEstado" onclick="formularioModificarEstado()">x</button>
 
             <input type="hidden" name="idIncidencia" id="idIncidenciaEstado">
+            <input type="hidden" name="ciTecnico" value="<?php $_SESSION["ci"] ?>">
 
             <br>
 

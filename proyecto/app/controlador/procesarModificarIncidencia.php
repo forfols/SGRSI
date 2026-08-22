@@ -6,7 +6,7 @@ require_once RUTA_MODELO . "/VerificarEstado.php";
 
 
 
-
+$ciTecnico = trim($_POST["ciTecnico"] ?? "");
 $idIncidencia = trim($_POST["idIncidencia"] ?? "");
 $estado = trim($_POST["estadoIncidencia"] ?? "");
 
@@ -53,7 +53,8 @@ if ($estado != "Sin asignar") {
 $modificarIncidencia = new ModificarIncidencia($conexion);
 
 $resultado = $modificarIncidencia->modificarIncidencia(
-
+    
+    $ciTecnico,
     $idIncidencia,
     $tipoIncidencia,
     $nroPc,

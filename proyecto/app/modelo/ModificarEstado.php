@@ -4,14 +4,12 @@ class ModificarEstado
 {
     private PDO $conexion;
 
-
     public function __construct(PDO $conexion)
     {
         $this->conexion = $conexion;
     }
 
-
-    public function modificarEstado(int $idIncidencia, string $estado, string $prioridad, string $diagnostico, string $soluciones): bool {
+    public function modificarEstado(string $ciTecnico, int $idIncidencia, string $estado, string $prioridad, string $diagnostico, string $soluciones): bool {
 
         try {
             $this->conexion->beginTransaction();
@@ -22,18 +20,14 @@ class ModificarEstado
                 WHERE id = :idIncidencia";
 
             $consultaIncidencia = $this->conexion->prepare($sqlIncidencia);
-
             $consultaIncidencia->execute(["idIncidencia" => $idIncidencia]);
 
-            $incidencia =$consultaIncidencia->fetch(PDO::FETCH_ASSOC);
+            $incidencia = $consultaIncidencia->fetch(PDO::FETCH_ASSOC);
 
             if (!$incidencia) {
-
                 $this->conexion->rollBack();
-
                 return false;
             }
-
 
             $idEstado = $incidencia["idEstado"];
 
@@ -45,8 +39,7 @@ class ModificarEstado
                     soluciones = :soluciones
                 WHERE id = :idEstado";
 
-            $consultaEstado =$this->conexion->prepare($sqlEstado);
-
+            $consultaEstado = $this->conexion->prepare($sqlEstado);
             $consultaEstado->execute([
                 "estado" => $estado,
                 "prioridad" => $prioridad,
@@ -55,11 +48,19 @@ class ModificarEstado
                 "idEstado" => $idEstado
             ]);
 
+            $sqlTecnico = "
+                UPDATE REGISTROINCIDENCIA
+                SET ciTecnico = :ciTecnico
+                WHERE id = :idIncidencia";
+
+            $consultaTecnico = $this->conexion->prepare($sqlTecnico);
+            $consultaTecnico->execute([
+                "ciTecnico" => $ciTecnico,
+                "idIncidencia" => $idIncidencia
+            ]);
 
             $this->conexion->commit();
-
             return true;
-
 
         } catch (PDOException $error) {
 

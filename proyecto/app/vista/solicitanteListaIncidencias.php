@@ -49,11 +49,11 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
             <tr>
                 <th>Tipo incidencia</th>
                 <th>Espacio</th>
+                <th>Nro espacio</th>
                 <th>Grupo</th>
                 <th>PC</th>
                 <th>Alumno asignado</th>
                 <th>Descripción</th>
-                <th>Nro espacio</th>
                 <th>Estado</th>
                 <th>Fecha creado</th>
                 <th>Acciones</th>
@@ -65,11 +65,12 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
                     <tr>
                         <td><?= htmlspecialchars($incidencia["tipoIncidencia"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["tipoEspacio"]) ?></td>
+                        <td><?= htmlspecialchars($incidencia["numeroEspacio"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["nombreGrupo"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["nombreEquipo"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["alumno"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["descripcionIncidencia"]) ?></td>
-                        <td><?= htmlspecialchars($incidencia["numeroEspacio"]) ?></td>
+                        
                         <td>
                             <button type="button" class="btnVerEstado"
                                 data-estado="<?= htmlspecialchars($incidencia["tipoEstado"]) ?>"

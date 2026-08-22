@@ -5,7 +5,7 @@ require_once RUTA_MODELO . "/ModificarEstado.php";
 
 
 
-
+$ciTecnico = $_SESSION["ci"] ?? "";
 $idIncidencia = trim($_POST["idIncidencia"] ?? "");
 $estado = $_POST["estado"] ?? "";
 $prioridad = $_POST["prioridad"] ?? "";
@@ -25,7 +25,7 @@ $modificarEstado = new ModificarEstado($conexion);
 
 $resultado = $modificarEstado->modificarEstado(
 
-    $idIncidencia, $estado, $prioridad, $diagnostico, $soluciones
+    $ciTecnico, $idIncidencia, $estado, $prioridad, $diagnostico, $soluciones
 );
 
 $conectorPDO->desconectar();

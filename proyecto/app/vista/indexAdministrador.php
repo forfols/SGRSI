@@ -34,7 +34,7 @@ require_once __DIR__ . "/../../config/config.php";
             <button class="btnPrincipal">Gestionar usuarios</button>
         </a>
 
-        <a href="administradorListaIncidencias.php">
+        <a href="<?= URL_CONTROLADOR . '/cargarIncidenciasAdministrador.php' ?>">
             <button class="btnPrincipal">Ver incidencias generales</button>
         </a>
         

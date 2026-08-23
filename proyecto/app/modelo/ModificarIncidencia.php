@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Clase encargada de modificar los datos
- * relacionados con incidencias del sistema.
+ * Clase encargada de modificar los datos relacionados con incidencias del sistema.
  */
 class ModificarIncidencia
 {
@@ -10,8 +9,7 @@ class ModificarIncidencia
     private PDO $conexion;
 
     /**
-     * Constructor parametrizado que recibe una conexión
-     * a la base de datos.
+     * Constructor parametrizado que recibe una conexión a la base de datos.
      *
      * @param PDO $conexion Conexión a la base de datos.
      */
@@ -29,8 +27,7 @@ class ModificarIncidencia
      * @param string $nombreAlumno Nuevo nombre del alumno.
      * @param string $descripcion Nueva descripción de la incidencia.
      *
-     * @return bool TRUE si la modificación se realiza correctamente,
-     * FALSE en caso contrario.
+     * @return bool TRUE si la modificación se realiza correctamente, FALSE en caso contrario.
      */
     public function modificarIncidencia(
         int $idIncidencia,

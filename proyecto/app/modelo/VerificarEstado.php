@@ -22,10 +22,8 @@ class VerificarEstado
     }
 
     /**
-     * Consulta el estado de una incidencia a partir de su identificador. El
-     * método ejecuta la consulta y guarda el resultado en la variable local
-     * $incidencia, pero no lo retorna: actualmente no devuelve ningún valor al
-     * invocante. Debería agregarse el return correspondiente.
+     * Consulta el estado de una incidencia a partir de su id.
+     * El método ejecuta la consulta y guarda el resultado en $incidencia
      *
      * @param int $idIncidencia Identificador de la incidencia a consultar.
      * @return void

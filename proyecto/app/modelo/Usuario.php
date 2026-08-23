@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Entidad que representa a un usuario del sistema. Los atributos se asignan en
- * el constructor y solo se exponen mediante métodos de acceso. Un mismo usuario
- * puede acumular más de un rol.
+ * Entidad que representa a un usuario.
+ * Los atributos se asignan en el constructor y solo se exponen mediante métodos de acceso.
+ * Un mismo usuario puede tener más de un rol.
  *
  * @class Usuario
  */

@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Recupera los espacios y grupos disponibles, principalmente para poblar las
- * listas desplegables del formulario de alta de incidencias.
+ * Recupera los espacios y grupos disponibles.
  *
  * @class RecibirEspacio
  */

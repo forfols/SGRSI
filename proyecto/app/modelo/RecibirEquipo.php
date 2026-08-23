@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Recupera los equipos registrados en el sistema, para poblar las listas
- * desplegables de los formularios.
+ * Recupera los equipos registrados en el sistema.
  *
  * @class RecibirEquipo
  */
@@ -21,9 +20,7 @@ class RecibirEquipo {
     }
 
     /**
-     * Obtiene todos los equipos registrados, sin filtros ni orden definido. La
-     * consulta usa SELECT *, por lo que devuelve todas las columnas de la tabla
-     * EQUIPO tal como esté definida en la base de datos.
+     * Obtiene todos los equipos registrados, sin filtros ni orden definido.
      *
      * @return array Arreglo asociativo con una fila por equipo.
      */

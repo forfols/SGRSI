@@ -88,8 +88,7 @@ WHERE u.ci = :ci;
 }
 
 /**
- * Activa o desactiva un usuario. El valor booleano se guarda como 1 o 0 en la
- * columna activo.
+ * Activa o desactiva un usuario.
  *
  * @param string $ci Cédula del usuario a modificar.
  * @param bool $activo TRUE para habilitar el usuario, FALSE para deshabilitarlo.
@@ -115,11 +114,9 @@ public function estaActivo(string $ci, bool $activo): void
 
 
 /**
- * Obtiene el listado completo de usuarios con sus roles. No incluye la
- * contraseña ni el estado activo.
+ * Obtiene el listado completo de usuarios con sus roles. No incluye la contraseña ni el estado activo.
  *
- * @return array Arreglo asociativo con las claves ci, nombre, solicitante,
- *         tecnico y administrador para cada usuario registrado.
+ * @return array Arreglo asociativo con las claves ci, nombre, solicitante, tecnico y administrador para cada usuario registrado.
  */
 public function listarUsuarios(): array {
         $sql = "

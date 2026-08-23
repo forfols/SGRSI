@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Clase encargada de modificar el estado asociado a una incidencia. Es la
- * operación que utiliza el técnico para dar seguimiento: reemplaza los valores
- * iniciales por defecto creados por RegistroEstado.
+ * Clase encargada de modificar el estado asociado a una incidencia.
+ * Es la operación que utiliza el técnico para dar seguimiento: reemplaza los valores iniciales por defecto creados por RegistroEstado.
  *
  * @class ModificarEstado
  */
@@ -25,17 +24,15 @@ class ModificarEstado
 
 
     /**
-     * Modifica el estado de una incidencia. Obtiene el identificador del estado
-     * vinculado a la incidencia y actualiza la fila correspondiente de la tabla
-     * ESTADO. Toda la operación se ejecuta dentro de una transacción.
+     * Modifica el estado de una incidencia. Obtiene el identificador del estado vinculado a la incidencia y actualiza la fila correspondiente de la tabla ESTADO.
+     * Toda la operación se ejecuta dentro de una transacción.
      *
      * @param int $idIncidencia ID de la incidencia cuyo estado se modifica.
      * @param string $estado Nuevo tipo de estado de la incidencia.
      * @param string $prioridad Nueva prioridad asignada.
      * @param string $diagnostico Diagnóstico elaborado por el técnico.
      * @param string $soluciones Soluciones aplicadas o propuestas.
-     * @return bool TRUE si la modificación se realiza correctamente, FALSE en
-     *         caso contrario o si la incidencia no existe.
+     * @return bool TRUE si la modificación se realiza correctamente, FALSE en caso contrario o si la incidencia no existe.
      */
     public function modificarEstado(int $idIncidencia, string $estado, string $prioridad, string $diagnostico, string $soluciones): bool {
 

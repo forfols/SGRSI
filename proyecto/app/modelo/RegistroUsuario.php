@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Registra nuevos usuarios en la base de datos junto con sus roles. Los roles
- * se modelan como tablas separadas (SOLICITANTE, TECNICO, ADMINISTRADOR) que
- * referencian la cédula del usuario.
+ * Registra nuevos usuarios en la base de datos junto con sus roles.
+ * Los roles son tablas separadas (SOLICITANTE, TECNICO, ADMINISTRADOR) que referencian la cédula del usuario.
  *
  * @class RegistroUsuario
  */
@@ -38,12 +37,9 @@ class RegistroUsuario {
 }
 
     /**
-     * Registra un nuevo usuario y le asigna los roles indicados. Inserta primero
-     * la fila en USUARIO y luego agrega la cédula a cada tabla de rol según los
-     * parámetros recibidos. La contraseña debe llegar ya hasheada, porque la
-     * autenticación la valida con password_verify(). Las inserciones no se
-     * ejecutan dentro de una transacción, por lo que un fallo al asignar un rol
-     * deja el usuario creado sin él.
+     * Registra un nuevo usuario y le asigna los roles indicados.
+     * Inserta primero la fila en USUARIO y luego agrega la cédula a cada tabla de rol según los parámetros que haya recibido.
+     * La contraseña debe llegar ya hasheada porque se usa password_verify().
      *
      * @param string $ci Cédula del nuevo usuario.
      * @param string $contra Contraseña del usuario, ya hasheada.

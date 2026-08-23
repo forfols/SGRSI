@@ -2,8 +2,8 @@
 
 /**
  * Registra incidencias y recupera el listado completo con sus datos asociados.
- * La incidencia actúa como entidad central: referencia al solicitante, al
- * registro de espacio, al tipo de incidencia y al estado, creados previamente.
+ * La incidencia actúa como entidad central: referencia al solicitante,
+ * al registro de espacio, al tipo de incidencia y al estado, creados previamente.
  *
  * @class RegistroIncidencia
  */
@@ -24,9 +24,8 @@ class RegistroIncidencia
     }
 
     /**
-     * Registra una nueva incidencia vinculando sus entidades asociadas. Los
-     * identificadores recibidos deben existir previamente en sus respectivas
-     * tablas.
+     * Registra una nueva incidencia vinculando sus entidades asociadas.
+     * Los identificadores recibidos deben existir previamente en sus respectivas tablas.
      *
      * @param int $idRegistroEspacio Identificador del registro de espacio.
      * @param int $idTipoIncidencia Identificador del tipo de incidencia.

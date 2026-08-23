@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Crea la fila de ESTADO que acompaña a toda incidencia nueva. El estado se
- * inserta con valores por defecto ("Sin asignar" / "N/A") y luego lo completa
- * el técnico mediante ModificarEstado.
+ * Crea la fila de ESTADO que acompaña a toda incidencia nueva.
+ * El estado se inserta con valores por defecto y luego lo completa el técnico mediante ModificarEstado.
  *
  * @class RegistroEstado
  */
@@ -24,8 +23,7 @@ class RegistroEstado {
     /**
      * Registra un estado con los valores iniciales por defecto.
      *
-     * @return string Identificador del estado creado, necesario para vincularlo
-     *         con la incidencia.
+     * @return string Identificador del estado creado, necesario para vincularlo con la incidencia.
      */
     public function registrarEstado() {
 

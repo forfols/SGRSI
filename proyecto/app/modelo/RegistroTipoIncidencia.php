@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Registra en REGISTROTIPOINCIDENCIA los datos específicos del problema
- * reportado: tipo de falla, equipo afectado, alumno involucrado y descripción.
+ * Registra los datos específicos del problema reportado:
+ * tipo de falla, equipo afectado, alumno involucrado y descripción.
  * Devuelve el identificador para asociarlo a la incidencia.
  *
  * @class RegistroTipoIncidencia

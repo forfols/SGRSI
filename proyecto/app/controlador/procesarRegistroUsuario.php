@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar el registro de un nuevo usuario por parte del administrador.
+ * @file procesarRegistroUsuario.php
+ * @brief Controlador encargado de procesar el registro de un nuevo usuario por parte del administrador.
+ *
  * Valida la petición y los campos recibidos, hashea la contraseña y delega la creación
  * del usuario en RegistroUsuario.
  */

@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar la modificación de un usuario por parte del administrador.
+ * @file procesarModificarUsuario.php
+ * @brief Controlador encargado de procesar la modificación de un usuario por parte del administrador.
+ *
  * Valida la petición y los campos recibidos, y delega la actualización en ModificarUsuario.
  */
 

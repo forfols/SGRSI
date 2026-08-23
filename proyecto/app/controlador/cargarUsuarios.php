@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de cargar el listado de usuarios para la vista del administrador.
+ * @file cargarUsuarios.php
+ * @brief Controlador encargado de cargar el listado de usuarios para la vista del administrador.
+ *
  * Establece la conexión a la base de datos, recupera todos los usuarios con sus roles
  * y delega la presentación a la vista correspondiente.
  */

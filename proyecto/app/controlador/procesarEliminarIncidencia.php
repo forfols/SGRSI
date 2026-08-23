@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar la eliminación de una incidencia.
+ * @file procesarEliminarIncidencia.php
+ * @brief Controlador encargado de procesar la eliminación de una incidencia.
+ *
  * Verifica que la petición sea válida, que la incidencia no esté siendo
  * procesada por un técnico, y delega la eliminación en EliminarIncidencia.
  */

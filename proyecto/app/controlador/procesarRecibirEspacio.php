@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Controlador encargado de recuperar los espacios y grupos registrados,
- * utilizado para poblar los formularios de registro de espacio.
+ * @file procesarRecibirEspacio.php
+ * @brief Controlador encargado de recuperar los espacios y grupos registrados.
+ *
+ * Utilizado para poblar los formularios de registro de espacio.
  */
 
 require_once __DIR__ . "/../../config/config.php";

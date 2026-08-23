@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar el registro de una nueva incidencia.
+ * @file procesarRegistroIncidencia.php
+ * @brief Controlador encargado de procesar el registro de una nueva incidencia.
+ *
  * Valida la petición y los campos recibidos, y crea en orden el tipo de
  * incidencia, el estado inicial y la incidencia que los vincula.
  */

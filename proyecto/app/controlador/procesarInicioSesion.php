@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar el inicio de sesión.
+ * @file procesarInicioSesion.php
+ * @brief Controlador encargado de procesar el inicio de sesión.
+ *
  * Autentica las credenciales recibidas, verifica que el usuario no tenga
  * ya una sesión activa, inicializa los datos de sesión y redirige según
  * los roles que posea el usuario autenticado.

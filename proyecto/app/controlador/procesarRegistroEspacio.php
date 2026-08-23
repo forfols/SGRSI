@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Controlador encargado de procesar el registro de la ocupación de un espacio
- * por parte de un grupo. Valida la petición y los campos recibidos, y delega
- * la creación del registro en RegistroEspacio.
+ * @file procesarRegistroEspacio.php
+ * @brief Controlador encargado de procesar el registro de la ocupación de un espacio por parte de un grupo.
+ *
+ * Valida la petición y los campos recibidos, y delega la creación del registro en RegistroEspacio.
  */
 
 require_once __DIR__ . "/../../config/config.php";

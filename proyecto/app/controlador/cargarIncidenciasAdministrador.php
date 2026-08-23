@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de cargar el listado de incidencias para la vista del administrador.
+ * @file cargarIncidenciasAdministrador.php
+ * @brief Controlador encargado de cargar el listado de incidencias para la vista del administrador.
+ *
  * Establece la conexión a la base de datos, recupera todas las incidencias registradas
  * y delega la presentación a la vista correspondiente.
  */

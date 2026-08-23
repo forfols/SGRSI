@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de cerrar la sesión del usuario.
+ * @file cerrarSesion.php
+ * @brief Controlador encargado de cerrar la sesión del usuario.
+ *
  * Marca al usuario como inactivo en la base de datos, destruye la sesión actual
  * y, según el motivo recibido por GET, define el mensaje de error que se mostrará
  * en la pantalla de inicio de sesión.

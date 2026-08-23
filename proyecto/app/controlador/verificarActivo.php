@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Controlador encargado de mostrar el motivo por el cual se rechazó un intento
- * de inicio de sesión cuando el usuario ya tiene una sesión activa en otro dispositivo.
+ * @file verificarActivo.php
+ * @brief Controlador encargado de mostrar el motivo por el cual se rechazó un intento de inicio de sesión.
+ *
+ * Se activa cuando el usuario ya tiene una sesión activa en otro dispositivo.
  */
 
 require_once __DIR__ . "/../../config/config.php";

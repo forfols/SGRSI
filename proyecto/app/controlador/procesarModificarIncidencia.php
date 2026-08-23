@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar la modificación de una incidencia por parte del solicitante.
+ * @file procesarModificarIncidencia.php
+ * @brief Controlador encargado de procesar la modificación de una incidencia por parte del solicitante.
+ *
  * Valida la petición y los campos recibidos, verifica que la incidencia aún no haya sido
  * tomada por un técnico, y delega la actualización en ModificarIncidencia.
  */

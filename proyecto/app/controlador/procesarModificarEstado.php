@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Controlador encargado de procesar la modificación del estado de una incidencia.
+ * @file procesarModificarEstado.php
+ * @brief Controlador encargado de procesar la modificación del estado de una incidencia.
+ *
  * Valida la petición y los campos recibidos, y delega la actualización en ModificarEstado.
  */
 

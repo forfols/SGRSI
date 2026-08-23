@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Controlador encargado de recuperar el listado de equipos registrados,
- * utilizado para poblar los formularios que requieren seleccionar un equipo.
+ * @file procesarRecibirEquipo.php
+ * @brief Controlador encargado de recuperar el listado de equipos registrados.
+ *
+ * Utilizado para poblar los formularios que requieren seleccionar un equipo.
  */
 
 require_once __DIR__ . "/../../config/config.php";

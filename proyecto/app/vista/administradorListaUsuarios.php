@@ -89,7 +89,8 @@ if (isset($_SESSION["mensaje"])) {
                         <button type="button" class="btnModificar" data-nombre="<?= htmlspecialchars($usuario["nombre"]) ?>"
                             data-ci="<?= htmlspecialchars(trim($usuario["ci"])) ?>"
                             data-solicitante="<?= $usuario["solicitante"] ?>" data-tecnico="<?= $usuario["tecnico"] ?>"
-                            data-administrador="<?= $usuario["administrador"] ?>">
+                            data-administrador="<?= $usuario["administrador"] ?>"
+                            data-activo="<?= $usuario["activo"] ?>" >
                             Modificar
                         </button>
                     </td>
@@ -105,6 +106,7 @@ if (isset($_SESSION["mensaje"])) {
         <fieldset class="formularioModificarUsuario" style="display:none">
 
         <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
+        <input type="hidden" id="estaActivo" name="estaActivo">
             <legend>
                 <h2>
                     Modificar Usuario

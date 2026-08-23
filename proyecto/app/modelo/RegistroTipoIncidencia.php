@@ -25,21 +25,21 @@ class RegistroTipoIncidencia {
      * Registra el tipo y el detalle de una incidencia.
      *
      * @param string $tipo Tipo de incidencia reportada.
-     * @param string $nroPc Número de PC o equipo afectado.
+     * @param string $idEquipo id te la tabla EQUIPO.
      * @param string $nombreAlumno Nombre del alumno involucrado.
      * @param string $descripcion Descripción del problema.
      * @return string Identificador del registro creado.
      */
-    public function registrarTipoIncidencia($tipo, $nroPc, $nombreAlumno, $descripcion) {
+    public function registrarTipoIncidencia($tipo, $idEquipo, $nombreAlumno, $descripcion) {
 
         $sql = "INSERT INTO REGISTROTIPOINCIDENCIA 
-                (tipo, nroPc, alumno, descripcion)
-                VALUES (:tipo, :nroPc, :nombreAlumno, :descripcion)";
+                (tipo, idEquipo, alumno, descripcion)
+                VALUES (:tipo, :idEquipo, :nombreAlumno, :descripcion)";
 
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(":tipo", $tipo);
-        $stmt->bindParam(":nroPc", $nroPc);
+        $stmt->bindParam(":idEquipo", $idEquipo);
         $stmt->bindParam(":nombreAlumno", $nombreAlumno); 
         $stmt->bindParam(":descripcion", $descripcion); 
 

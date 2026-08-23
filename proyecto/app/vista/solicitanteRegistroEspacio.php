@@ -30,6 +30,12 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
             </a>
         </nav>
     </header>
+          <?php
+    if (isset($_SESSION["error"])) {
+        echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+        unset($_SESSION["error"]);
+    }
+    ?>
 
     <form id="registroEspacio" class="mt-3" action="procesarRegistroEspacio.php" method="post">
         <fieldset>

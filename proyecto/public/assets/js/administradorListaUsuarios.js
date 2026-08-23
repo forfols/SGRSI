@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const campoRol = document.getElementById("rol");
     const formularioModificar = document.querySelector(".formularioModificarUsuario");
     const btnCerrar = document.getElementById("btnCerrarModificarUsuario");
+    const estaActivo= document.getElementById("estaActivo");
 
     document.querySelectorAll(".btnModificar").forEach(function (boton) {
 
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         campoNombre.value = boton.dataset.nombre;
         campoCi.value = boton.dataset.ci;
+        estaActivo.value = boton.dataset.activo;
 
         document.getElementById("rolSolicitante").checked =
             boton.dataset.solicitante === "1";

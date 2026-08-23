@@ -123,6 +123,7 @@ public function listarUsuarios(): array {
             SELECT
                 u.ci,
                 u.nombre,
+                u.activo,
 
                 CASE
                     WHEN s.ci IS NOT NULL THEN TRUE

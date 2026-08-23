@@ -8,7 +8,7 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-   //$mensaje = "Acceso Denegado: Petición incorrecta";
+    http_response_code(405);
     header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
     exit;
 }
@@ -17,11 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $ci = trim($_POST["ci"] ?? "");
 $contra = $_POST["contra"] ?? "";
 
+if ($ci === "" || $contra === "") {
+    http_response_code(400);
+    $_SESSION["error"] = "No se pudo iniciar sesión: campos vacíos";
+    header("Location:" . URL_PUBLIC . "/inicioSesion.php");
+    exit;
+}
+
 //Credenciales hardcodeadas, en un futuro van a colocarse en archivos aislados o variables de entorno
 $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
 $conexion = $conectorPDO->establecerConexion();
 
 if ($conexion === null) {
+    http_response_code(500);
     header("Location: cerrarSesion.php?motivo=sinConexion");
     exit;
 }
@@ -34,11 +42,13 @@ $conectorPDO->desconectar();
 
 //Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {
+    http_response_code(401);
     header("Location: cerrarSesion.php?motivo=credenciales");
     exit;
 }
 
 if ($usuario->estaActivo()) {
+    http_response_code(409);
     header("Location:" . URL_CONTROLADOR . "/verificarActivo.php?motivo=sesionActiva");
     exit;
 }

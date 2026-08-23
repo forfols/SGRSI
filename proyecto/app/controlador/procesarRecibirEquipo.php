@@ -11,6 +11,7 @@ $conectorPDO = new ConectorPDO($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_EN
 $conexion = $conectorPDO->establecerConexion();
 
 if ($conexion === null) {
+    http_response_code(500);
     header("Location: cerrarSesion.php?motivo=sinConexion");
     exit;
 }

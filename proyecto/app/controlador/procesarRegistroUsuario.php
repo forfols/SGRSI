@@ -7,7 +7,7 @@ require_once RUTA_MODELO . "/RegistroUsuario.php";
 
 //Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-   //$mensaje = "Acceso Denegado: Petición incorrecta";
+    http_response_code(405);
     header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
     exit;
 }
@@ -22,12 +22,15 @@ $solicitante = $_POST["solicitante"] ?? NULL;
 $tecnico = $_POST["tecnico"] ?? NULL;
 $administrador = $_POST["administrador"] ?? NULL;
 $csrfToken = $_POST["csrfToken"];
+
 if ($csrfToken != $_SESSION["csrfToken"]) {
+    http_response_code(403);
     header("Location: cerrarSesion.php?motivo=token");
     exit;
 }
 
 if ($contra !== $repetirContra) {
+    http_response_code(400);
     $_SESSION["error"] = "Las contraseñas no coinciden";
     header("Location: " . URL_PUBLIC . "/administradorCrearUsuario.php");
     exit;
@@ -38,6 +41,7 @@ $conectorPDO = new ConectorPDO ($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_E
 $conexion = $conectorPDO->establecerConexion();
 
 if ($conexion === null) {
+    http_response_code(500);
     header("Location: cerrarSesion.php?motivo=sinConexion");
     exit;
 }
@@ -66,6 +70,7 @@ if($seCreo== true){
     header("Location:" . URL_PUBLIC . "/administradorCrearUsuario.php");
     exit;
 } else {
+    http_response_code(500);
     $_SESSION["error"] ="Hubo un error al crear el usuario";
     header("Location:" . URL_PUBLIC . "/administradorCrearUsuario.php");
     exit;

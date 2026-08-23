@@ -3,7 +3,11 @@ require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/ModificarUsuario.php";
 
-
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+    header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
+    exit;
+}
 
 //Recupera los datos enviados por el formulario
 $ci = trim($_POST["ci"] ?? "");
@@ -12,14 +16,17 @@ $solicitante = trim($_POST["solicitante"] ?? "");
 $tecnico = $_POST["tecnico"] ?? "";
 $administrador = $_POST["administrador"] ?? "";
 $csrfToken = $_POST["csrfToken"];
+
 if ($csrfToken != $_SESSION["csrfToken"]) {
+    http_response_code(403);
     header("Location: cerrarSesion.php?motivo=token");
     exit;
 }
 
 //Sección que valida los datos recibidos del formulario
 if ($ci === "" || $nombre === "") {
-    $_SESSION["error"] = "No se pudo crear el usuario: hay campos vacíos";
+    http_response_code(400);
+    $_SESSION["error"] = "No se pudo modificar el usuario: hay campos vacíos";
     header("Location: " . URL_CONTROLADOR . "/cargarUsuarios.php");
     exit;
 }
@@ -28,6 +35,7 @@ $conectorPDO = new ConectorPDO($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_EN
 $conexion = $conectorPDO->establecerConexion();
 
     if ($conexion === null) {
+        http_response_code(500);
     header("Location: cerrarSesion.php?motivo=sinConexion");
     exit;
 }
@@ -46,6 +54,7 @@ $modificarUsuario = new ModificarUsuario($conexion);
 $conectorPDO->desconectar();
 
 if ($resultado == false) {
+    http_response_code(500);
     $_SESSION["error"] = "No se pudo modificar el usuario";
     header("Location: " . URL_CONTROLADOR . "/cargarUsuarios.php");
     exit;

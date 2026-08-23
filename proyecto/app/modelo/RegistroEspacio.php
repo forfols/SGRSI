@@ -1,13 +1,35 @@
 <?php
 
+/**
+ * Crea una fila en REGISTROESPACIO que vincula un espacio físico con un grupo.
+ * Antes de insertar, resuelve el identificador del espacio buscándolo por su
+ * tipo y número.
+ *
+ * @class RegistroEspacio
+ */
 class RegistroEspacio {
 
+    /** Conexión activa a la base de datos. */
     private $conexion;
 
+    /**
+     * Constructor parametrizado.
+     *
+     * @param PDO $conexion Conexión a la base de datos.
+     */
     public function __construct($conexion) {
         $this->conexion = $conexion;
     }
 
+    /**
+     * Registra la ocupación de un espacio por parte de un grupo.
+     *
+     * @param string $tipoEspacio Tipo de espacio (por ejemplo, salón o laboratorio).
+     * @param int $nroEspacio Número identificatorio del espacio.
+     * @param string $nombreGrupo Nombre del grupo asociado al registro.
+     * @return string|false Identificador del registro creado, o FALSE si no
+     *         existe un espacio con ese tipo y número.
+     */
     public function registrarEspacio($tipoEspacio, $nroEspacio, $nombreGrupo) {
 
 

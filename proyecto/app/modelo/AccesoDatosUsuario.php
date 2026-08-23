@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * Encapsula las consultas SQL vinculadas a los usuarios del sistema: la lectura
+ * y actualización de la tabla USUARIO, y la resolución de los roles a partir de
+ * las tablas SOLICITANTE, TECNICO y ADMINISTRADOR.
+ *
+ * @class AccesoDatosUsuario
+ */
 class AccesoDatosUsuario {
+
+    /** Conexión activa a la base de datos. */
     private PDO $conexion;
 
     /**
@@ -78,6 +87,14 @@ WHERE u.ci = :ci;
     );
 }
 
+/**
+ * Activa o desactiva un usuario. El valor booleano se guarda como 1 o 0 en la
+ * columna activo.
+ *
+ * @param string $ci Cédula del usuario a modificar.
+ * @param bool $activo TRUE para habilitar el usuario, FALSE para deshabilitarlo.
+ * @return void
+ */
 public function estaActivo(string $ci, bool $activo): void
 {
     $sql = "
@@ -97,7 +114,13 @@ public function estaActivo(string $ci, bool $activo): void
 }
 
 
-
+/**
+ * Obtiene el listado completo de usuarios con sus roles. No incluye la
+ * contraseña ni el estado activo.
+ *
+ * @return array Arreglo asociativo con las claves ci, nombre, solicitante,
+ *         tecnico y administrador para cada usuario registrado.
+ */
 public function listarUsuarios(): array {
         $sql = "
             SELECT

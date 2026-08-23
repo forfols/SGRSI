@@ -6,6 +6,7 @@
  */
 class ModificarUsuario
 {
+    /** Conexión activa a la base de datos. */
     private PDO $conexion;
     /**
      * Constructor parametrizado que recibe una conexión

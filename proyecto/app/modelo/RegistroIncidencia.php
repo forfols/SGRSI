@@ -7,8 +7,7 @@
  *
  * @class RegistroIncidencia
  */
-class RegistroIncidencia
-{
+class RegistroIncidencia{
 
     /** Conexión activa a la base de datos. */
     private $conexion;
@@ -18,8 +17,7 @@ class RegistroIncidencia
      *
      * @param PDO $conexion Conexión a la base de datos.
      */
-    public function __construct($conexion)
-    {
+    public function __construct($conexion){
         $this->conexion = $conexion;
     }
 
@@ -33,8 +31,7 @@ class RegistroIncidencia
      * @param int $idEstado Identificador del estado inicial.
      * @return bool TRUE si la inserción se ejecutó correctamente, FALSE en caso contrario.
      */
-    public function registrarIncidencia($idRegistroEspacio, $idTipoIncidencia, $ciSolicitante, $idEstado)
-    {
+    public function registrarIncidencia($idRegistroEspacio, $idTipoIncidencia, $ciSolicitante, $idEstado){
 
         $sql = "INSERT INTO REGISTROINCIDENCIA 
                 (ciSolicitante, idRegistroEspacio, idTipoIncidencia, idEstado)
@@ -58,8 +55,7 @@ class RegistroIncidencia
      *
      * @return array Arreglo asociativo con una fila por incidencia.
      */
-    public function listarIncidencias(): array
-    {
+    public function listarIncidencias(): array{
         $sql = "
             SELECT
                 ri.id,
@@ -78,9 +74,11 @@ class RegistroIncidencia
                 
                 rti.id AS idTipoIncidencia,
                 rti.tipo AS tipoIncidencia,
-                rti.nroPc,
                 rti.alumno,
                 rti.descripcion AS descripcionIncidencia,
+
+                eq.id AS idEquipo,
+                eq.nombre AS nombreEquipo,
                 
                 es.id AS idEstado,
                 es.tipo AS tipoEstado,
@@ -109,6 +107,9 @@ class RegistroIncidencia
 
         INNER JOIN REGISTROTIPOINCIDENCIA rti
             ON ri.idTipoIncidencia = rti.id
+
+        LEFT JOIN EQUIPO eq
+            ON rti.idEquipo = eq.id
 
         INNER JOIN ESTADO es
             ON ri.idEstado = es.id;";

@@ -1,6 +1,13 @@
 <?php
-
+/**
+ * Recibe el identificador del registro del espacio y carga las dependencias
+ * para procesar el equipo asociado a la incidencia.
+ */
 require_once __DIR__ . "/../../config/config.php";
+
+/**
+ * Toma el id del registro de espacio enviado por get, si esto no pasa queda en null.
+ */
 
 $idRegistroEspacio = $_GET["idRegistroEspacio"] ?? null;
 //$tipoEspacio = $_GET["tipoEspacio"] ?? null;
@@ -39,6 +46,14 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
   </header>
 
       <?php
+      /**
+       * @brief Muestra un mensaje de error almacenado en sesión, si es que este existe
+       * 
+       * Verifica si la clave "error" se encuentra dentro de la sesión, si esta existe la imprime dentro de un div con clase "alerta".
+       * Se utiliza htmlspecialchars para prevenir inyecciones de xss. Despues de esto se elimina de la variable de sesión para que
+       * el mensaje no se repita en una recarga de la página.
+       * @return string $_SESSION["error"] Mensaje de error que se muestra, si existe.
+       */
     if (isset($_SESSION["error"])) {
         echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
         unset($_SESSION["error"]);

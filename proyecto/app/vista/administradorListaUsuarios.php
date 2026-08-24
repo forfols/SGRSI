@@ -1,4 +1,8 @@
 <?php
+/**
+ *administradorListaUsuarios.php incluye solo una vez a config.php,
+ *si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 
 require_once __DIR__ . "/../../config/config.php";
 
@@ -30,6 +34,14 @@ require_once __DIR__ . "/../../config/config.php";
     </header>
 
     <?php
+    /**
+     * @brief Muestra un mensaje de error almacenado en sesión, si es que este existe
+     * 
+     * Verifica si la clave "error" se encuentra dentro de la sesión, si esta existe la imprime dentro de un div con clase "alerta".
+     * Se utiliza htmlspecialchars para prevenir inyecciones de xss. Despues de esto se elimina de la variable de sesión para que
+     * el mensaje no se repita en una recarga de la página.
+     * @return string $_SESSION["error"] Mensaje de error que se muestra, si existe.
+     */
 if (isset($_SESSION["error"])) {
     echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
     unset($_SESSION["error"]);
@@ -50,9 +62,21 @@ if (isset($_SESSION["mensaje"])) {
                 <th>Acciones</th>
             </tr>
             <tbody id="tabla"></tbody>
-            <?php foreach ($usuarios as $usuario) { ?>
+            <?php
+            /**
+             * Recorre la lista de usuarios y la pone en su respectiva fila de la tabla.
+             */
+             foreach ($usuarios as $usuario) {
+                 ?>
 
                 <?php
+                /**
+                 * @brief recorre la lista de rol con if, si el usuario coincide con el rol, se le asignan el rol,
+                 * y si este no coincide con uno se le deja el estado de "sin rol".
+                 * 
+                 * @param array $usuario Arreglo asociativo con las claves de los respectivos roles.
+                 * 
+                 */
                 $roles = "";
 
                 if ($usuario["solicitante"] == 1) {

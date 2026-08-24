@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Carga las dependencias necesarias para procesar la recepción de
+ * una incidencia relacionada a un espacio
+ */
 require_once __DIR__ . "/../../config/config.php";
 
 require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
@@ -53,7 +56,12 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEspacio.php";
                 <select id="grupo" name="grupo" required>
                     <option value="">Seleccione un grupo</option>
 
-                    <?php foreach ($grupos as $grupo): ?>
+                    <?php
+                    /**
+                     * Recorre todos los grupos que están en el
+                     * arreglo de grupos dentro de select.
+                     */
+                     foreach ($grupos as $grupo): ?>
                         <option value="<?= htmlspecialchars($grupo['nombre']) ?>">
                             <?= htmlspecialchars($grupo['nombre']) ?>
                         </option>

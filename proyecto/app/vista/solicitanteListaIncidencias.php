@@ -1,4 +1,8 @@
 <?php
+/**
+ * Utiliza las dependencias necesarias para procesar la recepción de una incidencia
+ * relacionada a espacio y equipo.
+ */
 
 require_once __DIR__ . "/../../config/config.php";
 
@@ -63,9 +67,23 @@ require_once RUTA_CONTROLADOR . "/procesarRecibirEquipo.php";
                 <th>Acciones</th>
             </tr>
             <tbody id="tabla"></tbody>
-            <?php foreach ($incidencias as $incidencia) { ?>
-                <?php if (($incidencia["ciSolicitante"] == $_SESSION["ci"])) { ?>
-                    <?php $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
+            <?php
+            /**
+             * Recorre todas las incidencias del solicitante actualmente en sesión
+             */
+             foreach ($incidencias as $incidencia) { ?>
+                <?php
+                /**
+                 * Filtra la incidencia, solo se muestra la incidencia si el ci del solicitante coincide con
+                 * el ci del usuario en sesión.
+                 */ 
+                 if (($incidencia["ciSolicitante"] == $_SESSION["ci"])) { ?>
+                    <?php
+                     /**Transforma la fecha de la incidencia, que se almacena en la base de datos
+                      * a un formato legible dia/mes/año y el horario de la incidencia
+                      * para mostrarse en la tabla.
+                      */
+                     $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
                     <tr>
                         <td><?= htmlspecialchars($incidencia["tipoIncidencia"]) ?></td>
                         <td><?= htmlspecialchars($incidencia["tipoEspacio"]) ?></td>

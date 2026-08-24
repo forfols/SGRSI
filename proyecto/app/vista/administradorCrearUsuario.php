@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * administradorCrearUsuario.php incluye solo una vez a config.php,
+ * si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 require_once __DIR__ . "/../../config/config.php";
 
 ?>
@@ -29,6 +32,14 @@ require_once __DIR__ . "/../../config/config.php";
     </header>
 
     <?php
+    /**
+     * @brief Muestra un mensaje de error almacenado en sesión, si es que este existe
+     * 
+     * Verifica si la clave "error" se encuentra dentro de la sesión, si esta existe la imprime dentro de un div con clase "alerta".
+     * Se utiliza htmlspecialchars para prevenir inyecciones de xss. Despues de esto se elimina de la variable de sesión para que
+     * el mensaje no se repita en una recarga de la página.
+     * @return string $_SESSION["error"] Mensaje de error que se muestra, si existe.
+     */
 if (isset($_SESSION["error"])) {
     echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
     unset($_SESSION["error"]);

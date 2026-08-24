@@ -1,5 +1,8 @@
 <?php
-
+/**
+ *administradorMetricas.php incluye solo una vez a config.php,
+ *si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 require_once __DIR__ . "/../../config/config.php";
 
 ?>

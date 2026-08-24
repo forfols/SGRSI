@@ -1,4 +1,8 @@
 <?php
+/**
+ *administradorListaIncidencias.php incluye solo una vez a config.php,
+ *si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 
 require_once __DIR__ . "/../../config/config.php";
 
@@ -43,7 +47,12 @@ require_once __DIR__ . "/../../config/config.php";
                 <th>Fecha creado</th>
             </tr>
             <tbody id="tabla"></tbody>
-            <?php foreach ($incidencias as $incidencia) { ?>
+            <?php
+            /**
+             * Recorre cada incidencia y la pone en su fila correspondiente en la tabla.
+             */
+             foreach ($incidencias as $incidencia) {
+                ?>
                     <?php $fechaCambiada = date("d/m/Y H:i", strtotime($incidencia["fecha"])); ?>
                     <tr>
                         <td><?= htmlspecialchars($incidencia["nombreSolicitante"]) ?></td>

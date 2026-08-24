@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Controlador encargado de procesar el registro de la ocupación de un espacio
- * por parte de un grupo. Valida la petición y los campos recibidos, y delega
- * la creación del registro en RegistroEspacio.
+ * @file procesarRegistroSolicitud.php
+ * @brief Controlador encargado de procesar el registro de una solicitud de servicio.
+ *
+ * Valida la petición y los campos recibidos, y envía por correo electrónico
+ * los datos de la solicitud mediante PHPMailer, utilizando una conexión SMTP.
  */
 
 require_once __DIR__ . "/../../config/config.php";
@@ -41,6 +43,7 @@ if ($csrfToken != $_SESSION["csrfToken"]) {
     exit;
 }
 
+//Valida que la cédula y el nombre recibidos coincidan con los del usuario en sesión
 if (($ci != $_SESSION["ci"]) || ($nombre != $_SESSION["nombre"])){
     http_response_code(403);
     header("Location: cerrarSesion.php?motivo=token");
@@ -55,6 +58,7 @@ if ($tipoEspacio === "" || $tipoServicio === "" || $nroEspacio === "" || $grupo 
     exit;
 }
 
+//Convierte la fecha recibida al formato d/m/Y para mostrarla en el correo
 $fechaLatam = date("d/m/Y", strtotime($fecha));
 
 $mail = new PHPMailer(true);
@@ -85,6 +89,7 @@ try {
     $mail->isHTML(true);
     $mail->Subject = "Nueva solicitud de servicio";
 
+    //Cuerpo del correo en formato HTML, con los datos de la solicitud
     $mail->Body = "
         <h2>Nueva solicitud de servicio</h2>
 
@@ -98,6 +103,7 @@ try {
         <p>{$descripcion}</p>
     ";
 
+    //Versión en texto plano del correo, para clientes que no admiten HTML
     $mail->AltBody = "
         Nueva solicitud de servicio
 
@@ -112,6 +118,7 @@ try {
         {$descripcion}
     ";
 
+    //Envía el correo con los datos de la solicitud
     $mail->send();
 
     $_SESSION["mensaje"] = "Se ha enviado la solicitud correctamente";
@@ -119,6 +126,7 @@ try {
 
 } catch (Exception $e) {
 
+    //Si ocurre un error al enviar el correo, se informa el error al usuario
     $_SESSION["error"] = "No se pudo enviar la solicitud de servicio";
     header("Location: solicitanteRegistroSolicitud.php");
 }

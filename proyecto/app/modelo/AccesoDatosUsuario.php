@@ -1,6 +1,7 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Encapsula las consultas SQL vinculadas a los usuarios del sistema: la lectura
  * y actualización de la tabla USUARIO, y la resolución de los roles a partir de
  * las tablas SOLICITANTE, TECNICO y ADMINISTRADOR.
@@ -10,6 +11,11 @@
 class AccesoDatosUsuario {
 
     /** Conexión activa a la base de datos. */
+=======
+ * Clase que simula una recuperación de credenciales correspondientes a la base de datos.
+ */
+class AccesoDatosUsuario {
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     private PDO $conexion;
 
     /**
@@ -19,12 +25,17 @@ class AccesoDatosUsuario {
     public function __construct (PDO $conexion) {
         $this->conexion = $conexion;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     /**
      * Busca un usuario por su cédula y determina el rol.
      * @param string $cedula La cedula del usuario sin puntos ni guiones.
      * @return Usuario|null Los datos del usuario, retorna su objeto si existe, null en caso contrario.
      */
     public function buscarUsuario(string $ci): ?Usuario
+<<<<<<< HEAD
 {
     $sql = "
         SELECT
@@ -162,3 +173,68 @@ public function listarUsuarios(): array {
 }
 
 ?>
+=======
+    {
+        $sql = "
+            SELECT
+                u.ci,
+                u.contra,
+                u.activo,
+                u.rol,
+
+                CASE
+                    WHEN a.cedula IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS administrador,
+
+                CASE
+                    WHEN s.cedula IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS solicitante
+
+                CASE
+                    WHEN t.cedula IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS tecnico
+
+            FROM USUARIO AS u
+
+            LEFT JOIN administrador AS a
+                ON a.cedula = u.cedula
+
+            LEFT JOIN solicitante AS s
+                ON s.cedula = u.cedula
+
+            LEFT JOIN tecnico AS t
+                ON t.cedula = u.cedula
+
+            WHERE u.cedula = :cedula
+        ";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $consulta->execute(["ci" => $ci]);
+
+        $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+
+        //Una vez usada la consulta, desconectar el objeto PDOStatement. https://www.php.net/manual/en/pdo.connections.php
+        $consulta = null;
+
+        if ($usuario === false) {
+            return null;
+        }
+
+        return new Usuario(
+            $usuario["ci"],
+            $usuario["contra"],
+            (bool) $usuario["activo"],
+            (bool) $usuario["administrador"],
+            (bool) $usuario["solicitante"],
+            (bool) $usuario["tecnico"]
+        );
+    }
+
+}
+
+?>
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87

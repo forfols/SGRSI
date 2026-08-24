@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 /**
  * @file procesarInicioSesion.php
  * @brief Controlador encargado de procesar el inicio de sesión.
@@ -20,6 +21,20 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
     header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
+=======
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
+require_once __DIR__ . "/../modelo/ConectorPDO.php";
+require_once __DIR__ . "/../modelo/InicioSesion.php";
+require_once __DIR__ . "/../modelo/Usuario.php";
+
+//Comprueba que el formulario haya sido enviado mediante POST
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $mensaje = "Acceso Denegado: Petición incorrecta";
+    header("Location: /proyecto/public/inicioSesion.php?error=" . urlencode($mensaje));
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     exit;
 }
 
@@ -27,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $ci = trim($_POST["ci"] ?? "");
 $contra = $_POST["contra"] ?? "";
 
+<<<<<<< HEAD
 //Valida que ambos campos hayan sido completados
 if ($ci === "" || $contra === "") {
     http_response_code(400);
@@ -47,6 +63,12 @@ if ($conexion === null) {
 }
 
     //Intenta autenticar al usuario con las credenciales recibidas
+=======
+//Credenciales hardcodeadas, en un futuro van a colocarse en archivos aislados o variables de entorno
+$conectorPDO = new ConectorPDO ("localhost:3306", "salva", "", "SGRSI");
+$conexion = $conectorPDO->establecerConexion();
+
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
     $inicioSesion = new InicioSesion($accesoDatosUsuario);
     $usuario = $inicioSesion->autenticar($ci, $contra);
@@ -55,8 +77,13 @@ $conectorPDO->desconectar();
 
 //Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {
+<<<<<<< HEAD
     http_response_code(401);
     header("Location: cerrarSesion.php?motivo=credenciales");
+=======
+    $mensaje = "Acceso Denegado: La cédula o la contraseña son incorrectas.";
+    header("Location: /proyecto/public/inicioSesion.php?error=" . urlencode($mensaje));
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     exit;
 }
 
@@ -79,6 +106,7 @@ $_SESSION["administrador"] = $usuario->getRolAdministrador();
 $_SESSION["nombre"]= $usuario->getNombre();
 
 
+<<<<<<< HEAD
 $solicitante= $usuario->getRolSolicitante();
 $tecnico= $usuario->getRolTecnico();
 $administrador= $usuario->getRolAdministrador();
@@ -106,7 +134,14 @@ if((($solicitante == true) && ($tecnico == true) && ($administrador == true)) ||
 }else if ($tecnico == true){
     header("<?= URL_CONTROLADOR . '/cargarIncidenciasTecnico.php' ?>");
 }else if ($administrador == true){
+=======
+if($rol== "Administrador") {
+>>>>>>> 9384d8451fc88a4e58eea6409ea3d7dae60e0d87
     header("Location: indexAdministrador.php");
+}else if($rol== "Solicitante") {
+    header("Location: indexSolicitante.php");
+}else if ($rol== "Tecnico"){
+    header("Location: tecnico.php");
 }
 
 

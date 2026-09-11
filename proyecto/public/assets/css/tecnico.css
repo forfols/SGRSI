@@ -210,6 +210,30 @@ input[readonly] {
     display: none !important;
 }
 
+.alerta {
+    background-color: #ffdddd;
+    color: #b30000;
+    border: 2px solid #b30000;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto;
+    width: 80%;
+}
+.mensaje {
+    background-color: #ffdddd;
+    color: #00b33f;
+    border: 2px solid #00b333;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto;
+    width: 80%;
+}
+
+
 /*Adaptacion para 1080p*/
 @media (min-width: 1900px) {
     fieldset {

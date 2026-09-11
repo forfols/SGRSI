@@ -1,18 +1,10 @@
 <?php
-
-
-
-
+/**
+ *indexGeneral.php incluye solo una vez a config.php,
+ *si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 require_once __DIR__ . "/../../config/config.php";
-if (!isset($_SESSION["ci"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=sinSesion");
-    exit;
-}
 
-if (empty($_SESSION["solicitante"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
-    exit;
-}
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +36,7 @@ if (empty($_SESSION["solicitante"])) {
             <button class="btnPrincipal">Registrar Solicitud</button>
         </a>
 
-        <a href="solicitanteListaIncidencias.php">
+        <a href="<?= URL_CONTROLADOR . '/cargarIncidenciasSolicitante.php' ?>">
             <button class="btnPrincipal">Ver Incidencias Realizadas</button>
         </a>
     </main>

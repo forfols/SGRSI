@@ -1,15 +1,10 @@
 <?php
-
+/**
+ * administradorCrearUsuario.php incluye solo una vez a config.php,
+ * si este ya se encuentra incluido no lo incluye por segunda vez.
+ */
 require_once __DIR__ . "/../../config/config.php";
-if (!isset($_SESSION["ci"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=sinSesion");
-    exit;
-}
 
-if (empty($_SESSION["administrador"])) {
-    header("Location:" . URL_PUBLIC . "/cerrarSesion.php?motivo=rol");
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +15,7 @@ if (empty($_SESSION["administrador"])) {
     <title>Crear Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/administrador.css">
-    <script src="assets/js/administradorCrearUsuario.js"></script>
+
 </head>
 
 <body>
@@ -36,10 +31,32 @@ if (empty($_SESSION["administrador"])) {
         </nav>
     </header>
 
+    <?php
+    /**
+     * @brief Muestra un mensaje de error almacenado en sesión, si es que este existe
+     * 
+     * Verifica si la clave "error" se encuentra dentro de la sesión, si esta existe la imprime dentro de un div con clase "alerta".
+     * Se utiliza htmlspecialchars para prevenir inyecciones de xss. Despues de esto se elimina de la variable de sesión para que
+     * el mensaje no se repita en una recarga de la página.
+     * @return string $_SESSION["error"] Mensaje de error que se muestra, si existe.
+     */
+if (isset($_SESSION["error"])) {
+    echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
+    unset($_SESSION["error"]);
+}
+if (isset($_SESSION["mensaje"])) {
+    echo "<div class='mensaje'>" . htmlspecialchars($_SESSION["mensaje"]) . "</div>";
+    unset($_SESSION["mensaje"]);
+}
+?>
+
     <p>
     <h1>Crear Usuario</h1>
     </p>
-    <form id="crearUsuario">
+    <form id="crearUsuario" action="procesarRegistroUsuario.php" method="post">
+
+        <input type="hidden" name="csrfToken" value="<?=htmlspecialchars($_SESSION["csrfToken"])?>">
+
         <div>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -52,25 +69,32 @@ if (empty($_SESSION["administrador"])) {
 
         <div>
             <label for="ci">Cédula:</label>
-            <input type="ci" id="ci" name="ci" required>
+            <input type="ci" id="ci" name="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric"
+                            maxlength="8" required>
         </div>
 
         <div>
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contra" name="contraseña" required>
+            <input type="password" id="contra" name="contra" required>
         </div>
 
         <div>
             <label for="repetirContraseña">Repetir contraseña:</label>
-            <input type="password" id="repetirContra" name="repetirContraseña" required>
+            <input type="password" id="repetirContra" name="repetirContra" required>
         </div>
 
         <div>
-            <label for="rol">Rol:</label>
-            <select id="rol" name="rol" required>
-                <option value="solicitante">Solicitante</option>
-                <option value="tecnico">Tecnico</option>
-            </select>
+            <label >Rol:</label>
+            <br>
+
+            <label for="solicitante">Solicitante:</label>
+            <input type="checkbox" id="solicitante" name="solicitante" value="activo">
+            <label for="tecnico">Tecnico:</label>
+            <input type="checkbox" id="tecnico" name="tecnico" value="activo">
+            <label for="administrador">Administrador:</label>
+            <input type="checkbox" id="administrador" name="administrador" value="activo">
+
+            
         </div>
 
         <button type="submit" class="mt-2" id="btnCrear">Crear Usuario</button>

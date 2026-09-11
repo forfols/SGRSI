@@ -1,0 +1,1 @@
+SELECT nombre FROM GRUPO ORDER BY nombre;

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,9 +10,7 @@
     
 </head>
 
-
 <body>
-    
 
     <header>
         <img src="assets/img/logoForfols.png" alt="logo de forfols" class="logoForfols">
@@ -23,7 +20,15 @@
 
     <section class="inicioSesion">
 
-    <?php
+<?php
+/**
+ * @brief Muestra un mensaje de error almacenado en sesión, si es que este existe
+ * 
+ * Verifica si la clave "error" se encuentra dentro de la sesión, si esta existe la imprime dentro de un div con clase "alerta".
+ * Se utiliza htmlspecialchars para prevenir inyecciones de xss. Despues de esto se elimina de la variable de sesión para que
+ * el mensaje no se repita en una recarga de la página.
+ * @return string $_SESSION["error"] Mensaje de error que se muestra, si existe.
+ */
 if (isset($_SESSION["error"])) {
     echo "<div class='alerta'>" . htmlspecialchars($_SESSION["error"]) . "</div>";
     unset($_SESSION["error"]);
@@ -34,7 +39,8 @@ if (isset($_SESSION["error"])) {
      <h1>Iniciar Sesión</h1>
 
     <label for="ci">Cédula:</label>
-    <input type="text" id="ci" name="ci" required>
+    <input type="text" id="ci" name="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric"
+                            maxlength="8" required>
     
     <label for="contra">Contraseña:</label>
     <input type="password" id="contra" name="contra" required>

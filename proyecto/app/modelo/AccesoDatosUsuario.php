@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * Encapsula las consultas SQL vinculadas a los usuarios del sistema: la lectura
+ * y actualización de la tabla USUARIO, y la resolución de los roles a partir de
+ * las tablas SOLICITANTE, TECNICO y ADMINISTRADOR.
+ *
+ * @class AccesoDatosUsuario
+ */
 class AccesoDatosUsuario {
+
+    /** Conexión activa a la base de datos. */
     private PDO $conexion;
 
     /**
@@ -78,6 +87,13 @@ WHERE u.ci = :ci;
     );
 }
 
+/**
+ * Activa o desactiva un usuario.
+ *
+ * @param string $ci Cédula del usuario a modificar.
+ * @param bool $activo TRUE para habilitar el usuario, FALSE para deshabilitarlo.
+ * @return void
+ */
 public function estaActivo(string $ci, bool $activo): void
 {
     $sql = "
@@ -96,6 +112,53 @@ public function estaActivo(string $ci, bool $activo): void
     $consulta = null;
 }
 
+
+/**
+ * Obtiene el listado completo de usuarios con sus roles. No incluye la contraseña ni el estado activo.
+ *
+ * @return array Arreglo asociativo con las claves ci, nombre, solicitante, tecnico y administrador para cada usuario registrado.
+ */
+public function listarUsuarios(): array {
+        $sql = "
+            SELECT
+                u.ci,
+                u.nombre,
+                u.activo,
+
+                CASE
+                    WHEN s.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS solicitante,
+
+                CASE
+                    WHEN t.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS tecnico,
+
+                CASE
+                    WHEN a.ci IS NOT NULL THEN TRUE
+                    ELSE FALSE
+                END AS administrador
+
+            FROM USUARIO AS u
+
+            LEFT JOIN SOLICITANTE AS s
+                ON s.ci = u.ci
+
+            LEFT JOIN TECNICO AS t
+                ON t.ci = u.ci
+
+            LEFT JOIN ADMINISTRADOR AS a
+                ON a.ci = u.ci";
+
+        $consulta = $this->conexion->query($sql);
+
+        $usuarios = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+        $consulta = null;
+
+        return $usuarios;
+    }
 }
 
 ?>

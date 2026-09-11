@@ -1,9 +1,7 @@
-// app/controlador/UsuarioController.php
 <?php
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/IncidenciaDAO.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
-require_once RUTA_MODELO . "/EliminarIncidencia.php";
 
 class ControladorIncidencia
 {
@@ -17,11 +15,9 @@ class ControladorIncidencia
             RespuestaJson::error("Acceso denegado: rol incorrecto", 403);
         }
 
-        //https://www.w3schools.com/php/php_match.asp
         match ($metodo) {
             "GET" => $this->listarIncidencia(),
             "POST" => $this->registrarIncidencia(),
-            //PONER PUT
             "PATCH" => $this->modificarIncidencia(),
             "DELETE" => $this->eliminarIncidencia(),
             default => RespuestaJson::error("Método no permitido", 405),
@@ -37,7 +33,7 @@ class ControladorIncidencia
 
     private function registrarIncidencia(): void
     {
-        $this->registrarIncidencia();
+        $this->verificarCsrf();
 
         $datos = json_decode(file_get_contents("php://input"), true) ?? [];
 
@@ -48,20 +44,17 @@ class ControladorIncidencia
         $descripcion = $datos["descripcion"] ?? "";
         $idRegistroEspacio = $datos["idRegistroEspacio"] ?? null;
 
-        //Valida que, si la incidencia es sobre una PC, se hayan indicado el equipo y el alumno
         if ($tipo === "PC" && ($idEquipo === "" || $nombreAlumno === "")) {
             RespuestaJson::error("Existen campos vacíos", 422);
         } else if ($tipo === "" || $descripcion === "") {
             RespuestaJson::error("Existen campos vacíos", 422);
         }
 
-        //Si la incidencia no es sobre una PC, se descartan el equipo y el alumno
         if ($tipo === "Otros") {
             $idEquipo = null;
             $nombreAlumno = null;
         }
 
-        //Establece la conexión a la base de datos utilizando las credenciales del entorno
         $conexion = $this->conectar();
         $dao = new IncidenciaDAO($conexion);
 
@@ -72,11 +65,8 @@ class ControladorIncidencia
             $descripcion
         );
 
-
-        //Registra el estado inicial de la incidencia, con valores por defecto
         $idEstado = $dao->registrarEstado();
 
-        //Registra la incidencia vinculando el espacio, el tipo, el solicitante y el estado creados
         $dao->registrarIncidencia(
             $idRegistroEspacio,
             $idTipoIncidencia,
@@ -89,59 +79,39 @@ class ControladorIncidencia
 
     private function modificarIncidencia(): void
     {
-        $this->modificarIncidencia();
+        $this->verificarCsrf();
 
         $datos = json_decode(file_get_contents("php://input"), true) ?? [];
 
         $idIncidencia = trim($datos["idIncidencia"] ?? "");
-        $estado = trim($datos["estadoIncidencia"] ?? "");
-
         $tipoIncidencia = $datos["tipoIncidencia"] ?? "";
         $idEquipo = $datos["nroPc"] ?? null;
         $nombreAlumno = $datos["nombreAlumno"] ?? "";
         $descripcion = $datos["descripcion"] ?? "";
 
-    
-        //Valida que, si la incidencia es sobre una PC, se hayan indicado el equipo y el alumno
-        if ($tipoIncidencia === "PC" && ($nroPc === "" || $nombreAlumno === "")) {
-            http_response_code(400);
-            $_SESSION["error"] = "No se pudo modificar la incidencia: Se eligio una incidencia sobre PC pero no se asigno un alumno o pc";
-            RespuestaJson::exito("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+        if ($tipoIncidencia === "PC" && ($idEquipo === "" || $nombreAlumno === "")) {
+            RespuestaJson::error("No se pudo modificar la incidencia: Se eligio una incidencia sobre PC pero no se asigno un alumno o pc", 400);
         } else if ($tipoIncidencia === "" || $descripcion === "") {
-            //Valida que los campos obligatorios hayan sido completados
-            http_response_code(400);
-            $_SESSION["error"] = "No se pudo modificar la incidencia: hay campos vacíos";
-            RespuestaJson::exito("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+            RespuestaJson::error("No se pudo modificar la incidencia: hay campos vacíos", 400);
         }
 
-        //Establece la conexión a la base de datos utilizando las credenciales del entorno
-        $conectorPDO = new ConectorPDO($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
-        $conexion = $conectorPDO->establecerConexion();
-
-        //Si la conexión falló, se cierra la sesión indicando el motivo
-        if ($conexion === null) {
-            http_response_code(500);
-            RespuestaJson::exito("Location: cerrarSesion.php?motivo=sinConexion");
-        }
-
+        $conexion = $this->conectar();
+        $dao = new IncidenciaDAO($conexion);
 
         //Verifica el estado actual de la incidencia antes de intentar modificarla
-        $verificarEstado = new VerificarEstado($conexion);
-        $incidencia = $verificarEstado->verificarEstado($idIncidencia);
+        $incidencia = $dao->verificarEstado($idIncidencia);
 
-        //Si la incidencia ya está siendo procesada por un técnico, no se permite modificarla
-        $estado = $incidencia["tipo"];
-        if ($estado != "Sin asignar") {
-            http_response_code(409);
-            $_SESSION["error"] = "No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico";
-            RespuestaJson::exito("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+        //fetch() devuelve false si no encuentra la incidencia
+        if ($incidencia === false) {
+            RespuestaJson::error("No se encontró la incidencia", 404);
         }
 
-        //Modifica los datos de la incidencia con la información recibida
-        $modificarIncidencia = new ModificarIncidencia($conexion);
+        $estado = $incidencia["tipo"];
+        if ($estado != "Sin asignar") {
+            RespuestaJson::error("No se pudo modificar la incidencia: La incidencia está siendo procesada por un Técnico", 409);
+        }
 
-        $resultado = $modificarIncidencia->modificarIncidencia(
-
+        $resultado = $dao->modificarIncidencia(
             $idIncidencia,
             $tipoIncidencia,
             $idEquipo,
@@ -149,88 +119,63 @@ class ControladorIncidencia
             $descripcion
         );
 
-        $conectorPDO->desconectar();
-
-        //Si la modificación falló, se informa el error
         if ($resultado == false) {
-            http_response_code(500);
-            $_SESSION["error"] = "No se pudo modificar la incidencia";
-            RespuestaJson::exito("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+            RespuestaJson::error("No se pudo modificar la incidencia", 500);
         }
 
-        //Si todo salió bien, se informa el éxito de la operación
-        $_SESSION["mensaje"] = "Se ha modificado la incidencia con éxito";
-        RespuestaJson::exito("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+        RespuestaJson::exito(["mensaje" => "Se ha modificado la incidencia con éxito"]);
     }
 
     private function eliminarIncidencia(): void
     {
-        //Comprueba que la solicitud haya sido enviada mediante POST
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405);
-    header("Location: cerrarSesion.php?motivo=peticionIncorrecta");
-    exit;
-}
+        $this->verificarCsrf();
 
+        $datos = json_decode(file_get_contents("php://input"), true) ?? [];
+        $idIncidencia = trim($datos["idIncidencia"] ?? "");
 
-//Recupera los datos provenientes del formulario
-$idIncidencia = trim($_POST["idIncidencia"] ?? "");
-$estado= trim($_POST["estadoIncidencia"] ??"");
-$csrfToken = $_POST["csrfToken"];
+        if ($idIncidencia === "") {
+            RespuestaJson::error("Falta el id de la incidencia", 422);
+        }
 
-//Valida el token CSRF para evitar peticiones falsificadas
-if ($csrfToken != $_SESSION["csrfToken"]) {
-    http_response_code(403);
-    header("Location: cerrarSesion.php?motivo=token");
-    exit;
-}
+        $conexion = $this->conectar();
+        $dao = new IncidenciaDAO($conexion);
 
+        //Verifica el estado actual de la incidencia antes de intentar eliminarla
+        $incidencia = $dao->verificarEstado($idIncidencia);
 
-//Establece la conexión a la base de datos utilizando las credenciales del entorno
-$conectorPDO = new ConectorPDO($_ENV['DB_HOST'] . ":" . $_ENV['DB_PUERTO'], $_ENV['DB_USUARIO'], $_ENV['DB_CLAVE'], $_ENV['DB_NOMBRE']);
-$conexion = $conectorPDO->establecerConexion();
+        if ($incidencia === false) {
+            RespuestaJson::error("No se encontró la incidencia", 404);
+        }
 
-    //Si la conexión falló, se cierra la sesión indicando el motivo
-    if ($conexion === null) {
-        http_response_code(500);
-    header("Location: cerrarSesion.php?motivo=sinConexion");
-    exit;
-}
+        $estado = $incidencia["tipo"];
+        if ($estado != "Sin asignar") {
+            RespuestaJson::error("No se pudo eliminar la incidencia: La incidencia está siendo procesada por un Técnico", 409);
+        }
 
-//Verifica el estado actual de la incidencia antes de intentar eliminarla
-$verificarEstado = new VerificarEstado($conexion);
-$incidencia = $verificarEstado->verificarEstado(
-    $idIncidencia
-);
+        $resultado = $dao->eliminarIncidencia($idIncidencia);
 
-//Si la incidencia ya está siendo procesada por un técnico, no se permite eliminarla
-$estado = $incidencia["tipo"];
-if ($estado != "Sin asignar") {
-    $_SESSION["error"] = "No se pudo eliminar la incidencia: La incidencia está siendo procesada por un Técnico";
-    header("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
-    exit;
-}
+        if ($resultado == false) {
+            RespuestaJson::error("No se pudo eliminar la incidencia", 500);
+        }
 
-//Elimina la incidencia junto con sus registros asociados
-$eliminarIncidencia = new EliminarIncidencia($conexion);
-
-    $resultado = $eliminarIncidencia->eliminarIncidencia(
-
-    $idIncidencia,
-);
-
-$conectorPDO->desconectar();
-
-//Si la eliminación falló, se informa el error
-if ($resultado == false) {
-    http_response_code(500);
-    $_SESSION["error"] = "No se pudo eliminar la incidencia";
-    RespuestaJson::error("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
-}
-
-    //Si todo salió bien, se informa el éxito de la operación
-    $_SESSION["mensaje"] = "Se ha eliminado la incidencia";
-    RespuestaJson::error("Location: " . URL_CONTROLADOR . "/cargarIncidenciasSolicitante.php");
+        RespuestaJson::exito(["mensaje" => "Se ha eliminado la incidencia"]);
     }
 
+    private function verificarCsrf(): void
+    {
+        $token = $_SERVER["HTTP_X_CSRF_TOKEN"] ?? "";
+        if (!isset($_SESSION["csrfToken"]) || !hash_equals($_SESSION["csrfToken"], $token)) {
+            RespuestaJson::error("Solicitud rechazada", 403);
+        }
+    }
+
+    private function conectar(): PDO
+    {
+        $conector = new ConectorPDO($_ENV["DB_HOST"] . ":" . $_ENV["DB_PUERTO"], $_ENV["DB_USUARIO"], $_ENV["DB_CLAVE"], $_ENV["DB_NOMBRE"]);
+        $conexion = $conector->establecerConexion();
+        if ($conexion === null) {
+            RespuestaJson::error("Error de conexión con la base de datos", 500);
+        }
+        return $conexion;
+    }
 }

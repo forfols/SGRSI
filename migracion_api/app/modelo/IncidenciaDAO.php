@@ -428,14 +428,13 @@ class IncidenciaDAO {
         return $this->conexion->lastInsertId();
     }
 
-     /**
-     * Consulta el estado de una incidencia a partir de su id.
-     * El método ejecuta la consulta y guarda el resultado en $incidencia
-     *
-     * @param int $idIncidencia Identificador de la incidencia a consultar.
-     * @return void
-     */
-    public function verificarEstado($idIncidencia){
+/**
+ * Consulta el estado de una incidencia a partir de su id.
+ *
+ * @param int $idIncidencia Identificador de la incidencia a consultar.
+ * @return array|false Arreglo con el tipo de estado, o false si no existe la incidencia.
+ */
+public function verificarEstado($idIncidencia){
         $sql = "
         SELECT E.tipo
         FROM REGISTROINCIDENCIA RI

@@ -1,17 +1,17 @@
-// app/vista/RespuestaJson.php
 <?php
 class RespuestaJson {
-    public static function exito($datos, int $status = 200): void {
+    public static function exito($datos, int $status = 200): never {
         http_response_code($status);
         header("Content-Type: application/json");
-        echo json_encode(["datos" => $datos]);
+        echo json_encode(["datos" => $datos], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
-    public static function error(string $mensaje, int $status): void {
+    public static function error(string $mensaje, int $status): never {
         http_response_code($status);
         header("Content-Type: application/json");
-        echo json_encode(["mensaje" => $mensaje]);
+        echo json_encode(["mensaje" => $mensaje], JSON_UNESCAPED_UNICODE);
         exit;
     }
+    
 }

@@ -27,6 +27,7 @@ define("URL_MODELO", URL_APP . "/modelo");
 define("URL_CONTROLADOR", URL_APP . "/controlador");
 define("URL_VISTA", URL_APP . "/vista");
 define("URL_PUBLIC", URL_BASE . "/public");
+define("RUTA_NUCLEO", RUTA_APP . "/nucleo");
 
 
 

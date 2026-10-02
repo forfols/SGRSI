@@ -77,4 +77,27 @@ class EspacioDAO {
             return false;
         }
     }
+
+        public function registrarUso(string $tipo, int $numero, string $grupo): ?int
+    {
+        try {
+            $consulta = $this->conexion->prepare("SELECT id FROM ESPACIO WHERE tipo = :tipo AND numero = :numero");
+            $consulta->execute(["tipo" => $tipo, "numero" => $numero]);
+            $espacio = $consulta->fetch(PDO::FETCH_ASSOC);
+
+            $consulta = null;
+
+            if ($espacio === false) {
+                return null;
+            }
+
+            $insertar = $this->conexion->prepare("INSERT INTO REGISTROESPACIO (idEspacio, nombreGrupo) VALUES (:idEspacio, :nombreGrupo)");
+            $insertar->execute(["idEspacio" => $espacio["id"], "nombreGrupo" => $grupo]);
+
+            return (int) $this->conexion->lastInsertId();
+
+        } catch (PDOException $error) {
+            return null;
+        }
+    }
 }

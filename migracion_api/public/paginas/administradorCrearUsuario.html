@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/administrador.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="indexAdministrador.html"><button>Volver</button></a>
+            <button id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <div id="alerta"></div>
+
+    <h1>Crear Usuario</h1>
+    <form id="crearUsuario">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+        </div>
+
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" required>
+        </div>
+
+        <div>
+            <label for="ci">Cédula:</label>
+            <input type="text" id="ci" pattern="[1-9][0-9]{7}" title="Ingrese la cédula de 8 dígitos sin puntos ni guiones" inputmode="numeric" maxlength="8" required>
+        </div>
+
+        <div>
+            <label for="contra">Contraseña:</label>
+            <input type="password" id="contra" minlength="12" required>
+        </div>
+
+        <div>
+            <label for="repetirContra">Repetir contraseña:</label>
+            <input type="password" id="repetirContra" minlength="12" required>
+        </div>
+
+        <div>
+            <label>Rol:</label>
+            <br>
+            <label for="solicitante">Solicitante:</label>
+            <input type="checkbox" id="solicitante">
+            <label for="tecnico">Técnico:</label>
+            <input type="checkbox" id="tecnico">
+            <label for="administrador">Administrador:</label>
+            <input type="checkbox" id="administrador">
+        </div>
+
+        <button type="submit" class="mt-2">Crear Usuario</button>
+    </form>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+    <script src="../assets/js/administradorCrearUsuario.js"></script>
+</body>
+</html>

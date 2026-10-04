@@ -5,6 +5,7 @@ class Usuario
     private string $ci;
     private string $nombre;
     private string $claveHash;
+    private bool $sesionActiva;
     private bool $rolSolicitante;
     private bool $rolTecnico;
     private bool $rolAdministrador;
@@ -13,6 +14,7 @@ class Usuario
         string $ci,
         string $nombre,
         string $claveHash,
+        bool $sesionActiva,
         bool $rolSolicitante,
         bool $rolTecnico,
         bool $rolAdministrador
@@ -20,6 +22,7 @@ class Usuario
         $this->ci = $ci;
         $this->nombre = $nombre;
         $this->claveHash = $claveHash;
+        $this->sesionActiva = $sesionActiva;
         $this->rolSolicitante = $rolSolicitante;
         $this->rolTecnico = $rolTecnico;
         $this->rolAdministrador = $rolAdministrador;
@@ -28,6 +31,7 @@ class Usuario
     public function getCi(): string { return $this->ci; }
     public function getNombre(): string { return $this->nombre; }
     public function getClaveHash(): string { return $this->claveHash; }
+    public function tieneSesionActiva(): bool { return $this->sesionActiva; }
     public function getRolSolicitante(): bool { return $this->rolSolicitante; }
     public function getRolTecnico(): bool { return $this->rolTecnico; }
     public function getRolAdministrador(): bool { return $this->rolAdministrador; }

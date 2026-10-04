@@ -1,39 +1,38 @@
-const formularioEstado = document.getElementById("verEstado");
-const campoEstado = document.querySelector(".formularioVerEstado");
-const estado = document.getElementById("estado");
-const tecnico = document.getElementById("tecnico");
-const prioridad = document.getElementById("prioridad");
-const diagnostico = document.getElementById("diagnostico");
-const solucion = document.getElementById("solucion");
-const campoTecnico = document.getElementById("campoTecnico");
-const campoSolucion = document.getElementById("campoSolucion");
-const btnCerrarEstado = document.getElementById("btnCerrarVerEstado");
+const cuerpoTabla = document.getElementById("cuerpoTabla");
 
-document.querySelectorAll(".btnVerEstado").forEach(function (boton) {
+function agregarFila(incidencia) {
+    const fila = document.createElement("tr");
 
-    boton.addEventListener("click", function () {
+    celda(fila, incidencia.nombreSolicitante);
+    celda(fila, incidencia.tipoIncidencia);
+    celda(fila, incidencia.tipoEspacio);
+    celda(fila, incidencia.numeroEspacio);
+    celda(fila, incidencia.nombreGrupo);
+    celda(fila, incidencia.nombreEquipo);
+    celda(fila, incidencia.alumno);
+    celda(fila, incidencia.descripcionIncidencia);
 
-        estado.textContent = boton.dataset.estado;
-        prioridad.textContent = boton.dataset.prioridad;
-        diagnostico.textContent = boton.dataset.diagnostico;
+    const campoEstado = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = "Ver estado";
+    boton.addEventListener("click", () => abrirVerEstado(incidencia));
+    campoEstado.appendChild(boton);
+    fila.appendChild(campoEstado);
 
-        if (boton.dataset.estado !== "Sin asignar") {
-            tecnico.textContent = boton.dataset.tecnico;
-            campoTecnico.style.display = "block";
-        } else {
-            campoTecnico.style.display = "none";
-        }
-        if (boton.dataset.estado === "Terminado") {
-            solucion.textContent = boton.dataset.solucion;
-            campoSolucion.style.display = "block";
-        } else {
-            campoSolucion.style.display = "none";
-        }
-        campoEstado.style.display = "block";
-    });
-});
+    celda(fila, formatearFecha(incidencia.fecha));
 
-btnCerrarEstado.addEventListener("click", function () {
-    campoEstado.style.display = "none";
-});
+    cuerpoTabla.appendChild(fila);
+}
 
+async function cargarTabla() {
+    cuerpoTabla.replaceChildren();
+
+    const incidencias = await api("GET", "incidencias.php?rol=administrador");
+
+    for (const incidencia of incidencias) {
+        agregarFila(incidencia);
+    }
+}
+
+cargarTabla().catch((error) => mostrarMensaje(error.message));

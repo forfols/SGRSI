@@ -1,69 +1,97 @@
-document.addEventListener("DOMContentLoaded", function () {
+const cuerpoTabla = document.getElementById("cuerpoTabla");
+const formularioEstado = document.getElementById("modificarEstado");
+const campoEstado = document.querySelector(".formularioModificarEstado");
+const btnCerrar = document.getElementById("btnCerrarModificarEstado");
+const estado = document.getElementById("estado");
+const prioridad = document.getElementById("prioridad");
+const diagnostico = document.getElementById("diagnostico");
+const soluciones = document.getElementById("soluciones");
+const campoExtra = document.getElementById("campoExtra");
 
-    const formularioModificarEstado = document.getElementById("modificarEstado");
-    const campoModificarEstado = document.querySelector(".formularioModificarEstado");
-    const btnCerrarModificarEstado = document.getElementById("btnCerrarModificarEstado");
-    const estado = document.getElementById("estado");
-    const prioridad = document.getElementById("prioridad");
-    const diagnostico = document.getElementById("diagnostico");
-    const soluciones = document.getElementById("soluciones");
-    const campoExtra = document.getElementById("campoExtra");
+let idEnEdicion = 0;
 
+function actualizarCampoSoluciones() {
+    const terminado = estado.value === "Terminado";
 
-    document.querySelectorAll(".btnModificarEstado")
-        .forEach(function (boton) {
+    campoExtra.classList.toggle("d-none", !terminado);
+    soluciones.required = terminado;
+}
 
-            boton.addEventListener("click", function () {
-                const idIncidencia = this.dataset.id;
-                const estadoActual = this.dataset.estado;
-                const prioridadActual = this.dataset.prioridad;
+function abrirModificarEstado(incidencia) {
+    idEnEdicion = incidencia.id;
 
-                const diagnosticoActual = this.dataset.diagnostico;
-                const solucionesActual =this.dataset.soluciones;
+    //Una incidencia "Sin asignar" todavía no tiene valores propios del técnico
+    estado.value = ["Pendiente", "En proceso", "Terminado"].includes(incidencia.tipoEstado) ? incidencia.tipoEstado : "Pendiente";
+    prioridad.value = ["Alto", "Medio", "Bajo"].includes(incidencia.prioridad) ? incidencia.prioridad : "Medio";
+    diagnostico.value = incidencia.diagnostico === "N/A" ? "" : incidencia.diagnostico;
+    soluciones.value = incidencia.soluciones === "N/A" ? "" : incidencia.soluciones;
 
+    actualizarCampoSoluciones();
+    campoEstado.style.display = "block";
+}
 
-                document.getElementById("idIncidenciaEstado").value = idIncidencia;
+function cerrarModificarEstado() {
+    campoEstado.style.display = "none";
+}
 
-                estado.value = estadoActual;
-                prioridad.value = prioridadActual;
-                diagnostico.value = diagnosticoActual;
-                soluciones.value = solucionesActual;
+function agregarFila(incidencia) {
+    const fila = document.createElement("tr");
 
+    celda(fila, incidencia.nombreSolicitante);
+    celda(fila, incidencia.tipoIncidencia);
+    celda(fila, incidencia.nombreEquipo);
+    celda(fila, incidencia.alumno);
+    celda(fila, incidencia.tipoEspacio);
+    celda(fila, incidencia.numeroEspacio);
+    celda(fila, incidencia.nombreGrupo);
 
-                if (estadoActual === "Terminado") {
-                campoExtra.classList.remove("d-none");
-                soluciones.required = true;
-                } else {
-                    campoExtra.classList.add("d-none");
-                    soluciones.required = false;
-                }
+    const campoBoton = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = "Modificar";
+    boton.addEventListener("click", () => abrirModificarEstado(incidencia));
+    campoBoton.appendChild(boton);
+    fila.appendChild(campoBoton);
 
+    celda(fila, incidencia.descripcionIncidencia);
+    celda(fila, formatearFecha(incidencia.fecha));
 
-                campoModificarEstado.style.display = "block";
+    cuerpoTabla.appendChild(fila);
+}
 
-            });
+async function cargarTabla() {
+    cuerpoTabla.replaceChildren();
 
+    const incidencias = await api("GET", "incidencias.php?rol=tecnico");
+
+    for (const incidencia of incidencias) {
+        agregarFila(incidencia);
+    }
+}
+
+async function modificarEstado(evento) {
+    evento.preventDefault();
+
+    try {
+        const resultado = await api("PUT", "incidencias.php", {
+            accion: "estado",
+            idIncidencia: idEnEdicion,
+            estado: estado.value,
+            prioridad: prioridad.value,
+            diagnostico: diagnostico.value,
+            soluciones: soluciones.value
         });
 
+        cerrarModificarEstado();
+        await cargarTabla();
+        mostrarMensaje(resultado.mensaje, "mensaje");
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
+}
 
-    estado.addEventListener("change", function () {
+estado.addEventListener("change", actualizarCampoSoluciones);
+btnCerrar.addEventListener("click", cerrarModificarEstado);
+formularioEstado.addEventListener("submit", modificarEstado);
 
-        if (estado.value === "Terminado") {
-
-            campoExtra.classList.remove("d-none");
-            soluciones.required = true;
-        } else {
-            campoExtra.classList.add("d-none");
-            soluciones.required = false;
-        }
-
-    });
-
-
-    btnCerrarModificarEstado.addEventListener("click", function () {
-            campoModificarEstado.style.display = "none";
-
-        }
-    );
-
-});
+cargarTabla().catch((error) => mostrarMensaje(error.message));

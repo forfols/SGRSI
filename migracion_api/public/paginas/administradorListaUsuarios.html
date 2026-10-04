@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/administrador.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="indexAdministrador.html"><button>Volver</button></a>
+            <button id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <div id="alerta"></div>
+
+    <h3>Lista de Usuarios</h3>
+    <div class="table-responsive">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>CI</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTabla"></tbody>
+        </table>
+    </div>
+
+    <form id="modificarUsuario">
+        <fieldset class="formularioModificarUsuario" style="display:none">
+            <legend><h2>Modificar Usuario</h2></legend>
+
+            <button type="button" id="btnCerrarModificarUsuario">x</button>
+            <br>
+
+            <div>
+                <label for="nombre">Usuario:</label>
+                <input type="text" id="nombre" required>
+            </div>
+
+            <div>
+                <label for="ci">Cédula:</label>
+                <input type="text" id="ci" readonly>
+            </div>
+
+            <div>
+                <label>Roles:</label>
+                <br>
+                <input type="checkbox" id="rolSolicitante">
+                <label for="rolSolicitante">Solicitante</label>
+
+                <input type="checkbox" id="rolTecnico">
+                <label for="rolTecnico">Técnico</label>
+
+                <input type="checkbox" id="rolAdministrador">
+                <label for="rolAdministrador">Administrador</label>
+            </div>
+
+            <p><input type="submit" value="Actualizar"></p>
+        </fieldset>
+    </form>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+    <script src="../assets/js/administradorListaUsuarios.js"></script>
+</body>
+</html>

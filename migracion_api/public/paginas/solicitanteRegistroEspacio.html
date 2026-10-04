@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro uso del Salón</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/solicitante.css">
+</head>
+<body>
+    <header>
+        <nav class="d-flex justify-content-between align-items-center">
+            <a href="indexSolicitante.html"><button class="btnNav">Volver</button></a>
+            <button class="btnNav" id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <div id="alerta"></div>
+
+    <form id="registroEspacio" class="mt-3">
+        <fieldset>
+            <label for="tipoEspacio">Espacio:</label>
+            <select id="tipoEspacio" name="tipoEspacio" required>
+                <option value="">Seleccione un tipo</option>
+                <option value="Laboratorio">Laboratorio</option>
+                <option value="Taller">Taller</option>
+                <option value="Teórico">Teórico</option>
+            </select>
+
+            <label for="nroEspacio">Número del espacio:</label>
+            <select id="nroEspacio" name="nroEspacio" required></select>
+
+            <div class="mb-2">
+                <label for="grupo">Grupo:</label>
+                <select id="grupo" name="grupo" required>
+                    <option value="">Seleccione un grupo</option>
+                </select>
+            </div>
+
+            <button type="submit" class="mt-2">Siguiente</button>
+        </fieldset>
+    </form>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+    <script src="../assets/js/solicitanteRegistroEspacio.js"></script>
+</body>
+</html>

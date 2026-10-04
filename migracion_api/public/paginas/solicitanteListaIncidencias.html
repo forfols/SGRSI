@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Incidencias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/solicitante.css">
+</head>
+<body>
+    <header>
+        <nav class="d-flex justify-content-between align-items-center">
+            <a href="indexSolicitante.html"><button class="btnNav">Volver</button></a>
+            <button class="btnNav" id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <div id="alerta"></div>
+
+    <h1>Lista de Incidencias</h1>
+    <div class="table-responsive">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Tipo incidencia</th>
+                    <th>Espacio</th>
+                    <th>Nro espacio</th>
+                    <th>Grupo</th>
+                    <th>PC</th>
+                    <th>Persona asignada PC</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Fecha creado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTabla"></tbody>
+        </table>
+    </div>
+
+    <form id="modificarIncidencia">
+        <fieldset class="formularioModificarIncidencia" style="display:none">
+            <legend><h2>Modificar Incidencia</h2></legend>
+
+            <button type="button" id="btnCerrarModificarIncidencia">x</button>
+            <br>
+
+            <div>
+                <label for="tipoIncidencia">Tipo de Incidencia:</label>
+                <select id="tipoIncidencia" required>
+                    <option value="" disabled selected hidden>--</option>
+                    <option>Otros</option>
+                    <option>PC</option>
+                </select>
+            </div>
+
+            <div id="campoExtra" class="d-none">
+                <label for="nroPc">PC:</label>
+                <select id="nroPc"></select>
+
+                <label for="nombreAlumno">Nombre de la Persona:</label>
+                <input id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
+            </div>
+
+            <div class="mb-2">
+                <h4>Descripción de la Incidencia</h4>
+                <textarea cols="40" rows="10" id="descripcion" required placeholder="Describe la incidencia..."></textarea>
+            </div>
+
+            <p><input type="submit" value="Actualizar"></p>
+        </fieldset>
+    </form>
+
+    <form id="verEstado">
+        <fieldset class="formularioVerEstado" style="display:none">
+            <legend><h2>Estado de la Incidencia</h2></legend>
+            <button type="button" id="btnCerrarVerEstado">x</button>
+
+            <div><label>Estado:</label> <span id="estado"></span></div>
+            <div id="campoTecnico"><label>Técnico asignado:</label> <span id="tecnico"></span></div>
+            <div><label>Prioridad:</label> <span id="prioridad"></span></div>
+            <div><label>Diagnóstico:</label> <span id="diagnostico"></span></div>
+            <div id="campoSolucion"><label>Solución:</label> <span id="solucion"></span></div>
+        </fieldset>
+    </form>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+    <script src="../assets/js/solicitanteListaIncidencias.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/indexAdministrador.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="btnNav" id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+        <a href="administradorCrearUsuario.html"><button class="btnPrincipal">Crear usuario</button></a>
+        <a href="administradorListaUsuarios.html"><button class="btnPrincipal">Gestionar usuarios</button></a>
+        <a href="administradorListaIncidencias.html"><button class="btnPrincipal">Ver incidencias generales</button></a>
+        <a href="administradorMetricas.html"><button class="btnPrincipal">Panel de métricas y reportes</button></a>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+</body>
+</html>

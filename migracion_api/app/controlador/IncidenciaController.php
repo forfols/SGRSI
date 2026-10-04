@@ -107,7 +107,7 @@ class IncidenciaController
     if ($incidencia === null) {
         RespuestaJson::error("No se encontró la incidencia", 404);
     }
-    if ($incidencia["tipoState"] !== "Sin asignar" && (string) $incidencia["ciTecnico"] !== (string) $_SESSION["ci"]) {
+    if ($incidencia["tipoEstado"] !== "Sin asignar" && (string) $incidencia["ciTecnico"] !== (string) $_SESSION["ci"]) {
         RespuestaJson::error("La incidencia la tiene otro técnico", 403);
     }
 

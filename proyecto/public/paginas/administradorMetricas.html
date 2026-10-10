@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/administrador.css">
+    <link rel="stylesheet" href="../assets/css/metricas.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="indexAdministrador.html"><button>Volver</button></a>
+            <button id="btnCerrarSesion">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <div id="alerta"></div>
+
+    <h1>Panel de métricas y reportes</h1>
+
+    <div class="cuadriculaMetricas">
+        <section class="tarjetaMetrica">
+            <h2>Incidencias por estado</h2>
+            <div class="cajaGrafico"><canvas id="graficoEstado"></canvas></div>
+        </section>
+
+        <section class="tarjetaMetrica">
+            <h2>Incidencias por tipo</h2>
+            <div class="cajaGrafico"><canvas id="graficoTipo"></canvas></div>
+        </section>
+
+        <section class="tarjetaMetrica">
+            <h2>Incidencias por espacio</h2>
+            <div class="cajaGrafico"><canvas id="graficoEspacio"></canvas></div>
+        </section>
+
+        <section class="tarjetaMetrica">
+            <h2>Incidencias por técnico</h2>
+            <div class="cajaGrafico"><canvas id="graficoTecnico"></canvas></div>
+        </section>
+
+         <section class="tarjetaMetrica anchoCompleto">
+            <h2>Salones con más incidencias</h2>
+            <div class="cajaGrafico"><canvas id="graficoSalon"></canvas></div>
+        </section>
+
+        <section class="tarjetaMetrica anchoCompleto">
+            <h2>Incidencias por mes</h2>
+            <div class="cajaGrafico"><canvas id="graficoMes"></canvas></div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+    <script src="../assets/js/administradorMetricas.js"></script>
+</body>
+</html>

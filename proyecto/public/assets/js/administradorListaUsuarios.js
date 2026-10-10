@@ -1,37 +1,86 @@
-document.addEventListener("DOMContentLoaded", function () {
+const cuerpoTabla = document.getElementById("cuerpoTabla");
+const formularioModificar = document.getElementById("modificarUsuario");
+const campoModificar = document.querySelector(".formularioModificarUsuario");
+const btnCerrar = document.getElementById("btnCerrarModificarUsuario");
+const entradaNombre = document.getElementById("nombre");
+const entradaCi = document.getElementById("ci");
+const rolSolicitante = document.getElementById("rolSolicitante");
+const rolTecnico = document.getElementById("rolTecnico");
+const rolAdministrador = document.getElementById("rolAdministrador");
 
-    const formulario = document.getElementById("modificarUsuario");
-    const campoNombre = document.getElementById("nombre");
-    const campoCi = document.getElementById("ci");
-    const campoRol = document.getElementById("rol");
-    const formularioModificar = document.querySelector(".formularioModificarUsuario");
-    const btnCerrar = document.getElementById("btnCerrarModificarUsuario");
-    const estaActivo= document.getElementById("estaActivo");
+function textoRoles(usuario) {
+    const roles = [];
 
-    document.querySelectorAll(".btnModificar").forEach(function (boton) {
+    if (usuario.solicitante == 1) roles.push("Solicitante");
+    if (usuario.tecnico == 1) roles.push("Técnico");
+    if (usuario.administrador == 1) roles.push("Administrador");
 
-    boton.addEventListener("click", function () {
+    return roles.length > 0 ? roles.join(", ") : "Sin rol";
+}
 
-        campoNombre.value = boton.dataset.nombre;
-        campoCi.value = boton.dataset.ci;
-        estaActivo.value = boton.dataset.activo;
+function abrirModificar(usuario) {
+    entradaNombre.value = usuario.nombre;
+    entradaCi.value = usuario.ci;
+    rolSolicitante.checked = usuario.solicitante == 1;
+    rolTecnico.checked = usuario.tecnico == 1;
+    rolAdministrador.checked = usuario.administrador == 1;
 
-        document.getElementById("rolSolicitante").checked =
-            boton.dataset.solicitante === "1";
+    campoModificar.style.display = "block";
+}
 
-        document.getElementById("rolTecnico").checked =
-            boton.dataset.tecnico === "1";
+function cerrarModificar() {
+    campoModificar.style.display = "none";
+}
 
-        document.getElementById("rolAdministrador").checked =
-            boton.dataset.administrador === "1";
+function agregarFila(usuario) {
+    const fila = document.createElement("tr");
 
-        formularioModificar.style.display = "block";
-    });
+    celda(fila, usuario.nombre);
+    celda(fila, usuario.ci);
+    celda(fila, textoRoles(usuario));
 
-});
+    const campoBoton = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = "Modificar";
+    boton.addEventListener("click", () => abrirModificar(usuario));
+    campoBoton.appendChild(boton);
+    fila.appendChild(campoBoton);
 
-    btnCerrar.addEventListener("click", function () {
-        formularioModificar.style.display = "none";
-    });
+    cuerpoTabla.appendChild(fila);
+}
 
-});
+async function cargarTabla() {
+    cuerpoTabla.replaceChildren();
+
+    const usuarios = await api("GET", "usuarios.php");
+
+    for (const usuario of usuarios) {
+        agregarFila(usuario);
+    }
+}
+
+async function modificarUsuario(evento) {
+    evento.preventDefault();
+
+    try {
+        const resultado = await api("PUT", "usuarios.php", {
+            ci: entradaCi.value,
+            nombre: entradaNombre.value.trim(),
+            solicitante: rolSolicitante.checked,
+            tecnico: rolTecnico.checked,
+            administrador: rolAdministrador.checked
+        });
+
+        cerrarModificar();
+        await cargarTabla();
+        mostrarMensaje(resultado.mensaje, "mensaje");
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
+}
+
+btnCerrar.addEventListener("click", cerrarModificar);
+formularioModificar.addEventListener("submit", modificarUsuario);
+
+cargarTabla().catch((error) => mostrarMensaje(error.message));

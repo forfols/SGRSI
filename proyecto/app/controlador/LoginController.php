@@ -50,12 +50,11 @@ class LoginController
         RespuestaJson::exito([
             "mensaje" => "Sesión iniciada correctamente",
             "csrfToken" => $_SESSION["csrfToken"],
+            "nombre" => $usuario->getNombre(),
             "roles" => [
                 "solicitante" => $usuario->getRolSolicitante(),
                 "tecnico" => $usuario->getRolTecnico(),
                 "administrador" => $usuario->getRolAdministrador(),
-                "csrfToken" => $_SESSION["csrfToken"],
-                "nombre" => $usuario->getNombre(),
             ],
         ]);
     }

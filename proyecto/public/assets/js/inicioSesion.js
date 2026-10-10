@@ -9,7 +9,7 @@ document.getElementById("formLogin").addEventListener("submit", async function (
 
         sessionStorage.setItem("csrfToken", datos.csrfToken);
         sessionStorage.setItem("roles", JSON.stringify(datos.roles));
-        sessionStorage.setItem("nombre", datos.nombre);
+        sessionStorage.setItem("nombre", datos.nombre ?? "");
 
         const r = datos.roles;
         const cantidad = [r.solicitante, r.tecnico, r.administrador].filter(Boolean).length;

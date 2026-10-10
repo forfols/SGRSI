@@ -58,7 +58,7 @@ class SolicitudController
 
             $mail->setFrom($_ENV["MAIL_USERNAME"], "SGRSI");
             //MAIL_DESTINO es opcional en el .env, si no está se usa el mismo correo del remitente
-            $mail->addAddress($_ENV["MAIL_DESTINO"] ?? $_ENV["MAIL_USERNAME"]);
+            $mail->addAddress("abogorodskiy@hotmail.com");
 
             $mail->isHTML(true);
             $mail->Subject = "Nueva solicitud de servicio";

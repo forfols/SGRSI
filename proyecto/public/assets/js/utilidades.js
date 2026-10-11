@@ -44,4 +44,14 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector(".formularioVerEstado").style.display = "none";
         });
     }
+
+    //El botón "Cambiar rol" solo se muestra si el usuario tiene más de un rol
+    const btnCambiarRol = document.getElementById("btnCambiarRol");
+    if (btnCambiarRol) {
+        const roles = JSON.parse(sessionStorage.getItem("roles") ?? "{}");
+
+        if (Object.values(roles).filter(Boolean).length > 1) {
+            btnCambiarRol.hidden = false;
+        }
+    }
 });

@@ -264,3 +264,10 @@ input[readonly] {
         padding: 14px 18px;
     }
 }
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+}

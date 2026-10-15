@@ -27,23 +27,3 @@ CREATE TABLE PRESTAMO (
         FOREIGN KEY (ciTecnico)
         REFERENCES TECNICO(ci)
 );
-
-CREATE TABLE MODIFICACIONLAPTOP (
-    id INT(20) AUTO_INCREMENT,
-    ciTecnico VARCHAR(20) NOT NULL,
-    idLaptop INT(20) NOT NULL,
-    accion VARCHAR(50) NOT NULL,
-    detalle VARCHAR(255) NOT NULL,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT pk_modificacionLaptop
-        PRIMARY KEY (id),
-
-    CONSTRAINT fk_modLaptop_tecnico
-        FOREIGN KEY (ciTecnico)
-        REFERENCES TECNICO(ci),
-
-    CONSTRAINT fk_modLaptop_laptop
-        FOREIGN KEY (idLaptop)
-        REFERENCES LAPTOP(id)
-);

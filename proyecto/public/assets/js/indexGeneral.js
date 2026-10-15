@@ -3,7 +3,7 @@ const roles = JSON.parse(sessionStorage.getItem("roles") ?? "{}");
 
 const opciones = [
     ["solicitante", "indexSolicitante.html", "Ingresar como Solicitante"],
-    ["tecnico", "tecnico.html", "Ingresar como Técnico"],
+    ["tecnico", "indexTecnico.html", "Ingresar como Técnico"],
     ["administrador", "indexAdministrador.html", "Ingresar como Administrador"]
 ];
 

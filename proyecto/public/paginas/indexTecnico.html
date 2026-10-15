@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/indexSolicitante.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="btnNav" id="btnCerrarSesion">Cerrar sesión</button>
+            <a href="indexGeneral.html">
+                <button class="btnNav btnImagen" id="btnCambiarRol" hidden title="Cambiar rol">
+                    <img src="../assets/img/btnCambiarRol.svg" alt="Cambiar rol">
+                </button>
+            </a>        
+        </nav>
+    </header>
+
+    <main class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+        <a href="tecnico.html"><button class="btnPrincipal">Incidencias</button></a>
+        <a href="tecnicoRegistroPrestamo.html"><button class="btnPrincipal">Realizar préstamo</button></a>
+        <a href="tecnicoListaPrestamos.html"><button class="btnPrincipal">Ver préstamos</button></a>
+        <a href="tecnicoGestionarLaptops.html"><button class="btnPrincipal">Gestionar ceibal</button></a>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utilidades.js"></script>
+</body>
+</html>

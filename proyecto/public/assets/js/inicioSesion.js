@@ -17,7 +17,7 @@ document.getElementById("formLogin").addEventListener("submit", async function (
         let destino = "indexGeneral.html";
         if (cantidad === 1) {
             if (r.solicitante) destino = "indexSolicitante.html";
-            else if (r.tecnico) destino = "tecnico.html";
+            else if (r.tecnico) destino = "indexTecnico.html";
             else destino = "indexAdministrador.html";
         }
 

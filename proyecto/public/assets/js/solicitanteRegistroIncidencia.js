@@ -12,7 +12,9 @@ const tipo = document.getElementById("tipo");
 const campoExtra = document.getElementById("campoExtra");
 const nroPc = document.getElementById("nroPc");
 const nombreAlumno = document.getElementById("nombreAlumno");
+const incidenciaGeneral = document.getElementById("incidenciaGeneral");
 const descripcion = document.getElementById("descripcion");
+const avisoDescripcion = document.getElementById("avisoDescripcion");
 
 let equipos = [];
 
@@ -37,6 +39,21 @@ function actualizarAlumno() {
     nombreAlumno.value = seleccionada && seleccionada.textContent === "PCDocente" ? nombreUsuario : "";
 }
 
+//Con PC: incidencia general obligatoria y descripción opcional (salvo "Otro").
+//Con "Otros": no hay incidencia general, la descripción es obligatoria.
+function actualizarObligatorios() {
+    const esPC = tipo.value === "PC";
+
+    incidenciaGeneral.required = esPC;
+
+    if (esPC) {
+        actualizarDescripcion(incidenciaGeneral, descripcion, avisoDescripcion);
+    } else {
+        descripcion.required = true;
+        avisoDescripcion.textContent = "(obligatoria)";
+    }
+}
+
 function cambiarTipo() {
     const esPC = tipo.value === "PC";
 
@@ -48,7 +65,10 @@ function cambiarTipo() {
     } else {
         nroPc.replaceChildren();
         nombreAlumno.value = "";
+        incidenciaGeneral.value = "";
     }
+
+    actualizarObligatorios();
 }
 
 async function registrarIncidencia(evento) {
@@ -60,12 +80,14 @@ async function registrarIncidencia(evento) {
             tipo: tipo.value,
             nroPc: nroPc.value,
             nombreAlumno: nombreAlumno.value,
+            idIncidenciaGeneral: incidenciaGeneral.value,
             descripcion: descripcion.value
         });
 
         mostrarMensaje(resultado.mensaje, "mensaje");
         formularioIncidencia.reset();
         cambiarTipo();
+        actualizarDescripcion(incidenciaGeneral, descripcion, avisoDescripcion);
     } catch (error) {
         mostrarMensaje(error.message);
     }
@@ -74,6 +96,7 @@ async function registrarIncidencia(evento) {
 async function iniciar() {
     try {
         equipos = await api("GET", "equipos.php");
+        await cargarIncidenciasGenerales(incidenciaGeneral);
     } catch (error) {
         mostrarMensaje(error.message);
     }
@@ -81,6 +104,7 @@ async function iniciar() {
 
 tipo.addEventListener("change", cambiarTipo);
 nroPc.addEventListener("change", actualizarAlumno);
+incidenciaGeneral.addEventListener("change", () => actualizarDescripcion(incidenciaGeneral, descripcion, avisoDescripcion));
 formularioIncidencia.addEventListener("submit", registrarIncidencia);
 
 iniciar();

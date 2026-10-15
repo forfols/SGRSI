@@ -36,11 +36,16 @@
 
                 <label for="nombreAlumno">Persona asignada:</label>
                 <input name="nombreAlumno" id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
+
+                <label for="incidenciaGeneral">Incidencia general:</label>
+                <select id="incidenciaGeneral" name="incidenciaGeneral">
+                    <option value="" disabled selected hidden>--</option>
+                </select>
             </div>
 
             <div class="mb-2">
-                <h4>Descripción de la Incidencia</h4>
-                <textarea cols="40" rows="10" id="descripcion" name="descripcion" required placeholder="Describe la incidencia..."></textarea>
+                <h4>Descripción <span id="avisoDescripcion">(obligatoria)</span></h4>
+                <textarea cols="40" rows="10" id="descripcion" name="descripcion" placeholder="Describe la incidencia..." required></textarea>
             </div>
 
             <input type="submit" value="Registrar Incidencia" class="mt-2">

@@ -39,12 +39,14 @@ function agregarFila(incidencia) {
 
     celda(fila, incidencia.nombreSolicitante);
     celda(fila, incidencia.tipoIncidencia);
+    celda(fila, incidencia.nombreIncidenciaGeneral);
     celda(fila, incidencia.nombreEquipo);
     celda(fila, incidencia.alumno);
     celda(fila, incidencia.tipoEspacio);
     celda(fila, incidencia.numeroEspacio);
     celda(fila, incidencia.nombreGrupo);
 
+    // columna Estado: el botón "Modificar"
     const campoBoton = document.createElement("td");
     const boton = document.createElement("button");
     boton.type = "button";

@@ -28,6 +28,15 @@ class IncidenciaController
 
     private function listar(): void
     {
+        //Menú desplegable de incidencias generales: cualquier usuario con sesión
+        if (isset($_GET["general"])) {
+            $conexion = Conexion::conectar();
+            $lista = (new IncidenciaDAO($conexion))->listarIncidenciasGenerales();
+            Conexion::desconectar();
+
+            RespuestaJson::exito($lista);
+        }
+
         //El usuario puede tener varios roles, por eso el rol llega por GET (?rol=solicitante|tecnico|administrador)
         $rol = $_GET["rol"] ?? "";
 
@@ -51,13 +60,16 @@ class IncidenciaController
         $alumno = trim($datos["nombreAlumno"] ?? "");
         $descripcion = trim($datos["descripcion"] ?? "");
         $idRegistroEspacio = (int) ($datos["idRegistroEspacio"] ?? 0);
+        $idIncidenciaGeneral = (int) ($datos["idIncidenciaGeneral"] ?? 0);
 
-        if ($tipo === "" || $descripcion === "" || $idRegistroEspacio === 0) {
+        if ($tipo === "" || $idRegistroEspacio === 0) {
             RespuestaJson::error("Existen campos vacíos", 422);
         }
         if (!in_array($tipo, ["PC", "Otros"], true)) {
             RespuestaJson::error("Tipo de incidencia inválido", 422);
         }
+
+        $this->validarIncidenciaGeneral($tipo, $idIncidenciaGeneral, $descripcion);
 
         if ($tipo === "PC") {
             if (empty($idEquipo) || $alumno === "") {
@@ -67,10 +79,11 @@ class IncidenciaController
         } else {
             $idEquipo = null;
             $alumno = null;
+            $idIncidenciaGeneral = null;
         }
 
         $dao = new IncidenciaDAO(Conexion::conectar());
-        $resultado = $dao->registrarIncidencia($idRegistroEspacio, $tipo, $idEquipo, $alumno, $descripcion, (string) $_SESSION["ci"]);
+               $resultado = $dao->registrarIncidencia($idRegistroEspacio, $tipo, $idEquipo, $alumno, $descripcion, $idIncidenciaGeneral, (string) $_SESSION["ci"]);
 
         if (!$resultado) {
             RespuestaJson::error("No se pudo registrar la incidencia", 400);
@@ -128,20 +141,23 @@ class IncidenciaController
     }
 
     Sesion::verificarRol("solicitante");    
-        $datos = $this->leerJson();
+
 
         $idIncidencia = (int) ($datos["idIncidencia"] ?? 0);
         $tipo = trim($datos["tipoIncidencia"] ?? "");
         $idEquipo = $datos["nroPc"] ?? null;
         $alumno = trim($datos["nombreAlumno"] ?? "");
         $descripcion = trim($datos["descripcion"] ?? "");
+        $idIncidenciaGeneral = (int) ($datos["idIncidenciaGeneral"] ?? 0);
 
-        if ($idIncidencia === 0 || $tipo === "" || $descripcion === "") {
+        if ($idIncidencia === 0 || $tipo === "") {
             RespuestaJson::error("Existen campos vacíos", 422);
         }
         if (!in_array($tipo, ["PC", "Otros"], true)) {
             RespuestaJson::error("Tipo de incidencia inválido", 422);
         }
+
+        $this->validarIncidenciaGeneral($tipo, $idIncidenciaGeneral, $descripcion);
 
         if ($tipo === "PC") {
             if (empty($idEquipo) || $alumno === "") {
@@ -166,7 +182,7 @@ class IncidenciaController
             RespuestaJson::error("La incidencia está siendo procesada por un técnico", 409);
         }
 
-        $resultado = $dao->modificarIncidencia($idIncidencia, $tipo, $idEquipo, $alumno, $descripcion);
+        $resultado = $dao->modificarIncidencia($idIncidencia, $tipo, $idEquipo, $alumno, $descripcion, $idIncidenciaGeneral);
 
         if (!$resultado) {
             RespuestaJson::error("No se pudo modificar la incidencia", 400);
@@ -219,5 +235,30 @@ class IncidenciaController
         return $datos;
     }
 
+    private function validarIncidenciaGeneral(string $tipo, int $idIncidenciaGeneral, string $descripcion): void
+    {
+        //Con "Otros" no hay categoría y la descripción es obligatoria
+        if ($tipo === "Otros") {
+            if ($descripcion === "") {
+                RespuestaJson::error("La descripción es obligatoria", 422);
+            }
+            return;
+        }
+
+        if ($idIncidenciaGeneral === 0) {
+            RespuestaJson::error("Debe seleccionar una incidencia general", 422);
+        }
+
+        $conexion = Conexion::conectar();
+        $general = (new IncidenciaDAO($conexion))->buscarIncidenciaGeneral($idIncidenciaGeneral);
+        Conexion::desconectar();
+
+        if ($general === null) {
+            RespuestaJson::error("La incidencia general no existe", 422);
+        }
+        if ($general["nombre"] === "Otro" && $descripcion === "") {
+            RespuestaJson::error("La descripción es obligatoria cuando se elige Otro", 422);
+        }
+    }
 
 }

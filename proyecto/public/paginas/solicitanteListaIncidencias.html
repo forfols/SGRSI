@@ -23,6 +23,7 @@
             <thead>
                 <tr>
                     <th>Tipo incidencia</th>
+                    <th>Incidencia general</th>
                     <th>Espacio</th>
                     <th>Nro espacio</th>
                     <th>Grupo</th>
@@ -60,11 +61,16 @@
 
                 <label for="nombreAlumno">Nombre de la Persona:</label>
                 <input id="nombreAlumno" type="text" placeholder="Ej: Juan Perez">
+
+                <label for="incidenciaGeneral">Incidencia general:</label>
+                <select id="incidenciaGeneral" required>
+                    <option value="" disabled selected hidden>--</option>
+                </select>
             </div>
 
             <div class="mb-2">
-                <h4>Descripción de la Incidencia</h4>
-                <textarea cols="40" rows="10" id="descripcion" required placeholder="Describe la incidencia..."></textarea>
+                <h4>Descripción <span id="avisoDescripcion">(opcional)</span></h4>
+                <textarea cols="40" rows="10" id="descripcion" placeholder="Describe la incidencia..."></textarea>
             </div>
 
             <p><input type="submit" value="Actualizar"></p>

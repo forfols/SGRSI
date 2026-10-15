@@ -31,6 +31,8 @@ class IncidenciaDAO
                 rti.tipo AS tipoIncidencia,
                 rti.alumno,
                 rti.descripcion AS descripcionIncidencia,
+                ig.id AS idIncidenciaGeneral,
+                ig.nombre AS nombreIncidenciaGeneral,
                 eq.id AS idEquipo,
                 eq.nombre AS nombreEquipo,
                 es.id AS idEstado,
@@ -39,6 +41,7 @@ class IncidenciaDAO
                 es.diagnostico,
                 es.soluciones,
                 ri.fecha
+
 
             FROM REGISTROINCIDENCIA AS ri
 
@@ -59,6 +62,9 @@ class IncidenciaDAO
 
             INNER JOIN REGISTROTIPOINCIDENCIA AS rti
                 ON ri.idTipoIncidencia = rti.id
+            
+            LEFT JOIN INCIDENCIAGENERAL AS ig
+                ON rti.idIncidenciaGeneral = ig.id
 
             LEFT JOIN EQUIPO AS eq
                 ON rti.idEquipo = eq.id
@@ -117,15 +123,14 @@ class IncidenciaDAO
 
         return $incidencia;
     }
-
-    public function registrarIncidencia(int $idRegistroEspacio, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, string $ciSolicitante): bool
+    public function registrarIncidencia(int $idRegistroEspacio, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, int $idIncidenciaGeneral, string $ciSolicitante): bool
     {
         try {
             $this->conexion->beginTransaction();
 
-            $sqlTipo = "INSERT INTO REGISTROTIPOINCIDENCIA (tipo, idEquipo, alumno, descripcion) VALUES (:tipo, :idEquipo, :alumno, :descripcion)";
+            $sqlTipo = "INSERT INTO REGISTROTIPOINCIDENCIA (tipo, idEquipo, alumno, descripcion, idIncidenciaGeneral) VALUES (:tipo, :idEquipo, :alumno, :descripcion, :idIncidenciaGeneral)";
             $consultaTipo = $this->conexion->prepare($sqlTipo);
-            $consultaTipo->execute(["tipo" => $tipo, "idEquipo" => $idEquipo, "alumno" => $alumno, "descripcion" => $descripcion]);
+            $consultaTipo->execute(["tipo" => $tipo, "idEquipo" => $idEquipo, "alumno" => $alumno, "descripcion" => $descripcion, "idIncidenciaGeneral" => $idIncidenciaGeneral]);
             $idTipoIncidencia = (int) $this->conexion->lastInsertId();
 
             $sqlEstado = "INSERT INTO ESTADO (tipo, prioridad, diagnostico, soluciones) VALUES ('Sin asignar', 'Sin asignar', 'N/A', 'N/A')";
@@ -149,7 +154,7 @@ class IncidenciaDAO
         }
     }
 
-    public function modificarIncidencia(int $idIncidencia, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion): bool
+    public function modificarIncidencia(int $idIncidencia, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, int $idIncidenciaGeneral): bool
     {
         try {
             $this->conexion->beginTransaction();
@@ -164,13 +169,14 @@ class IncidenciaDAO
                 return false;
             }
 
-            $sqlTipo = "UPDATE REGISTROTIPOINCIDENCIA SET tipo = :tipo, idEquipo = :idEquipo, alumno = :alumno, descripcion = :descripcion WHERE id = :idTipoIncidencia";
+            $sqlTipo = "UPDATE REGISTROTIPOINCIDENCIA SET tipo = :tipo, idEquipo = :idEquipo, alumno = :alumno, descripcion = :descripcion, idIncidenciaGeneral = :idIncidenciaGeneral WHERE id = :idTipoIncidencia";
             $consultaTipo = $this->conexion->prepare($sqlTipo);
             $consultaTipo->execute([
                 "tipo" => $tipo,
                 "idEquipo" => $idEquipo,
                 "alumno" => $alumno,
                 "descripcion" => $descripcion,
+                "idIncidenciaGeneral" => $idIncidenciaGeneral,
                 "idTipoIncidencia" => $incidencia["idTipoIncidencia"]
             ]);
 
@@ -265,5 +271,31 @@ class IncidenciaDAO
 
             return false;
         }
+    }
+
+    public function listarIncidenciasGenerales(): array
+    {
+        $consulta = $this->conexion->query("SELECT id, nombre FROM INCIDENCIAGENERAL ORDER BY nombre");
+        $lista = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+        $consulta = null;
+
+        return $lista;
+    }
+
+    public function buscarIncidenciaGeneral(int $id): ?array
+    {
+        $consulta = $this->conexion->prepare("SELECT id, nombre FROM INCIDENCIAGENERAL WHERE id = :id");
+        $consulta->execute(["id" => $id]);
+
+        $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+
+        $consulta = null;
+
+        if ($fila === false) {
+            return null;
+        }
+
+        return $fila;
     }
 }

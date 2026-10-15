@@ -6,7 +6,9 @@ const tipoIncidencia = document.getElementById("tipoIncidencia");
 const campoExtra = document.getElementById("campoExtra");
 const nroPc = document.getElementById("nroPc");
 const nombreAlumno = document.getElementById("nombreAlumno");
+const incidenciaGeneral = document.getElementById("incidenciaGeneral");
 const descripcion = document.getElementById("descripcion");
+const avisoDescripcion = document.getElementById("avisoDescripcion");
 const nombreUsuario = sessionStorage.getItem("nombre") ?? "";
 
 let equipos = [];
@@ -37,6 +39,20 @@ function actualizarAlumno() {
     }
 }
 
+
+function actualizarObligatorios() {
+    const esPC = tipoIncidencia.value === "PC";
+
+    incidenciaGeneral.required = esPC;
+
+    if (esPC) {
+        actualizarDescripcion(incidenciaGeneral, descripcion, avisoDescripcion);
+    } else {
+        descripcion.required = true;
+        avisoDescripcion.textContent = "(obligatoria)";
+    }
+}
+
 function mostrarCampoExtra() {
     const esPC = tipoIncidencia.value === "PC";
 
@@ -49,7 +65,10 @@ function mostrarCampoExtra() {
     } else {
         nroPc.replaceChildren();
         nombreAlumno.value = "";
+        incidenciaGeneral.value = "";
     }
+
+    actualizarObligatorios();
 }
 
 function abrirModificar(incidencia) {
@@ -58,6 +77,8 @@ function abrirModificar(incidencia) {
 
     tipoIncidencia.value = incidencia.tipoIncidencia;
     descripcion.value = incidencia.descripcionIncidencia;
+    incidenciaGeneral.value = incidencia.idIncidenciaGeneral ?? "";
+    actualizarObligatorios();
 
     campoExtra.classList.toggle("d-none", incidencia.tipoIncidencia !== "PC");
     nroPc.required = incidencia.tipoIncidencia === "PC";
@@ -75,6 +96,7 @@ function abrirModificar(incidencia) {
 function cerrarModificar() {
     campoModificar.style.display = "none";
     formularioModificar.reset();
+    actualizarObligatorios();
 }
 
 async function eliminarIncidencia(incidencia) {
@@ -95,6 +117,7 @@ function agregarFila(incidencia) {
     const fila = document.createElement("tr");
 
     celda(fila, incidencia.tipoIncidencia);
+    celda(fila, incidencia.nombreIncidenciaGeneral);
     celda(fila, incidencia.tipoEspacio);
     celda(fila, incidencia.numeroEspacio);
     celda(fila, incidencia.nombreGrupo);
@@ -150,6 +173,7 @@ async function modificarIncidencia(evento) {
             tipoIncidencia: tipoIncidencia.value,
             nroPc: nroPc.value,
             nombreAlumno: nombreAlumno.value,
+            idIncidenciaGeneral: tipoIncidencia.value === "PC" ? incidenciaGeneral.value : "",
             descripcion: descripcion.value
         });
 
@@ -164,6 +188,7 @@ async function modificarIncidencia(evento) {
 async function iniciar() {
     try {
         equipos = await api("GET", "equipos.php");
+        await cargarIncidenciasGenerales(incidenciaGeneral);
         await cargarTabla();
     } catch (error) {
         mostrarMensaje(error.message);
@@ -172,6 +197,7 @@ async function iniciar() {
 
 tipoIncidencia.addEventListener("change", mostrarCampoExtra);
 nroPc.addEventListener("change", actualizarAlumno);
+incidenciaGeneral.addEventListener("change", actualizarObligatorios);
 btnCerrarModificar.addEventListener("click", cerrarModificar);
 formularioModificar.addEventListener("submit", modificarIncidencia);
 

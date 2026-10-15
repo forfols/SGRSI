@@ -32,6 +32,29 @@ function abrirVerEstado(incidencia) {
     document.querySelector(".formularioVerEstado").style.display = "block";
 }
 
+//Carga el menú desplegable de incidencias generales, dejando "Otro" al final
+async function cargarIncidenciasGenerales(select) {
+    const lista = await api("GET", "incidencias.php?general=1");
+
+    lista.sort((a, b) => (a.nombre === "Otro") - (b.nombre === "Otro") || a.nombre.localeCompare(b.nombre));
+
+    for (const item of lista) {
+        const opcion = document.createElement("option");
+        opcion.value = item.id;
+        opcion.textContent = item.nombre;
+        select.appendChild(opcion);
+    }
+}
+
+//La descripción es obligatoria solo si se elige "Otro"
+function actualizarDescripcion(select, textarea, aviso) {
+    const opcion = select.options[select.selectedIndex];
+    const esOtro = opcion !== undefined && opcion.textContent === "Otro";
+
+    textarea.required = esOtro;
+    aviso.textContent = esOtro ? "(obligatoria)" : "(opcional)";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const btnCerrarSesion = document.getElementById("btnCerrarSesion");
     if (btnCerrarSesion) {

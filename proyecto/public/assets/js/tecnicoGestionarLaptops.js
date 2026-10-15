@@ -3,15 +3,17 @@ const formularioAlta = document.getElementById("altaLaptop");
 const modelo = document.getElementById("modelo");
 
 async function darDeBaja(laptop) {
-    const motivo = window.prompt("Motivo de la baja de " + laptop.modelo + " (ej: pantalla rota):");
-
-    //Si cancela o deja el motivo vacío no se hace nada
-    if (motivo === null || motivo.trim() === "") {
+    const confirmar = window.confirm(
+        "¿Estás seguro que queres dar de baja la laptop?"
+    );
+    if (!confirmar) {
         return;
     }
-
     try {
-        const resultado = await api("PUT", "laptops.php", { idLaptop: laptop.id, motivo: motivo.trim() });
+        const resultado = await api("PUT", "laptops.php", {
+            idLaptop: laptop.id
+        });
+
         await cargarTabla();
         mostrarMensaje(resultado.mensaje, "mensaje");
     } catch (error) {

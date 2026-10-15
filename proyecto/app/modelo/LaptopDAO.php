@@ -57,7 +57,7 @@ class LaptopDAO
         return $existe;
     }
 
-    public function registrarLaptop(string $modelo, string $ciTecnico): bool
+    public function registrarLaptop(string $modelo): bool
     {
         try {
             $this->conexion->beginTransaction();
@@ -66,10 +66,6 @@ class LaptopDAO
             $consultaLaptop = $this->conexion->prepare($sqlLaptop);
             $consultaLaptop->execute(["modelo" => $modelo]);
             $idLaptop = (int) $this->conexion->lastInsertId();
-
-            $sqlModificacion = "INSERT INTO MODIFICACIONLAPTOP (ciTecnico, idLaptop, accion, detalle) VALUES (:ciTecnico, :idLaptop, 'Alta', 'Se agregó la laptop al catálogo')";
-            $consultaModificacion = $this->conexion->prepare($sqlModificacion);
-            $consultaModificacion->execute(["ciTecnico" => $ciTecnico, "idLaptop" => $idLaptop]);
 
             $this->conexion->commit();
             return true;
@@ -86,7 +82,7 @@ class LaptopDAO
     /**
      * Devuelve: "ok", "noExiste" o "prestada".
      */
-    public function darDeBajaLaptop(int $idLaptop, string $motivo, string $ciTecnico): string
+    public function darDeBajaLaptop(int $idLaptop): string
     {
         try {
             $this->conexion->beginTransaction();
@@ -114,9 +110,6 @@ class LaptopDAO
             $consultaBaja = $this->conexion->prepare($sqlBaja);
             $consultaBaja->execute(["idLaptop" => $idLaptop]);
 
-            $sqlModificacion = "INSERT INTO MODIFICACIONLAPTOP (ciTecnico, idLaptop, accion, detalle) VALUES (:ciTecnico, :idLaptop, 'Baja', :detalle)";
-            $consultaModificacion = $this->conexion->prepare($sqlModificacion);
-            $consultaModificacion->execute(["ciTecnico" => $ciTecnico, "idLaptop" => $idLaptop, "detalle" => $motivo]);
 
             $this->conexion->commit();
             return "ok";

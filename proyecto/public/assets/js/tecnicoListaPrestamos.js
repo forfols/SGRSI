@@ -31,7 +31,7 @@ function agregarFila(prestamo) {
     if (prestamo.fechaFin === null) {
         const btnDevolver = document.createElement("button");
         btnDevolver.type = "button";
-        btnDevolver.textContent = "Se devolvió la " + prestamo.modelo;
+        btnDevolver.textContent = "Registrar como devuelto";
         btnDevolver.addEventListener("click", () => devolverPrestamo(prestamo));
         campoAcciones.appendChild(btnDevolver);
     }

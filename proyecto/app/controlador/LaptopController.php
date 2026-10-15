@@ -56,7 +56,7 @@ class LaptopController
             RespuestaJson::error("Ya existe una laptop con ese nombre", 409);
         }
 
-        $resultado = $dao->registrarLaptop($modelo, (string) $_SESSION["ci"]);
+        $resultado = $dao->registrarLaptop($modelo);
         Conexion::desconectar();
 
         if (!$resultado) {
@@ -73,15 +73,12 @@ class LaptopController
         $idLaptop = (int) ($datos["idLaptop"] ?? 0);
         $motivo = trim($datos["motivo"] ?? "");
 
-        if ($idLaptop === 0 || $motivo === "") {
-            RespuestaJson::error("Falta la laptop o el motivo de la baja", 422);
-        }
-        if (strlen($motivo) > 255) {
-            RespuestaJson::error("El motivo es demasiado largo", 422);
+        if ($idLaptop === 0) {
+            RespuestaJson::error("No se seleccionó ninguna laptop", 422);
         }
 
         $conexion = Conexion::conectar();
-        $resultado = (new LaptopDAO($conexion))->darDeBajaLaptop($idLaptop, $motivo, (string) $_SESSION["ci"]);
+        $resultado = (new LaptopDAO($conexion))->darDeBajaLaptop($idLaptop);
         Conexion::desconectar();
 
         if ($resultado === "prestada") {

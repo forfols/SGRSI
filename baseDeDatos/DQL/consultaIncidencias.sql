@@ -13,6 +13,8 @@ SELECT
     rti.tipo AS tipoIncidencia,
     rti.alumno,
     rti.descripcion AS descripcionIncidencia,
+    ig.id AS idIncidenciaGeneral,
+    ig.nombre AS nombreIncidenciaGeneral,
     eq.id AS idEquipo,
     eq.nombre AS nombreEquipo,
     es.id AS idEstado,
@@ -29,5 +31,6 @@ FROM
     INNER JOIN ESPACIO e ON re.idEspacio = e.id
     INNER JOIN GRUPO g ON re.nombreGrupo = g.nombre
     INNER JOIN REGISTROTIPOINCIDENCIA rti ON ri.idTipoIncidencia = rti.id
+    LEFT JOIN INCIDENCIAGENERAL ig ON rti.idIncidenciaGeneral = ig.id
     LEFT JOIN EQUIPO eq ON rti.idEquipo = eq.id
     INNER JOIN ESTADO es ON ri.idEstado = es.id;

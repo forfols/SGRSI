@@ -2,9 +2,13 @@ CREATE TABLE ESPACIO (
     id INT(20) AUTO_INCREMENT,
     tipo VARCHAR(255) NOT NULL,
     numero INT(10) NOT NULL,
+    cantidadEquipos INT(10) NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_Espacio
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+
+    CONSTRAINT uq_espacio_tipoNumero
+        UNIQUE (tipo, numero)
 );
 
 CREATE TABLE GRUPO (
@@ -39,19 +43,35 @@ CREATE TABLE EQUIPO (
         PRIMARY KEY (id)
 );
 
+CREATE TABLE INCIDENCIAGENERAL (
+    id INT(20) AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+
+    CONSTRAINT pk_incidenciaGeneral
+        PRIMARY KEY (id),
+
+    CONSTRAINT uq_incidenciaGeneral_nombre
+        UNIQUE (nombre)
+);
+
 CREATE TABLE REGISTROTIPOINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
     tipo VARCHAR(255) NOT NULL,
     idEquipo INT(20) NULL,
     alumno VARCHAR(255) NULL,
     descripcion VARCHAR(255) NOT NULL,
+    idIncidenciaGeneral INT(20) NULL,
 
     CONSTRAINT pk_registroTipoIncidencia
         PRIMARY KEY (id),
     
     CONSTRAINT fk_idEquipo
         FOREIGN KEY (idEquipo)
-        REFERENCES EQUIPO(id)
+        REFERENCES EQUIPO(id),
+
+    CONSTRAINT fk_incidenciaGeneral
+        FOREIGN KEY (idIncidenciaGeneral)
+        REFERENCES INCIDENCIAGENERAL(id)
 );
 
 CREATE TABLE ESTADO (
@@ -64,6 +84,7 @@ CREATE TABLE ESTADO (
     CONSTRAINT pk_estado
         PRIMARY KEY (id)
 );
+
 
 CREATE TABLE REGISTROINCIDENCIA (
     id INT(20) AUTO_INCREMENT,
@@ -101,4 +122,4 @@ CREATE TABLE REGISTROINCIDENCIA (
     CONSTRAINT fk_estado
         FOREIGN KEY (idEstado)
         REFERENCES ESTADO(id)
-); 
+);

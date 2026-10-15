@@ -167,6 +167,7 @@ class IncidenciaController
         } else {
             $idEquipo = null;
             $alumno = null;
+            $idIncidenciaGeneral = null;
         }
 
         $dao = new IncidenciaDAO(Conexion::conectar());

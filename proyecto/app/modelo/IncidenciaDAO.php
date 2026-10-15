@@ -123,7 +123,7 @@ class IncidenciaDAO
 
         return $incidencia;
     }
-    public function registrarIncidencia(int $idRegistroEspacio, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, int $idIncidenciaGeneral, string $ciSolicitante): bool
+    public function registrarIncidencia(int $idRegistroEspacio, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, ?int $idIncidenciaGeneral, string $ciSolicitante): bool
     {
         try {
             $this->conexion->beginTransaction();
@@ -154,7 +154,7 @@ class IncidenciaDAO
         }
     }
 
-    public function modificarIncidencia(int $idIncidencia, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, int $idIncidenciaGeneral): bool
+    public function modificarIncidencia(int $idIncidencia, string $tipo, ?int $idEquipo, ?string $alumno, string $descripcion, ?int $idIncidenciaGeneral): bool
     {
         try {
             $this->conexion->beginTransaction();

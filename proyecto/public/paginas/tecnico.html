@@ -18,6 +18,55 @@
     <div id="alerta"></div>
 
     <h1>Lista de Incidencias</h1>
+
+        <div class="btn-Filtrar">
+    <button class="btn btn-danger dropdown-toggle" type="button" id="btn-filtrar" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        Filtrar
+    </button>
+        <ul class="dropdown-menu p-2" aria-labelledby="btn-filtrar">
+            
+            <li>
+                <button class="dropdown-item d-flex justify-content-between align-items-center"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#grupoEstado"
+                        aria-expanded="true">
+                    Estado <span>▾</span>
+                </button>
+
+                <div class="collapse" id="grupoEstado">
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="ePendiente">Pendiente</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Pendiente" id="ePendiente">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eProceso">En proceso</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="En proceso" id="eProceso">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eTerminado">Terminado</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Terminado" id="eTerminado">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <button class="dropdown-item d-flex justify-content-between align-items-center"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#grupoTipo"
+                        aria-expanded="true">
+                    Tipo Incidencia <span>▾</span>
+                </button>
+
+                <div class="collapse" id="grupoTipo">
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="tPC">PC</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="PC" id="tPC">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="tOtros">Otros</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="Otros" id="tOtros">
+                    </div>
+                </li>
+            </ul>
+    </div>
+
     <div class="table-responsive">
         <table border="1">
             <thead>
@@ -74,6 +123,7 @@
         </fieldset>
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/utilidades.js"></script>
     <script src="../assets/js/tecnico.js"></script>

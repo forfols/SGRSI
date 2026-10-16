@@ -218,6 +218,14 @@ h1{
     justify-content: center;
 }
 
+.btn-Filtrar .dropdown-menu{
+    background-color: #fc3a3a;
+    color: #ffffff;
+}
+.btn-Filtrar .form-check-label{
+    color: #ffffff;
+}
+
 .alerta {
     background-color: #ffdddd;
     color: #b30000;

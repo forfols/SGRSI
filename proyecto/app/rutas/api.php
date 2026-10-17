@@ -1,4 +1,9 @@
 <?php
+/** @var string $ruta */
+/** @var string $metodo */
+
+require_once RUTA_CONTROLADOR . "/LoginController.php";
+// ...
 require_once RUTA_CONTROLADOR . "/LoginController.php";
 require_once RUTA_CONTROLADOR . "/UsuarioController.php";
 require_once RUTA_CONTROLADOR . "/IncidenciaController.php";
@@ -9,9 +14,6 @@ require_once RUTA_CONTROLADOR . "/SolicitudController.php";
 require_once RUTA_CONTROLADOR . "/EquipoController.php";
 require_once RUTA_CONTROLADOR . "/GrupoController.php";
 require_once RUTA_CONTROLADOR . "/RegistroEspacioController.php";
-
-/** @var string $ruta */
-/** @var string $metodo */
 
 // Espacio donde se encuentran los endpoints que establecen la comunicación con el controlador
 switch ($ruta) {

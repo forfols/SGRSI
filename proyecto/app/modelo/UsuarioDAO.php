@@ -47,17 +47,17 @@ class UsuarioDAO
         );
     }
 
-        public function existeUsuario(string $ci): bool
-        {
-            $consulta = $this->conexion->prepare("SELECT 1 FROM USUARIO WHERE ci = :ci LIMIT 1");
-            $consulta->execute(["ci" => $ci]);
+    public function existeUsuario(string $ci): bool
+    {
+        $consulta = $this->conexion->prepare("SELECT 1 FROM USUARIO WHERE ci = :ci LIMIT 1");
+        $consulta->execute(["ci" => $ci]);
 
-            $existe = $consulta->fetchColumn() !== false;
+        $existe = $consulta->fetchColumn() !== false;
 
-            $consulta = null;
+        $consulta = null;
 
-            return $existe;
-        }
+        return $existe;
+    }
 
     public function listarUsuarios(): array
     {
@@ -65,15 +65,16 @@ class UsuarioDAO
             SELECT
                 u.ci,
                 u.nombre,
-                u.contra,
+
                 CASE WHEN s.ci IS NOT NULL THEN 1 ELSE 0 END AS solicitante,
                 CASE WHEN t.ci IS NOT NULL THEN 1 ELSE 0 END AS tecnico,
                 CASE WHEN a.ci IS NOT NULL THEN 1 ELSE 0 END AS administrador
+
             FROM USUARIO AS u
+
             LEFT JOIN SOLICITANTE AS s ON s.ci = u.ci
             LEFT JOIN TECNICO AS t ON t.ci = u.ci
             LEFT JOIN ADMINISTRADOR AS a ON a.ci = u.ci
-            WHERE u.ci = :ci
         ";
 
         $consulta = $this->conexion->query($sql);
@@ -85,7 +86,6 @@ class UsuarioDAO
         return $usuarios;
     }
 
-    //Deja al usuario con exactamente los roles indicados (inserta los que faltan y borra los que sobran)
     private function asignarRoles(string $ci, bool $solicitante, bool $tecnico, bool $administrador): void
     {
         $roles = ["SOLICITANTE" => $solicitante, "TECNICO" => $tecnico, "ADMINISTRADOR" => $administrador];

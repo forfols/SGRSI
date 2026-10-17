@@ -1,0 +1,1 @@
+SELECT id, tipo, numero, cantidadEquipos FROM ESPACIO ORDER BY tipo, numero;

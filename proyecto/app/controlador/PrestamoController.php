@@ -13,10 +13,6 @@ class PrestamoController
     {
         Sesion::verificarRol("tecnico");
 
-        //El token solo se exige en las operaciones que modifican datos
-        if (in_array($metodo, ["POST", "PUT"], true)) {
-            Token::verificarCSRF();
-        }
 
         match ($metodo) {
             "GET" => $this->listar(),
@@ -61,7 +57,7 @@ class PrestamoController
 
         $conexion = Conexion::conectar();
         $dao = new PrestamoDAO($conexion);
-        $resultado = $dao->registrarPrestamo($nombre . " " . $apellido, $ciAlumno, $idLaptop, (string) $_SESSION["ci"]);
+        $resultado = $dao->registrarPrestamo($nombre . " " . $apellido, $ciAlumno, $idLaptop, (string) Sesion::ci());
         Conexion::desconectar();
 
         if (!$resultado) {

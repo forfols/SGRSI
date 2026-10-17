@@ -16,23 +16,13 @@ class UsuarioDAO
                 u.ci,
                 u.nombre,
                 u.contra,
-                u.activo,
-
                 CASE WHEN s.ci IS NOT NULL THEN 1 ELSE 0 END AS solicitante,
                 CASE WHEN t.ci IS NOT NULL THEN 1 ELSE 0 END AS tecnico,
                 CASE WHEN a.ci IS NOT NULL THEN 1 ELSE 0 END AS administrador
-
             FROM USUARIO AS u
-
-            LEFT JOIN SOLICITANTE AS s
-                ON s.ci = u.ci
-
-            LEFT JOIN TECNICO AS t
-                ON t.ci = u.ci
-
-            LEFT JOIN ADMINISTRADOR AS a
-                ON a.ci = u.ci
-
+            LEFT JOIN SOLICITANTE AS s ON s.ci = u.ci
+            LEFT JOIN TECNICO AS t ON t.ci = u.ci
+            LEFT JOIN ADMINISTRADOR AS a ON a.ci = u.ci
             WHERE u.ci = :ci
         ";
 
@@ -48,35 +38,26 @@ class UsuarioDAO
         }
 
         return new Usuario(
-            (string) $fila["ci"],
-            (string) $fila["nombre"],
-            (string) $fila["contra"],
-            (bool) $fila["activo"],
+            $fila["ci"],
+            $fila["nombre"],
+            $fila["contra"],
             (bool) $fila["solicitante"],
             (bool) $fila["tecnico"],
             (bool) $fila["administrador"]
         );
     }
 
-    public function marcarActivo(string $ci, bool $activo): void
-    {
-        $consulta = $this->conexion->prepare("UPDATE USUARIO SET activo = :activo WHERE ci = :ci");
-        $consulta->execute(["activo" => $activo ? 1 : 0, "ci" => $ci]);
-
-        $consulta = null;
-    }
-
         public function existeUsuario(string $ci): bool
-    {
-        $consulta = $this->conexion->prepare("SELECT 1 FROM USUARIO WHERE ci = :ci LIMIT 1");
-        $consulta->execute(["ci" => $ci]);
+        {
+            $consulta = $this->conexion->prepare("SELECT 1 FROM USUARIO WHERE ci = :ci LIMIT 1");
+            $consulta->execute(["ci" => $ci]);
 
-        $existe = $consulta->fetchColumn() !== false;
+            $existe = $consulta->fetchColumn() !== false;
 
-        $consulta = null;
+            $consulta = null;
 
-        return $existe;
-    }
+            return $existe;
+        }
 
     public function listarUsuarios(): array
     {
@@ -84,22 +65,15 @@ class UsuarioDAO
             SELECT
                 u.ci,
                 u.nombre,
-                u.activo,
-
+                u.contra,
                 CASE WHEN s.ci IS NOT NULL THEN 1 ELSE 0 END AS solicitante,
                 CASE WHEN t.ci IS NOT NULL THEN 1 ELSE 0 END AS tecnico,
                 CASE WHEN a.ci IS NOT NULL THEN 1 ELSE 0 END AS administrador
-
             FROM USUARIO AS u
-
-            LEFT JOIN SOLICITANTE AS s
-                ON s.ci = u.ci
-
-            LEFT JOIN TECNICO AS t
-                ON t.ci = u.ci
-
-            LEFT JOIN ADMINISTRADOR AS a
-                ON a.ci = u.ci
+            LEFT JOIN SOLICITANTE AS s ON s.ci = u.ci
+            LEFT JOIN TECNICO AS t ON t.ci = u.ci
+            LEFT JOIN ADMINISTRADOR AS a ON a.ci = u.ci
+            WHERE u.ci = :ci
         ";
 
         $consulta = $this->conexion->query($sql);
@@ -117,11 +91,7 @@ class UsuarioDAO
         $roles = ["SOLICITANTE" => $solicitante, "TECNICO" => $tecnico, "ADMINISTRADOR" => $administrador];
 
         foreach ($roles as $tabla => $tieneRol) {
-            if ($tieneRol) {
-                $sql = "INSERT IGNORE INTO $tabla (ci) VALUES (:ci)";
-            } else {
-                $sql = "DELETE FROM $tabla WHERE ci = :ci";
-            }
+            $sql = $tieneRol ? "INSERT IGNORE INTO $tabla (ci) VALUES (:ci)" : "DELETE FROM $tabla WHERE ci = :ci";
 
             $consulta = $this->conexion->prepare($sql);
             $consulta->execute(["ci" => $ci]);
@@ -134,8 +104,7 @@ class UsuarioDAO
         try {
             $this->conexion->beginTransaction();
 
-            $sql = "INSERT INTO USUARIO (ci, contra, nombre) VALUES (:ci, :contra, :nombre)";
-            $consulta = $this->conexion->prepare($sql);
+            $consulta = $this->conexion->prepare("INSERT INTO USUARIO (ci, contra, nombre) VALUES (:ci, :contra, :nombre)");
             $consulta->execute(["ci" => $ci, "contra" => $claveHash, "nombre" => $nombre]);
 
             $this->asignarRoles($ci, $solicitante, $tecnico, $administrador);
@@ -157,8 +126,7 @@ class UsuarioDAO
         try {
             $this->conexion->beginTransaction();
 
-            $sql = "UPDATE USUARIO SET nombre = :nombre WHERE ci = :ci";
-            $consulta = $this->conexion->prepare($sql);
+            $consulta = $this->conexion->prepare("UPDATE USUARIO SET nombre = :nombre WHERE ci = :ci");
             $consulta->execute(["nombre" => $nombre, "ci" => $ci]);
 
             $this->asignarRoles($ci, $solicitante, $tecnico, $administrador);

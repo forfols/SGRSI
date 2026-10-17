@@ -1,13 +1,17 @@
-const URL_API = "../api";
+const URL_API = "../index.php";
 
 async function api(metodo, recurso, cuerpo) {
+    const [nombre, consulta] = recurso.split("?");
+    const ruta = nombre.replace(".php", "");
+    const url = URL_API + "?ruta=" + ruta + (consulta ? "&" + consulta : "");
+
     const headers = { "Content-Type": "application/json" };
-    const token = sessionStorage.getItem("csrfToken");
+    const token = sessionStorage.getItem("token");
     if (token) {
-        headers["X-CSRF-Token"] = token;
+        headers["Authorization"] = "Bearer " + token;
     }
 
-    const respuesta = await fetch(URL_API + "/" + recurso, {
+    const respuesta = await fetch(url, {
         method: metodo,
         headers: headers,
         body: cuerpo ? JSON.stringify(cuerpo) : undefined
@@ -22,8 +26,8 @@ async function api(metodo, recurso, cuerpo) {
         throw new Error(`HTTP ${respuesta.status}: La API no devolvió JSON.`);
     }
 
-    //Sesión no iniciada: vuelve al inicio de sesión (salvo que el 401 venga del propio login)
-    if (respuesta.status === 401 && !recurso.startsWith("login.php")) {
+    //Token ausente, inválido o vencido: vuelve al inicio de sesión (salvo en el propio login)
+    if (respuesta.status === 401 && ruta !== "login") {
         sessionStorage.clear();
         window.location.replace("inicioSesion.html");
         throw new Error(json.mensaje ?? "Sesión no iniciada");
@@ -36,14 +40,8 @@ async function api(metodo, recurso, cuerpo) {
     return json.datos;
 }
 
-async function cerrarSesion() {
-    try {
-        await api("POST", "logout.php");
-    } catch (error) {
-        mostrarMensaje(error.message);
-        return;
-    }
-
+//Sin estado: el servidor no guarda la sesión, cerrarla es descartar el token
+function cerrarSesion() {
     sessionStorage.clear();
     window.location.replace("inicioSesion.html");
 }

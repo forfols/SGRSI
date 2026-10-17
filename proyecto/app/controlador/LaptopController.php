@@ -15,7 +15,6 @@ class LaptopController
 
         //El token solo se exige en las operaciones que modifican datos
         if (in_array($metodo, ["POST", "PUT"], true)) {
-            Token::verificarCSRF();
         }
 
         match ($metodo) {

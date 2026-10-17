@@ -1,20 +1,51 @@
 <?php
+require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Firebase\JWT\ExpiredException;
 
 class Token
 {
-    public static function verificarCSRF(): void
+    private const DURACION = 3600;
+
+    public static function generar(Usuario $usuario): string
     {
-        $token = $_SERVER["HTTP_X_CSRF_TOKEN"] ?? "";
-        if (!isset($_SESSION["csrfToken"]) || !hash_equals($_SESSION["csrfToken"], $token)) {
-            RespuestaJson::error("Solicitud rechazada", 403);
-        }
+        $ahora = time();
+
+        $claims = [
+            "sub" => $usuario->getCi(),
+            "nombre" => $usuario->getNombre(),
+            "roles" => [
+                "solicitante" => $usuario->getRolSolicitante(),
+                "tecnico" => $usuario->getRolTecnico(),
+                "administrador" => $usuario->getRolAdministrador(),
+            ],
+            "iat" => $ahora,
+            "exp" => $ahora + self::DURACION,
+        ];
+
+        return JWT::encode($claims, $_ENV["JWT_SECRETO"], "HS256");
     }
 
-    public static function generarTokenCSRF(): void
+    //Lee y verifica el token del header Authorization. Si no es válido responde 401
+    public static function leer(): array
     {
-        if (!isset($_SESSION["csrfToken"])) {
-            $_SESSION["csrfToken"] = bin2hex(random_bytes(32));
+        $cabecera = $_SERVER["HTTP_AUTHORIZATION"] ?? $_SERVER["REDIRECT_HTTP_AUTHORIZATION"] ?? "";
+
+        if (!preg_match('/^Bearer\s+(\S+)$/', $cabecera, $coincidencia)) {
+            RespuestaJson::error("Acceso denegado: falta el token", 401);
         }
+
+        try {
+            $claims = JWT::decode($coincidencia[1], new Key($_ENV["JWT_SECRETO"], "HS256"));
+        } catch (ExpiredException $error) {
+            RespuestaJson::error("La sesión venció", 401);
+        } catch (Throwable $error) {
+            RespuestaJson::error("Token inválido", 401);
+        }
+
+        return json_decode(json_encode($claims), true);
     }
 }

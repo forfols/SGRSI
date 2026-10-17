@@ -7,7 +7,7 @@ document.getElementById("formLogin").addEventListener("submit", async function (
             contra: document.getElementById("contra").value
         });
 
-        sessionStorage.setItem("csrfToken", datos.csrfToken);
+        sessionStorage.setItem("token", datos.token);
         sessionStorage.setItem("roles", JSON.stringify(datos.roles));
         sessionStorage.setItem("nombre", datos.nombre ?? "");
 

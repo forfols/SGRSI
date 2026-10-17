@@ -1,7 +1,35 @@
 const cuerpoTabla = document.getElementById("cuerpoTabla");
 
+
+function aplicarFiltro(){
+    const porCampo ={};
+    document.querySelectorAll('.filtro:checked').forEach(c =>{
+        (porCampo[c.dataset.campo] ??= []).push(c.value);    
+    });
+
+    document.querySelectorAll('#cuerpoTabla tr').forEach(fila => {
+    const visible = Object.entries(porCampo).every(([campo, valores]) => 
+            valores.includes(fila.dataset[campo])
+        );
+        fila.classList.toggle('d-none', !visible);
+    });
+
+    const total =  document.querySelectorAll('.filtro:checked').length;
+    document.getElementById('btn-filtrar').textContent = total ? `Filtrar (${total})` : 'Filtrar';
+    
+}
+
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('filtro')) aplicarFiltro();
+})
+
+
 function agregarFila(incidencia) {
     const fila = document.createElement("tr");
+
+    fila.dataset.estado = incidencia.tipoEstado;
+    fila.dataset.tipo = incidencia.tipoIncidencia;
+    fila.dataset.general = incidencia.nombreIncidenciaGeneral;
 
     celda(fila, incidencia.nombreSolicitante);
     celda(fila, incidencia.tipoIncidencia);
@@ -33,6 +61,8 @@ async function cargarTabla() {
     for (const incidencia of incidencias) {
         agregarFila(incidencia);
     }
+    
+    aplicarFiltro();
 }
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

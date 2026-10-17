@@ -5,7 +5,6 @@ require_once RUTA_VISTA . "/RespuestaJson.php";
 
 require_once RUTA_NUCLEO . "/Conexion.php";
 require_once RUTA_NUCLEO . "/Token.php";
-require_once RUTA_NUCLEO . "/Sesion.php";
 
 class LoginController
 {
@@ -31,25 +30,16 @@ class LoginController
         $conexion = Conexion::conectar();
         $dao = new UsuarioDAO($conexion);
         $usuario = $dao->buscarUsuario($ci);
+        unset($dao, $conexion);
+        Conexion::desconectar();
 
         if ($usuario === null || !password_verify($contra, $usuario->getClaveHash())) {
-            Conexion::desconectar();
             RespuestaJson::error("Usuario o credenciales incorrectas", 401);
         }
 
-        if ($usuario->tieneSesionActiva()) {
-            Conexion::desconectar();
-            RespuestaJson::error("El usuario ya tiene una sesión activa", 409);
-        }
-
-        Sesion::iniciar($usuario);
-        Token::generarTokenCSRF();
-        $dao->marcarActivo($usuario->getCi(), true);
-        Conexion::desconectar();
-
         RespuestaJson::exito([
             "mensaje" => "Sesión iniciada correctamente",
-            "csrfToken" => $_SESSION["csrfToken"],
+            "token" => Token::generar($usuario),
             "nombre" => $usuario->getNombre(),
             "roles" => [
                 "solicitante" => $usuario->getRolSolicitante(),
@@ -57,26 +47,5 @@ class LoginController
                 "administrador" => $usuario->getRolAdministrador(),
             ],
         ]);
-    }
-
-    public function cerrarSesion(string $metodo): void
-    {
-        if ($metodo !== "POST") {
-            RespuestaJson::error("Método no permitido", 405);
-        }
-
-        Token::verificarCSRF();
-
-        //Se libera el flag "activo" antes de destruir la sesión, porque después ya no existe $_SESSION["ci"]
-        $ci = (string) ($_SESSION["ci"] ?? "");
-        if ($ci !== "") {
-            $conexion = Conexion::conectar();
-            (new UsuarioDAO($conexion))->marcarActivo($ci, false);
-            Conexion::desconectar();
-        }
-
-        Sesion::cerrar();
-
-        RespuestaJson::exito(["mensaje" => "Sesión cerrada correctamente"]);
     }
 }

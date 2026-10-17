@@ -3,6 +3,7 @@ require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Token.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -15,8 +16,7 @@ class SolicitudController
         if ($metodo !== "POST") {
             RespuestaJson::error("Método no permitido", 405);
         }
-
-        Token::verificarCSRF();
+     
 
         $datos = json_decode(file_get_contents("php://input"), true);
 
@@ -36,8 +36,8 @@ class SolicitudController
         }
 
         //La cédula y el nombre salen de la sesión, no del formulario
-        $ci = htmlspecialchars((string) $_SESSION["ci"]);
-        $nombre = htmlspecialchars((string) $_SESSION["nombre"]);
+        $ci = htmlspecialchars((string) Sesion::ci());
+        $nombre = htmlspecialchars((string) Sesion::nombre());
         $tipoServicio = htmlspecialchars($tipoServicio);
         $tipoEspacio = htmlspecialchars($tipoEspacio);
         $nroEspacio = htmlspecialchars($nroEspacio);

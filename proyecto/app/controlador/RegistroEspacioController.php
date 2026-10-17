@@ -21,8 +21,7 @@ class RegistroEspacioController
 
     private function registrar(): void
 {
-    Sesion::verificarRol("solicitante");
-    Token::verificarCSRF();
+    Sesion::verificarRol("solicitante"); 
     $this->alta();
 }
 

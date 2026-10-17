@@ -18,6 +18,107 @@
     <div id="alerta"></div>
 
     <h1>Lista de Incidencias</h1>
+
+    <div class="btn-Filtrar">
+    <button class="btn btn-danger dropdown-toggle" type="button" id="btn-filtrar" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        Filtrar
+    </button>
+    <ul class="dropdown-menu p-2" aria-labelledby="btn-filtrar">
+            
+        <li>
+            <button class="dropdown-item d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#grupoEstado"
+                    aria-expanded="true">
+                Estado <span>▾</span>
+            </button>
+
+            <div class="collapse" id="grupoEstado">
+                <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="ePendiente">Pendiente</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Pendiente" id="ePendiente">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eProceso">En proceso</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="En proceso" id="eProceso">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eTerminado">Terminado</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Terminado" id="eTerminado">
+                    </div>
+                </div>
+            </li>
+            <li>
+            <button class="dropdown-item d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#grupoGeneral"
+                    aria-expanded="true">
+                Incidencia General <span>▾</span>
+            </button>
+
+            <div class="collapse" id="grupoGeneral">
+                <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g1">Virus o malware</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Virus o malware" id="g1">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g2">Equipo lento</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Equipo lento" id="g2">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g3">No enciende el equipo</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="No enciende el equipo" id="g3">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g4">No enciende el monitor</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="No enciende el monitor" id="g4">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g5">No funciona el mouse</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="No enciende el mouse" id="g5">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g6">No funciona el teclado</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="No funciona el teclado" id="g6">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g7">Pantalla azul</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Pantalla azul" id="g7">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g8">Problema de hardware</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Problema de hardware" id="g8">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g9">Sin conexion a internet</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Sin conexión a internet" id="g9">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="g10">Otro</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="general" value="Otro" id="g10">
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <button class="dropdown-item d-flex justify-content-between align-items-center"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#grupoTipo"
+                        aria-expanded="true">
+                    Tipo Incidencia <span>▾</span>
+                </button>
+
+                <div class="collapse" id="grupoTipo">
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="tPC">PC</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="PC" id="tPC">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="tOtros">Otros</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="Otros" id="tOtros">
+                    </div>
+                </li>
+            </ul>
+    </div>
+
+
     <div class="table-responsive">
         <table border="1">
             <thead>
@@ -73,7 +174,7 @@
             <p><input type="submit" value="Actualizar"></p>
         </fieldset>
     </form>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/utilidades.js"></script>
     <script src="../assets/js/tecnico.js"></script>

@@ -12,10 +12,6 @@ class UsuarioController
     {
         Sesion::verificarRol("administrador");
 
-        if (in_array($metodo, ["POST", "PUT"], true)) {
-            Token::verificarCSRF();
-        }
-
         match ($metodo) {
             "GET" => $this->listar(),
             "POST" => $this->alta(),
@@ -96,7 +92,7 @@ class UsuarioController
         if (!preg_match("/^[1-9][0-9]{7}$/", $ci)) {
             RespuestaJson::error("Cédula incorrecta", 422);
         }
-        if ($ci === (string) $_SESSION["ci"] && !$administrador) {
+        if ($ci === (string) Sesion::ci() && !$administrador) {
             RespuestaJson::error("No puede quitarse a sí mismo el rol de administrador", 403);
         }
 
@@ -128,4 +124,6 @@ class UsuarioController
 
         return $datos;
     }
+
+    
 }

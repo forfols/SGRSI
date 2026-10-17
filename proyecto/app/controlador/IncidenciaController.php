@@ -12,11 +12,6 @@ class IncidenciaController
     {
         Sesion::verificarSesion();
 
-        //El token solo se exige en las operaciones que modifican datos
-        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
-            Token::verificarCSRF();
-        }
-
         match ($metodo) {
             "GET" => $this->listar(),
             "POST" => $this->alta(),
@@ -47,7 +42,7 @@ class IncidenciaController
         Sesion::verificarRol($rol);
 
         $dao = new IncidenciaDAO(Conexion::conectar());
-        RespuestaJson::exito($dao->listarIncidencias($rol, (string) $_SESSION["ci"]));
+        RespuestaJson::exito($dao->listarIncidencias($rol, (string) Sesion::ci()));
     }
 
     private function alta(): void
@@ -83,7 +78,7 @@ class IncidenciaController
         }
 
         $dao = new IncidenciaDAO(Conexion::conectar());
-               $resultado = $dao->registrarIncidencia($idRegistroEspacio, $tipo, $idEquipo, $alumno, $descripcion, $idIncidenciaGeneral, (string) $_SESSION["ci"]);
+               $resultado = $dao->registrarIncidencia($idRegistroEspacio, $tipo, $idEquipo, $alumno, $descripcion, $idIncidenciaGeneral, (string) Sesion::ci());
 
         if (!$resultado) {
             RespuestaJson::error("No se pudo registrar la incidencia", 400);
@@ -120,11 +115,11 @@ class IncidenciaController
     if ($incidencia === null) {
         RespuestaJson::error("No se encontró la incidencia", 404);
     }
-    if ($incidencia["tipoEstado"] !== "Sin asignar" && (string) $incidencia["ciTecnico"] !== (string) $_SESSION["ci"]) {
+    if ($incidencia["tipoEstado"] !== "Sin asignar" && (string) $incidencia["ciTecnico"] !== (string) Sesion::ci()) {
         RespuestaJson::error("La incidencia la tiene otro técnico", 403);
     }
 
-    if (!$dao->modificarEstado((string) $_SESSION["ci"], $idIncidencia, $estado, $prioridad, $diagnostico, $soluciones)) {
+    if (!$dao->modificarEstado((string) Sesion::ci(), $idIncidencia, $estado, $prioridad, $diagnostico, $soluciones)) {
         RespuestaJson::error("No se pudo modificar el estado", 400);
     }
 
@@ -176,7 +171,7 @@ class IncidenciaController
         if ($incidencia === null) {
             RespuestaJson::error("No se encontró la incidencia", 404);
         }
-        if ((string) $incidencia["ciSolicitante"] !== (string) $_SESSION["ci"]) {
+        if ((string) $incidencia["ciSolicitante"] !== (string) Sesion::ci()) {
             RespuestaJson::error("Acceso denegado: la incidencia pertenece a otro solicitante", 403);
         }
         if ($incidencia["tipoEstado"] !== "Sin asignar") {
@@ -209,7 +204,7 @@ class IncidenciaController
         if ($incidencia === null) {
             RespuestaJson::error("No se encontró la incidencia", 404);
         }
-        if ((string) $incidencia["ciSolicitante"] !== (string) $_SESSION["ci"]) {
+        if ((string) $incidencia["ciSolicitante"] !== (string) Sesion::ci()) {
             RespuestaJson::error("Acceso denegado: la incidencia pertenece a otro solicitante", 403);
         }
         if ($incidencia["tipoEstado"] !== "Sin asignar") {

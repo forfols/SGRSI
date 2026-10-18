@@ -51,6 +51,7 @@ async function cargarTabla() {
     for (const laptop of laptops) {
         agregarFila(laptop);
     }
+    filtrarTabla();
 }
 
 async function agregarLaptop(evento) {
@@ -68,5 +69,17 @@ async function agregarLaptop(evento) {
 }
 
 formularioAlta.addEventListener("submit", agregarLaptop);
+
+function filtrarTabla(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const laptop = fila.cells[0]?.textContent.toLowerCase() ?? ''; 
+        fila.style.display = laptop.includes(texto)|| texto === '' ? '' : 'none'; 
+    });
+}
+
+document.getElementById('buscador').addEventListener('input', filtrarTabla);
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

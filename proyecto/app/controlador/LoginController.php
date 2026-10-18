@@ -5,6 +5,8 @@ require_once RUTA_VISTA . "/RespuestaJson.php";
 
 require_once RUTA_NUCLEO . "/Conexion.php";
 require_once RUTA_NUCLEO . "/Token.php";
+require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Presencia.php";
 
 class LoginController
 {
@@ -37,6 +39,12 @@ class LoginController
             RespuestaJson::error("Usuario o credenciales incorrectas", 401);
         }
 
+        if (Presencia::estaActivo($usuario->getCi())) {
+            RespuestaJson::error("Este usuario ya está conectado en otro dispositivo", 409);
+        }
+
+        Presencia::registrar($usuario->getCi());
+
         RespuestaJson::exito([
             "mensaje" => "Sesión iniciada correctamente",
             "token" => Token::generar($usuario),
@@ -47,5 +55,27 @@ class LoginController
                 "administrador" => $usuario->getRolAdministrador(),
             ],
         ]);
+    }
+
+    public function latido(string $metodo): void
+    {
+        if ($metodo !== "POST") {
+            RespuestaJson::error("Método no permitido", 405);
+        }
+
+        Presencia::registrar(Sesion::ci());
+
+        RespuestaJson::exito(["ok" => true]);
+    }
+
+    public function logout(string $metodo): void
+    {
+        if ($metodo !== "POST") {
+            RespuestaJson::error("Método no permitido", 405);
+        }
+
+        Presencia::limpiar(Sesion::ci());
+
+        RespuestaJson::exito(["ok" => true]);
     }
 }

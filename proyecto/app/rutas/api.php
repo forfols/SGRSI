@@ -14,6 +14,7 @@ require_once RUTA_CONTROLADOR . "/SolicitudController.php";
 require_once RUTA_CONTROLADOR . "/EquipoController.php";
 require_once RUTA_CONTROLADOR . "/GrupoController.php";
 require_once RUTA_CONTROLADOR . "/RegistroEspacioController.php";
+require_once __DIR__ . "/../nucleo/Presencia.php";
 
 // Espacio donde se encuentran los endpoints que establecen la comunicación con el controlador
 switch ($ruta) {
@@ -47,6 +48,13 @@ switch ($ruta) {
     case "espacios":
         (new RegistroEspacioController())->gestionar($metodo);
         break;
+    case "latido":
+        (new LoginController())->latido($metodo);
+        break;
+    case "logout":
+        (new LoginController())->logout($metodo);
+        break;
     default:
         RespuestaJson::error("Ruta no encontrada", 404);
+        
 }

@@ -1,4 +1,5 @@
 const URL_API = "../index.php";
+const INTERVALO_LATIDO = 30000;
 
 async function api(metodo, recurso, cuerpo) {
     const [nombre, consulta] = recurso.split("?");
@@ -40,8 +41,37 @@ async function api(metodo, recurso, cuerpo) {
     return json.datos;
 }
 
-//Sin estado: el servidor no guarda la sesión, cerrarla es descartar el token
-function cerrarSesion() {
+//El servidor libera la presencia y el cliente descarta el token
+async function cerrarSesion() {
+    try {
+        await api("POST", "logout");
+    } catch {
+        // si falla (token vencido, sin red), igual se cierra del lado del cliente
+    }
+
     sessionStorage.clear();
     window.location.replace("inicioSesion.html");
+}
+
+//Latido: avisa cada 30 s que la pestaña sigue abierta
+if (sessionStorage.getItem("token")) {
+    setInterval(() => {
+        api("POST", "latido").catch(() => {});
+    }, INTERVALO_LATIDO);
+}
+
+const TIEMPO_INACTIVIDAD = 15 * 60 * 1000; // 15 minutos
+let temporizadorInactividad;
+
+function reiniciarInactividad() {
+    clearTimeout(temporizadorInactividad);
+    temporizadorInactividad = setTimeout(cerrarSesion, TIEMPO_INACTIVIDAD);
+}
+
+if (sessionStorage.getItem("token")) {
+    ["mousemove", "keydown", "click", "scroll", "touchstart"].forEach((evento) => {
+        document.addEventListener(evento, reiniciarInactividad, { passive: true });
+    });
+
+    reiniciarInactividad();
 }

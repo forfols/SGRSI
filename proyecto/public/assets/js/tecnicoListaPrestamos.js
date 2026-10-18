@@ -51,4 +51,16 @@ async function cargarTabla() {
     }
 }
 
+function filtrarTabla(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const laptop = fila.cells[2]?.textContent.toLowerCase() ?? '';
+        fila.style.display = laptop === texto || texto === '' ? '' : 'none'; 
+    });
+}
+
+document.getElementById('buscador').addEventListener('input', filtrarTabla);
+
 cargarTabla().catch((error) => mostrarMensaje(error.message));

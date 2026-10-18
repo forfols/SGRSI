@@ -51,7 +51,11 @@ function agregarFila(incidencia) {
     celda(fila, formatearFecha(incidencia.fecha));
 
     cuerpoTabla.appendChild(fila);
+
+            for (const incidencia of incidencias)
+        agregarFila(incidencia);
 }
+aplicarFiltro();
 
 async function cargarTabla() {
     cuerpoTabla.replaceChildren();
@@ -62,7 +66,12 @@ async function cargarTabla() {
         agregarFila(incidencia);
     }
     
+<<<<<<< HEAD
     aplicarFiltro();
+=======
+    fila.dataset.estado = incidencia.tipoEstado;
+    fila.dataset.tipo = incidencia.tipoIncidencia;
+>>>>>>> 0d6ec721f38261169b4597c4be6eb1bcb6ce724d
 }
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

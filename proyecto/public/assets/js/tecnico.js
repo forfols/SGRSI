@@ -10,6 +10,29 @@ const campoExtra = document.getElementById("campoExtra");
 
 let idEnEdicion = 0;
 
+function aplicarFiltro(){
+    const porCampo ={};
+    document.querySelectorAll('.filtro:checked').forEach(c =>{
+        (porCampo[c.dataset.campo] ??= []).push(c.value);    
+    });
+
+    document.querySelectorAll('#cuerpoTabla tr').forEach(fila => {
+    const visible = Object.entries(porCampo).every(([campo, valores]) => 
+            valores.includes(fila.dataset[campo])
+        );
+        fila.classList.toggle('d-none', !visible);
+    });
+
+    const total =  document.querySelectorAll('.filtro:checked').length;
+    document.getElementById('btn-filtrar').textContent = total ? `Filtrar (${total})` : 'Filtrar';
+    
+}
+
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('filtro')) aplicarFiltro();
+})
+
+
 function actualizarCampoSoluciones() {
     const terminado = estado.value === "Terminado";
 
@@ -86,7 +109,11 @@ function agregarFila(incidencia) {
     celda(fila, formatearFecha(incidencia.fecha));
 
     cuerpoTabla.appendChild(fila);
+
+      for (const incidencia of incidencias)
+        agregarFila(incidencia);
 }
+aplicarFiltro();
 
 async function cargarTabla() {
     cuerpoTabla.replaceChildren();

@@ -52,7 +52,7 @@ async function cargarTabla() {
     filtrarTabla();
 }
 
-function filtrarTabla(){
+function buscador(){
     const texto = document.getElementById('buscador').value.toLowerCase().trim();
     const filas = document.querySelectorAll('#cuerpoTabla tr');
 
@@ -63,6 +63,6 @@ function filtrarTabla(){
     });
 }
 
-document.getElementById('buscador').addEventListener('input', filtrarTabla);
+document.getElementById('buscador').addEventListener('input', buscador);
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

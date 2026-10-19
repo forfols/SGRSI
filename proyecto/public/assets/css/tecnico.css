@@ -210,15 +210,17 @@ input[readonly] {
     display: none !important;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d6ec721f38261169b4597c4be6eb1bcb6ce724d
-.btn-Filtrar .dropdown-menu{
+.btn-Filtrar{
+    display: flex;
+    justify-content: baseline;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+.dropdown-menu{
     background-color: #fc3a3a;
     color: #ffffff;
 }
-.btn-Filtrar .form-check-label{
+.form-check-label{
     color: #ffffff;
 }
 

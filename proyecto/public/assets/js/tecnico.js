@@ -10,29 +10,6 @@ const campoExtra = document.getElementById("campoExtra");
 
 let idEnEdicion = 0;
 
-function aplicarFiltro(){
-    const porCampo ={};
-    document.querySelectorAll('.filtro:checked').forEach(c =>{
-        (porCampo[c.dataset.campo] ??= []).push(c.value);    
-    });
-
-    document.querySelectorAll('#cuerpoTabla tr').forEach(fila => {
-    const visible = Object.entries(porCampo).every(([campo, valores]) => 
-            valores.includes(fila.dataset[campo])
-        );
-        fila.classList.toggle('d-none', !visible);
-    });
-
-    const total =  document.querySelectorAll('.filtro:checked').length;
-    document.getElementById('btn-filtrar').textContent = total ? `Filtrar (${total})` : 'Filtrar';
-    
-}
-
-document.addEventListener('change', e => {
-    if (e.target.classList.contains('filtro')) aplicarFiltro();
-})
-
-
 function actualizarCampoSoluciones() {
     const terminado = estado.value === "Terminado";
 
@@ -109,11 +86,7 @@ function agregarFila(incidencia) {
     celda(fila, formatearFecha(incidencia.fecha));
 
     cuerpoTabla.appendChild(fila);
-
-      for (const incidencia of incidencias)
-        agregarFila(incidencia);
 }
-aplicarFiltro();
 
 async function cargarTabla() {
     cuerpoTabla.replaceChildren();
@@ -147,6 +120,19 @@ async function modificarEstado(evento) {
         mostrarMensaje(error.message);
     }
 }
+
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const celdas = Array.from(fila.cells);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto) || texto === '' ? '' : 'none';
+    })
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
 
 estado.addEventListener("change", actualizarCampoSoluciones);
 btnCerrar.addEventListener("click", cerrarModificarEstado);

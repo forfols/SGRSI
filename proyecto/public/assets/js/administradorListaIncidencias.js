@@ -52,10 +52,7 @@ function agregarFila(incidencia) {
 
     cuerpoTabla.appendChild(fila);
 
-            for (const incidencia of incidencias)
-        agregarFila(incidencia);
 }
-aplicarFiltro();
 
 async function cargarTabla() {
     cuerpoTabla.replaceChildren();
@@ -65,13 +62,21 @@ async function cargarTabla() {
     for (const incidencia of incidencias) {
         agregarFila(incidencia);
     }
-    
-<<<<<<< HEAD
     aplicarFiltro();
-=======
-    fila.dataset.estado = incidencia.tipoEstado;
-    fila.dataset.tipo = incidencia.tipoIncidencia;
->>>>>>> 0d6ec721f38261169b4597c4be6eb1bcb6ce724d
 }
+
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const celdas = Array.from(fila.cells);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto) || texto === '' ? '' : 'none';
+    })
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
+
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

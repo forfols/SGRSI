@@ -203,6 +203,20 @@ input[readonly] {
     z-index: 1000;
 }
 
+.btn-Filtrar{
+    display: flex;
+    justify-content: baseline;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+.dropdown-menu{
+    background-color: #fc3a3a;
+    color: #ffffff;
+}
+.form-check-label{
+    color: #ffffff;
+}
+
 .d-none {
     display: none !important;
 }

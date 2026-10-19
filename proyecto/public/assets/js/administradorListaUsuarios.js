@@ -18,6 +18,10 @@ function textoRoles(usuario) {
     return roles.length > 0 ? roles.join(", ") : "Sin rol";
 }
 
+function textoRoles(usuario) {
+    return listaRoles(usuario).join(", ");
+}
+
 function abrirModificar(usuario) {
     entradaNombre.value = usuario.nombre;
     entradaCi.value = usuario.ci;
@@ -34,6 +38,8 @@ function cerrarModificar() {
 
 function agregarFila(usuario) {
     const fila = document.createElement("tr");
+
+    fila.dataset.rol = listaRoles(usuario).join("|");
 
     celda(fila, usuario.nombre);
     celda(fila, usuario.ci);
@@ -58,6 +64,7 @@ async function cargarTabla() {
     for (const usuario of usuarios) {
         agregarFila(usuario);
     }
+    aplicarFiltro();
 }
 
 async function modificarUsuario(evento) {
@@ -79,6 +86,42 @@ async function modificarUsuario(evento) {
         mostrarMensaje(error.message);
     }
 }
+
+function aplicarFiltro(){
+    const porCampo ={};
+    document.querySelectorAll('.filtro:checked').forEach(c =>{
+        (porCampo[c.dataset.campo] ??= []).push(c.value);    
+    });
+
+    document.querySelectorAll('#cuerpoTabla tr').forEach(fila => {
+    const visible = Object.entries(porCampo).every(([campo, valores]) => {
+        const deLaFila = (fila.dataset[campo] ?? "").split("|");
+        return valores.some(v => deLaFila.includes(v));
+        });
+        fila.classList.toggle('d-none', !visible);
+    });
+
+    const total =  document.querySelectorAll('.filtro:checked').length;
+    document.getElementById('btn-filtrar').textContent = total ? `Filtrar (${total})` : 'Filtrar';
+    
+}
+
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('filtro')) aplicarFiltro();
+})
+
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const celdas = Array.from(fila.cells).slice(0, -2);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto) || texto === '' ? '' : 'none';
+    })
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
 
 btnCerrar.addEventListener("click", cerrarModificar);
 formularioModificar.addEventListener("submit", modificarUsuario);

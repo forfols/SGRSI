@@ -80,6 +80,19 @@ async function modificarUsuario(evento) {
     }
 }
 
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const celdas = Array.from(fila.cells).slice(0, -2);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto) || texto === '' ? '' : 'none';
+    })
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
+
 btnCerrar.addEventListener("click", cerrarModificar);
 formularioModificar.addEventListener("submit", modificarUsuario);
 

@@ -51,6 +51,7 @@ function agregarFila(incidencia) {
     celda(fila, formatearFecha(incidencia.fecha));
 
     cuerpoTabla.appendChild(fila);
+
 }
 
 async function cargarTabla() {
@@ -61,8 +62,21 @@ async function cargarTabla() {
     for (const incidencia of incidencias) {
         agregarFila(incidencia);
     }
-    
     aplicarFiltro();
 }
+
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const celdas = Array.from(fila.cells);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto) || texto === '' ? '' : 'none';
+    })
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
+
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

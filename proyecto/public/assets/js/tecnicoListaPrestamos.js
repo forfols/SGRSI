@@ -49,18 +49,20 @@ async function cargarTabla() {
     for (const prestamo of prestamos) {
         agregarFila(prestamo);
     }
+    filtrarTabla();
 }
 
-function filtrarTabla(){
+function buscador(){
     const texto = document.getElementById('buscador').value.toLowerCase().trim();
     const filas = document.querySelectorAll('#cuerpoTabla tr');
 
     filas.forEach(fila => {
-        const laptop = fila.cells[2]?.textContent.toLowerCase() ?? '';
-        fila.style.display = laptop === texto || texto === '' ? '' : 'none'; 
+        const celdas = Array.from(fila.cells).slice(0, -1);
+        const contenido = celdas.map(c => c.textContent).join('').toLowerCase();
+        fila.style.display = contenido.includes(texto)|| texto === '' ? '' : 'none'; 
     });
 }
 
-document.getElementById('buscador').addEventListener('input', filtrarTabla);
+document.getElementById('buscador').addEventListener('input', buscador);
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

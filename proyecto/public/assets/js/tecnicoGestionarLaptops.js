@@ -24,6 +24,8 @@ async function darDeBaja(laptop) {
 function agregarFila(laptop) {
     const fila = document.createElement("tr");
 
+    fila.dataset.estado = laptop.estado;
+
     celda(fila, laptop.modelo);
     celda(fila, laptop.estado);
 
@@ -51,6 +53,7 @@ async function cargarTabla() {
     for (const laptop of laptops) {
         agregarFila(laptop);
     }
+    filtrarTabla();
 }
 
 async function agregarLaptop(evento) {
@@ -68,5 +71,39 @@ async function agregarLaptop(evento) {
 }
 
 formularioAlta.addEventListener("submit", agregarLaptop);
+
+function buscador(){
+    const texto = document.getElementById('buscador').value.toLowerCase().trim();
+    const filas = document.querySelectorAll('#cuerpoTabla tr');
+
+    filas.forEach(fila => {
+        const laptop = fila.cells[0]?.textContent.toLowerCase() ?? ''; 
+        fila.style.display = laptop.includes(texto)|| texto === '' ? '' : 'none'; 
+    });
+}
+
+document.getElementById('buscador').addEventListener('input', buscador);
+
+function aplicarFiltro(){
+    const porCampo ={};
+    document.querySelectorAll('.filtro:checked').forEach(c =>{
+        (porCampo[c.dataset.campo] ??= []).push(c.value);    
+    });
+
+    document.querySelectorAll('#cuerpoTabla tr').forEach(fila => {
+    const visible = Object.entries(porCampo).every(([campo, valores]) => 
+            valores.includes(fila.dataset[campo])
+        );
+        fila.classList.toggle('d-none', !visible);
+    });
+
+    const total =  document.querySelectorAll('.filtro:checked').length;
+    document.getElementById('btn-filtrar').textContent = total ? `Filtrar (${total})` : 'Filtrar';
+    
+}
+
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('filtro')) aplicarFiltro();
+})
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

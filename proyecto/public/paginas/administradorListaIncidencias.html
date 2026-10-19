@@ -19,11 +19,11 @@
 
     <h1>Lista de Incidencias</h1>
 
-    <div class="btn-Filtrar">
-    <button class="btn btn-danger dropdown-toggle" type="button" id="btn-filtrar" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-        Filtrar
-    </button>
-    <ul class="dropdown-menu p-2" aria-labelledby="btn-filtrar">
+        <div class="btn-Filtrar dropstart">
+        <button class="btn btn-danger dropdown-toggle" type="button" id="btn-filtrar" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            Filtrar
+        </button>
+        <ul class="dropdown-menu p-2" aria-labelledby="btn-filtrar">
             
         <li>
             <button class="dropdown-item d-flex justify-content-between align-items-center"
@@ -37,10 +37,22 @@
                         <label class="form-check-label" for="ePendiente">Pendiente</label>
                         <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Pendiente" id="ePendiente">
                     </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eProceso">En proceso</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="En proceso" id="eProceso">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eTerminado">Terminado</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Terminado" id="eTerminado">
+                    </div>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="eSinasignar">Sin asignar</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="estado" value="Sin asignar" id="eSinasignar">
+                    </div>
                 </div>
             </li>
-
-                        <button class="dropdown-item d-flex justify-content-between align-items-center"
+            <li>
+            <button class="dropdown-item d-flex justify-content-between align-items-center"
                     type="button" data-bs-toggle="collapse" data-bs-target="#grupoGeneral"
                     aria-expanded="true">
                 Incidencia General <span>▾</span>
@@ -96,19 +108,23 @@
                         aria-expanded="true">
                     Tipo Incidencia <span>▾</span>
                 </button>
-            </li>
-            <li>
+
                 <div class="collapse" id="grupoTipo">
                     <div class="form-check- ms-4 my-1">
                         <label class="form-check-label" for="tPC">PC</label>
                         <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="PC" id="tPC">
                     </div>
-                <div class="form-check- ms-4 my-1">
-                    <label class="form-check-label" for="tOtros">Otros</label>
-                    <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="Otros" id="tOtros">
-                </div>
-            </li>
-        </ul>
+                    <div class="form-check- ms-4 my-1">
+                        <label class="form-check-label" for="tOtros">Otros</label>
+                        <input class="form-check-input filtro" type="checkbox" data-campo="tipo" value="Otros" id="tOtros">
+                    </div>
+                </li>
+            </ul>
+    </div>
+
+    <div class="buscador">
+        <input type="text" id="buscador" class="form-control"
+           placeholder="Buscar incidencia">
     </div>
 
     <div class="table-responsive">

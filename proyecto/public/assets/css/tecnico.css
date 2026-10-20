@@ -205,6 +205,12 @@ input[readonly] {
     z-index: 1000;
 }
 
+.ocultar-filtro,
+.ocultar-busqueda,
+.oculto-pagina {
+    display: none !important;
+}
+
 /*Bootstrap*/
 .d-none {
     display: none !important;

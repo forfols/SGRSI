@@ -82,6 +82,12 @@ header nav button:hover {
     float: right;
 }
 
+.oculto-filtro,
+.oculto-busqueda,
+.oculto-pagina {
+    display: none !important;
+}
+
 h1 {
     color: var(--amarillo);
     font-weight: 700;

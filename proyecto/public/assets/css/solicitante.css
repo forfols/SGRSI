@@ -256,6 +256,12 @@ h1{
     width: 80%;
 }
 
+.ocultar-filtro,
+.ocultar-busqueda,
+.oculto-pagina {
+    display: none !important;
+}
+
 /* Adaptar 1080P */
 @media (min-width: 1900px) {
     fieldset {

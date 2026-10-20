@@ -82,6 +82,35 @@ header nav button:hover {
     float: right;
 }
 
+#paginador .page-link {
+    margin-left: 10px;
+    color: #fff;
+    background-color: #9ea0a2;
+    border: 1px solid #9ea0a2;
+}
+
+#paginador .page-link:hover {
+    background-color: #495057;
+    border-color: #495057;
+}
+
+#paginador .page-item.active .page-link {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#paginador .page-item.disabled .page-link {
+    color: #adb5bd;
+    background-color: #323334;
+    border-color: #323334;
+}
+
+.oculto-filtro,
+.oculto-busqueda,
+.oculto-pagina {
+    display: none !important;
+}
+
 h1 {
     color: var(--amarillo);
     font-weight: 700;

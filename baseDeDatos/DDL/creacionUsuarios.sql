@@ -6,6 +6,7 @@ CREATE TABLE USUARIO (
     ci VARCHAR(20) NOT NULL,
     contra VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT 1,
 
     CONSTRAINT pk_usuario
         PRIMARY KEY (ci)

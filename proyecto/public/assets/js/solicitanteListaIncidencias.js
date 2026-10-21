@@ -34,8 +34,8 @@ function aplicarFiltro(){
 }
 
 document.addEventListener('change', e => {
-    if (e.target.classList.contains('filtro')) aplicarFiltro();
-})
+    if (e.target.classList.contains('filtro')) {aplicarFiltro(); paginaActual = 1; paginar();}
+});
 
 
 function cargarEquipos(equipoSeleccionado) {

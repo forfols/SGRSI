@@ -285,6 +285,40 @@ h1{
     display: none !important;
 }
 
+.pantallaCarga {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.pantallaCarga.oculto {
+    display: none;
+}
+
+.pantallaCargaContenido {
+    background: var(--vordo);
+    padding: 70px 100px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--rojo); 
+}
+
+.pantallaCargaContenido img {
+    width: 80px;
+    height: auto;
+}
+
+.pantallaCargaContenido p {
+    margin-top: 12px;
+    font-weight: 600;
+    color: var(--amarillo);
+}
+
+
 /* Adaptar 1080P */
 @media (min-width: 1900px) {
     fieldset {
@@ -329,5 +363,7 @@ h1{
     td {
         padding: 14px 18px;
     }
+
+
 }
 

@@ -6,6 +6,7 @@ const grupo = document.getElementById("grupo");
 const fecha = document.getElementById("fecha");
 const descripcion = document.getElementById("descripcion");
 const btnEnviar = document.getElementById("btnEnviar");
+const pantallaCarga = document.getElementById("pantallaCarga");
 
 let espacios = [];
 
@@ -46,8 +47,8 @@ async function iniciar() {
 async function enviarSolicitud(evento) {
     evento.preventDefault();
 
-    //Se deshabilita el botón mientras se envía para no mandar solicitudes repetidas
     btnEnviar.disabled = true;
+    pantallaCarga.classList.remove("oculto");
 
     try {
         const resultado = await api("POST", "solicitudes.php", {
@@ -66,6 +67,7 @@ async function enviarSolicitud(evento) {
         mostrarMensaje(error.message);
     } finally {
         btnEnviar.disabled = false;
+        pantallaCarga.classList.add("oculto");
     }
 }
 

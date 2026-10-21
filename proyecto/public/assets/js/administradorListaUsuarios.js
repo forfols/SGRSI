@@ -7,6 +7,13 @@ const entradaCi = document.getElementById("ci");
 const rolSolicitante = document.getElementById("rolSolicitante");
 const rolTecnico = document.getElementById("rolTecnico");
 const rolAdministrador = document.getElementById("rolAdministrador");
+const panelBaja = document.getElementById("panelBaja");
+const nombreBaja = document.getElementById("nombreBaja");
+const ciBaja = document.getElementById("ciBaja");
+const btnConfirmarBaja = document.getElementById("btnConfirmarBaja");
+const btnCancelarBaja = document.getElementById("btnCancelarBaja");
+
+let ciEnBaja = "";
 
 function textoRoles(usuario) {
     const roles = [];
@@ -19,6 +26,7 @@ function textoRoles(usuario) {
 }
 
 function abrirModificar(usuario) {
+    cerrarBaja();
     entradaNombre.value = usuario.nombre;
     entradaCi.value = usuario.ci;
     rolSolicitante.checked = usuario.solicitante == 1;
@@ -30,6 +38,32 @@ function abrirModificar(usuario) {
 
 function cerrarModificar() {
     campoModificar.style.display = "none";
+}
+
+function abrirBaja(usuario) {
+    cerrarModificar();
+    ciEnBaja = usuario.ci;
+    nombreBaja.textContent = usuario.nombre;
+    ciBaja.textContent = usuario.ci;
+    panelBaja.style.display = "block";
+}
+
+function cerrarBaja() {
+    panelBaja.style.display = "none";
+    ciEnBaja = "";
+}
+
+async function confirmarBaja() {
+    try {
+        const resultado = await api("PUT", "usuarios.php", { accion: "baja", ci: ciEnBaja });
+
+        cerrarBaja();
+        await cargarTabla();
+        mostrarMensaje(resultado.mensaje, "mensaje");
+    } catch (error) {
+        cerrarBaja();
+        mostrarMensaje(error.message);
+    }
 }
 
 function agregarFila(usuario) {
@@ -48,6 +82,15 @@ function agregarFila(usuario) {
     boton.textContent = "Modificar";
     boton.addEventListener("click", () => abrirModificar(usuario));
     campoBoton.appendChild(boton);
+    fila.appendChild(campoBoton);
+
+    const btnBaja = document.createElement("button");
+    btnBaja.type = "button";
+    btnBaja.textContent = "Dar de baja";
+    btnBaja.addEventListener("click", () => abrirBaja(usuario));
+
+    campoBoton.appendChild(boton);
+    campoBoton.appendChild(btnBaja);
     fila.appendChild(campoBoton);
 
     cuerpoTabla.appendChild(fila);
@@ -147,8 +190,11 @@ document.addEventListener('click', e => {
 });
 
 document.getElementById('buscador').addEventListener('input', buscador);
+document.getElementById("btnCerrarBaja").addEventListener("click", cerrarBaja);
 
 btnCerrar.addEventListener("click", cerrarModificar);
+btnConfirmarBaja.addEventListener("click", confirmarBaja);
+btnCancelarBaja.addEventListener("click", cerrarBaja);
 formularioModificar.addEventListener("submit", modificarUsuario);
 
 cargarTabla().catch((error) => mostrarMensaje(error.message));

@@ -61,13 +61,20 @@ class UsuarioController
         $conexion = Conexion::conectar();
         $dao = new UsuarioDAO($conexion);
 
+        $nombreCompleto = $nombre . " " . $apellido;
+
         if ($dao->existeUsuario($ci)) {
-            Conexion::desconectar();
-            RespuestaJson::error("Un usuario con esa cédula ya existe", 409);
+            if (!$dao->estaDeBaja($ci)) {
+                Conexion::desconectar();
+                RespuestaJson::error("Un usuario con esa cédula ya existe", 409);
+            }
+
+            $resultado = $dao->reactivarUsuario($ci, $nombreCompleto, $claveHash, $solicitante, $tecnico, $administrador);
+        } else {
+            $resultado = $dao->registrarUsuario($ci, $nombreCompleto, $claveHash, $solicitante, $tecnico, $administrador);
         }
 
-        $resultado = $dao->registrarUsuario($ci, $nombre . " " . $apellido, $claveHash, $solicitante, $tecnico, $administrador);
-        Conexion::desconectar();
+        Conexion::desconectar();;
 
         if (!$resultado) {
             RespuestaJson::error("No se pudo registrar el usuario", 400);
@@ -76,9 +83,46 @@ class UsuarioController
         RespuestaJson::exito(["mensaje" => "Usuario creado exitosamente"], 201);
     }
 
+        private function darDeBaja(array $datos): void
+    {
+        $ci = trim($datos["ci"] ?? "");
+
+        if ($ci === "") {
+            RespuestaJson::error("Falta la cédula del usuario", 422);
+        }
+        if (!preg_match("/^[1-9][0-9]{7}$/", $ci)) {
+            RespuestaJson::error("Cédula incorrecta", 422);
+        }
+        if ($ci === (string) Sesion::ci()) {
+            RespuestaJson::error("No puede darse de baja a sí mismo", 403);
+        }
+
+        $conexion = Conexion::conectar();
+        $dao = new UsuarioDAO($conexion);
+
+        if (!$dao->existeUsuario($ci)) {
+            Conexion::desconectar();
+            RespuestaJson::error("El usuario no existe", 404);
+        }
+
+        $resultado = $dao->darDeBajaUsuario($ci);
+        Conexion::desconectar();
+
+        if (!$resultado) {
+            RespuestaJson::error("No se pudo dar de baja al usuario", 400);
+        }
+
+        RespuestaJson::exito(["mensaje" => "Usuario dado de baja exitosamente"]);
+    }
+
     private function modificar(): void
     {
         $datos = $this->leerJson();
+
+        if (($datos["accion"] ?? "") === "baja") {
+            $this->darDeBaja($datos);
+            return;
+        }
 
         $ci = trim($datos["ci"] ?? "");
         $nombre = trim($datos["nombre"] ?? "");

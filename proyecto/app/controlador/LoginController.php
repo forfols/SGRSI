@@ -63,7 +63,8 @@ class LoginController
             RespuestaJson::error("Método no permitido", 405);
         }
 
-        Presencia::registrar(Sesion::ci());
+        $claims = Token::leer();
+        Presencia::registrar((string) $claims["sub"]);
 
         RespuestaJson::exito(["ok" => true]);
     }
@@ -74,8 +75,10 @@ class LoginController
             RespuestaJson::error("Método no permitido", 405);
         }
 
-        Presencia::limpiar(Sesion::ci());
+        $claims = Token::leer();
+        Presencia::limpiar((string) $claims["sub"]);
 
         RespuestaJson::exito(["ok" => true]);
+
     }
 }

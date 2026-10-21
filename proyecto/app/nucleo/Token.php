@@ -48,4 +48,10 @@ class Token
 
         return json_decode(json_encode($claims), true);
     }
+
+    public static function ci(): string
+{
+    return (string) (Token::leer()["sub"] ?? "");
+}
+
 }

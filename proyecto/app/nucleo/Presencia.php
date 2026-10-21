@@ -27,6 +27,10 @@ class Presencia
 
     public static function registrar(string $ci): void
     {
+        if ($ci === "") {
+            return;
+        }
+
         $datos = self::leer();
         $datos[$ci] = time();
         self::guardar($datos);

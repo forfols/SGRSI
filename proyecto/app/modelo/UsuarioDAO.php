@@ -23,7 +23,7 @@ class UsuarioDAO
             LEFT JOIN SOLICITANTE AS s ON s.ci = u.ci
             LEFT JOIN TECNICO AS t ON t.ci = u.ci
             LEFT JOIN ADMINISTRADOR AS a ON a.ci = u.ci
-            WHERE u.ci = :ci
+            WHERE u.ci = :ci AND u.activo = 1
         ";
 
         $consulta = $this->conexion->prepare($sql);
@@ -75,6 +75,7 @@ class UsuarioDAO
             LEFT JOIN SOLICITANTE AS s ON s.ci = u.ci
             LEFT JOIN TECNICO AS t ON t.ci = u.ci
             LEFT JOIN ADMINISTRADOR AS a ON a.ci = u.ci
+            WHERE u.activo = 1
         ";
 
         $consulta = $this->conexion->query($sql);
@@ -128,6 +129,56 @@ class UsuarioDAO
 
             $consulta = $this->conexion->prepare("UPDATE USUARIO SET nombre = :nombre WHERE ci = :ci");
             $consulta->execute(["nombre" => $nombre, "ci" => $ci]);
+
+            $this->asignarRoles($ci, $solicitante, $tecnico, $administrador);
+
+            $this->conexion->commit();
+            return true;
+
+        } catch (PDOException $error) {
+            if ($this->conexion->inTransaction()) {
+                $this->conexion->rollBack();
+            }
+
+            return false;
+        }
+    }
+
+        public function darDeBajaUsuario(string $ci): bool
+    {
+        try {
+            $consulta = $this->conexion->prepare("UPDATE USUARIO SET activo = 0 WHERE ci = :ci AND activo = 1");
+            $consulta->execute(["ci" => $ci]);
+
+            $afectadas = $consulta->rowCount();
+            $consulta = null;
+
+            return $afectadas > 0;
+
+        } catch (PDOException $error) {
+            return false;
+        }
+    }
+
+        public function estaDeBaja(string $ci): bool
+    {
+        $consulta = $this->conexion->prepare("SELECT 1 FROM USUARIO WHERE ci = :ci AND activo = 0 LIMIT 1");
+        $consulta->execute(["ci" => $ci]);
+
+        $deBaja = $consulta->fetchColumn() !== false;
+
+        $consulta = null;
+
+        return $deBaja;
+    }
+
+    public function reactivarUsuario(string $ci, string $nombre, string $claveHash, bool $solicitante, bool $tecnico, bool $administrador): bool
+    {
+        try {
+            $this->conexion->beginTransaction();
+
+            $consulta = $this->conexion->prepare("UPDATE USUARIO SET nombre = :nombre, contra = :contra, activo = 1 WHERE ci = :ci");
+            $consulta->execute(["nombre" => $nombre, "contra" => $claveHash, "ci" => $ci]);
 
             $this->asignarRoles($ci, $solicitante, $tecnico, $administrador);
 

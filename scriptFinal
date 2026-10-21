@@ -1,0 +1,131 @@
+#!/bin/bash
+
+# Datos de MariaDB (rellenar luego)
+DB_HOST=""
+DB_USER=""
+DB_PASS=""
+DB_NAME=""
+
+# Respaldos
+ORIGEN="$HOME/aplicacion"
+LOCAL="$HOME/respaldos/local"
+REMOTO="$HOME/respaldos/remoto"
+LOG="$HOME/respaldos/registro.log"
+RETENCION=7
+
+while true; do
+    clear
+    cat <<'EOF'
+ ____    ____   ____   ____   ___
+/ ___|  / ___| |  _ \ / ___| |_ _|
+\___ \ | |  _  | |_) |\___ \  | |
+ ___) || |_| | |  _ <  ___) | | |
+|____/  \____| |_| \_\|____/ |___|
+
+        BIENVENIDO A SGRSI
+EOF
+    echo
+    echo "1) Usuarios y grupos"
+    echo "2) Respaldos"
+    echo "3) Redes"
+    echo "4) Bases de datos"
+    echo "5) Firewall y registros"
+    echo "6) Salir"
+    echo
+    read -p "Elegí una opción: " op
+
+    case $op in
+        1)
+            echo "--- Mi usuario ---"
+            id
+            echo "--- Usuarios del sistema ---"
+            cut -d: -f1 /etc/passwd
+            echo "--- Grupos del sistema ---"
+            cut -d: -f1 /etc/group
+            read -p "Usuario a verificar: " u
+            if id "$u" >/dev/null 2>&1; then
+                echo "El usuario $u existe"
+            else
+                echo "El usuario $u NO existe"
+            fi
+            read -p "Grupo a verificar: " g
+            if getent group "$g" >/dev/null; then
+                echo "El grupo $g existe"
+            else
+                echo "El grupo $g NO existe"
+            fi
+            read -p "ENTER para volver..."
+            ;;
+        2)
+            mkdir -p "$ORIGEN" "$LOCAL" "$REMOTO"
+            [ -f "$ORIGEN/prueba.txt" ] || echo "Archivo de prueba" > "$ORIGEN/prueba.txt"
+            FECHA=$(date +%Y-%m-%d_%H-%M-%S)
+            ARCHIVO="$LOCAL/aplicacion_$FECHA.tar.gz"
+            if tar -czf "$ARCHIVO" -C "$HOME" aplicacion && tar -tzf "$ARCHIVO" >/dev/null; then
+                echo "$(date '+%F %T') OK respaldo $ARCHIVO" >> "$LOG"
+                echo "Respaldo creado y verificado: $ARCHIVO"
+                cp "$ARCHIVO" "$REMOTO/"
+                echo "Copia simulada en $REMOTO"
+            else
+                echo "$(date '+%F %T') ERROR al crear respaldo" >> "$LOG"
+                echo "Error al crear el respaldo"
+                rm -f "$ARCHIVO"
+            fi
+            echo "--- Respaldos vencidos (más de $RETENCION días) ---"
+            find "$LOCAL" -maxdepth 1 -type f -name 'aplicacion_*.tar.gz' -mtime +$RETENCION -print
+            read -p "¿Eliminar los vencidos? (s/n): " r
+            if [ "$r" = "s" ]; then
+                find "$LOCAL" -maxdepth 1 -type f -name 'aplicacion_*.tar.gz' -mtime +$RETENCION -delete
+                echo "Vencidos eliminados"
+            fi
+            echo "--- Respaldos actuales ---"
+            ls -lh "$LOCAL"
+            read -p "ENTER para volver..."
+            ;;
+        3)
+            echo "--- Interfaces y direcciones IP ---"
+            ip -br addr
+            echo "--- Rutas ---"
+            ip route
+            echo "--- Conectividad ---"
+            ping -c 3 8.8.8.8
+            read -p "ENTER para volver..."
+            ;;
+        4)
+            echo "1) Ver tablas"
+            echo "2) Ingresar datos"
+            read -p "Opción: " d
+            case $d in
+                1)
+                    mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "SHOW TABLES;"
+                    ;;
+                2)
+                    read -p "Tabla: " tabla
+                    read -p "Columnas (ej: nombre,edad): " cols
+                    read -p "Valores (ej: 'Ana',25): " vals
+                    mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "INSERT INTO $tabla ($cols) VALUES ($vals);"
+                    ;;
+                *)
+                    echo "Opción inválida"
+                    ;;
+            esac
+            read -p "ENTER para volver..."
+            ;;
+        5)
+            echo "--- Firewall ---"
+            ufw status 2>&1
+            iptables -L 2>&1 | head -15
+            echo "--- Registros del sistema ---"
+            tail -n 15 /var/log/syslog 2>&1
+            read -p "ENTER para volver..."
+            ;;
+        6)
+            echo "Saliendo de SGRSI..."
+            exit 0
+            ;;
+        *)
+            echo "Opción inválida"
+            sleep 1
+            ;;
+    esac
+done

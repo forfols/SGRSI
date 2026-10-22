@@ -1,0 +1,105 @@
+#!/bin/bash
+origen="$HOME/aplicacion"
+local="$HOME/respaldos/local"
+remoto="$HOME/respaldos/remoto"
+retencion=5
+opcion=""
+preparar() {
+}
+retener() {
+find "$1" -maxdepth 1 -type f -name 'respaldo_*.tar.gz' \
+-printf '%T@ %p\n' 2>/dev/null | sort -nr | cut -d' ' -f2- |
+tail -n +$((retencion + 1)) |
+while IFS= read -r archivo; do
+[ -n "$archivo" ] && rm -f -- "$archivo"
+done
+}
+crear() {
+preparar
+if [ -z "$(find "$origen" -type f -print -quit 2>/dev/null)" ]; then
+echo "No hay archivos para respaldar en $origen."
+return
+fi
+fecha=$(date +%Y-%m-%d_%H-%M-%S)
+nombre="respaldo_$fecha.tar.gz"
+if tar -czf "$local/$nombre" -C "$HOME" aplicacion; then
+echo "Copia local creada."
+else
+echo "Error al crear el respaldo."
+rm -f "$local/$nombre"
+return
+fi
+if ! cp "$local/$nombre" "$remoto/$nombre"; then
+echo "No se pudo crear la copia secundaria."
+return
+fi
+if tar -tzf "$local/$nombre" >/dev/null 2>&1 &&
+tar -tzf "$remoto/$nombre" >/dev/null 2>&1; then
+echo "Verificacion basica correcta: ambas copias se pueden leer."
+else
+echo "Advertencia: no se pudo verificar una de las copias."
+fi
+retener "$local"
+retener "$remoto"
+}
+listar() {
+if [ -d "$1" ]; then
+find "$1" -maxdepth 1 -type f -name 'respaldo_*.tar.gz' \
+Gestion de Respaldos — Rocky Linux
+Pagina 1
+mkdir -p "$origen" "$local" "$remoto"
+else
+fi
+}
+while [ "$opcion" != "0" ]; do
+echo
+echo "====== GESTION DE RESPALDOS ======"
+echo "1. Preparar carpetas"
+echo "2. Crear copias de respaldo"
+echo "3. Listar copias locales"
+echo "4. Listar copias secundarias"
+echo "5. Aplicar retencion (conservar 5)"
+echo "0. Salir"
+read -r -p "Seleccione una opcion: " opcion
+case "$opcion" in
+1) preparar; echo "Carpetas preparadas en $HOME." ;;
+2) crear ;;
+3) listar "$local" ;;
+4) listar "$remoto" ;;
+5) preparar; retener "$local"; retener "$remoto"
+echo "Retencion aplicada: hasta 5 copias por repositorio." ;;
+0) echo "Saliendo del programa." ;;
+*) echo "Opcion no valida." ;;
+esac
+done
+-printf '%TY-%Tm-%Td %TH:%TM %f\n' | sort -r
+echo "Repositorio aun no creado: $1"
+
+-printf '%TY-%Tm-%Td %TH:%TM %f\n' | sort -r
+else
+    echo "Repositorio aun no creado: $1"
+fi
+}
+
+while [ "$opcion" != "0" ]; do
+    echo
+    echo "====== GESTION DE RESPALDOS ======"
+    echo "1. Preparar carpetas"
+    echo "2. Crear copias de respaldo"
+    echo "3. Listar copias locales"
+    echo "4. Listar copias secundarias"
+    echo "5. Aplicar retencion (conservar 5)"
+    echo "0. Salir"
+    read -r -p "Seleccione una opcion: " opcion
+
+    case "$opcion" in
+        1) preparar; echo "Carpetas preparadas en $HOME." ;;
+        2) crear ;;
+        3) listar "$local" ;;
+        4) listar "$remoto" ;;
+        5) preparar; retener "$local"; retener "$remoto"
+           echo "Retencion aplicada: hasta 5 copias por repositorio." ;;
+        0) echo "Saliendo del programa." ;;
+        *) echo "Opcion no valida." ;;
+    esac
+done

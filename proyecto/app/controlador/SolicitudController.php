@@ -76,7 +76,7 @@ class SolicitudController
 
             $mail->send();
         } catch (Exception $error) {
-            RespuestaJson::error("No se pudo enviar la solicitud de servicio", 500);
+            RespuestaJson::error("En desarrollo: El servidor no permite el uso de PHPMailer", 500);
         }
 
         RespuestaJson::exito(["mensaje" => "Se ha enviado la solicitud correctamente"], 201);

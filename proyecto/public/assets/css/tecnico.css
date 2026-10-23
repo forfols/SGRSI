@@ -175,6 +175,13 @@ textarea {
     font-size: 0.95rem;
 }
 
+input[type="submit"] {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    justify-self: start;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -315,4 +322,25 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 16px;
+}
+#altaLaptop {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#altaLaptop fieldset {
+    display: block;          /* anula el grid de 1900px */
+    text-align: center;
+}
+
+#altaLaptop input {
+    margin-left: auto;
+    margin-right: auto;    /* centra los inputs, que son display:block */
+}
+
+#altaLaptop input[type="submit"] {
+    width: auto;
+    max-width: none;
+    padding: 8px 24px;
 }

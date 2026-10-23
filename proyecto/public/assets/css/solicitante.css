@@ -319,6 +319,13 @@ h1{
 }
 
 
+td:last-child {
+    white-space: nowrap;
+}
+
+td:last-child button {
+    margin-right: 6px;
+}
 /* Adaptar 1080P */
 @media (min-width: 1900px) {
     fieldset {
@@ -366,4 +373,5 @@ h1{
 
 
 }
+
 

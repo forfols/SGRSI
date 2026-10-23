@@ -341,7 +341,18 @@ label{
 }
 }
 
+td:last-child {
+    white-space: nowrap;
+}
 
+td:last-child > *,
+td:last-child form,
+td:last-child div {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    margin: 0 6px 0 0;
+}
 /*
   Adaptar 1080P 
 */
